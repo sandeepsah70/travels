@@ -96,12 +96,14 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
   .mc-remove-wrap{grid-column:span 12;justify-content:flex-end}
 }
 
-/* Phone Country Code Selector */
-.phone-combo{display:flex;gap:0;width:100%;height:37px}
-.phone-country{width:90px;height:37px;border:1px solid #e7e7e7;border-right:0;background:#fafafa;border-radius:3px 0 0 3px;padding:0 4px;color:#333;font-size:11px;cursor:pointer;flex-shrink:0}
-.phone-country:focus{outline:1px solid #08aeea}
-.phone-input{flex:1;min-width:0;height:37px;border:1px solid #e7e7e7;background:#fff;border-radius:0 3px 3px 0;padding:0 10px;color:#333;font-size:12px}
-.phone-input::placeholder{color:#888}
+/* Dedicated Country Code & Phone Number Fields */
+.country-field{grid-column:span 4}
+.phone-field{grid-column:span 5}
+.country-field select{cursor:pointer;background:#fff}
+@media(max-width:768px){
+  .country-field{grid-column:span 12}
+  .phone-field{grid-column:span 12}
+}
 
 /* Inquiry Modal */
 .inquiry-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
@@ -363,53 +365,46 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
           </div>
         </div>
 
-        <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder=" " required></div>
+        <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder="1" required></div>
         <div class="field"><label for="class">Class:</label><select id="class" name="class"><option>Economy</option><option>Premium Economy</option><option>Business</option><option>First Class</option></select></div>
-        <div class="field wide"><label for="email">Email:</label><input id="email" name="email" type="email" placeholder="*****@gmail.com" required></div>
-        <div class="field phone-field"><label for="phone">Phone No.:</label>
-            <div class="phone-combo">
-              <select class="phone-country" id="phoneCountry" aria-label="Country code">
-                <option value="+1" selected>🇺🇸 +1</option>
-                <option value="+1CA">🇨🇦 +1</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+91">🇮🇳 +91</option>
-                <option value="+61">🇦🇺 +61</option>
-                <option value="+49">🇩🇪 +49</option>
-                <option value="+33">🇫🇷 +33</option>
-                <option value="+81">🇯🇵 +81</option>
-                <option value="+86">🇨🇳 +86</option>
-                <option value="+55">🇧🇷 +55</option>
-                <option value="+52">🇲🇽 +52</option>
-                <option value="+971">🇦🇪 +971</option>
-                <option value="+966">🇸🇦 +966</option>
-                <option value="+65">🇸🇬 +65</option>
-                <option value="+82">🇰🇷 +82</option>
-                <option value="+39">🇮🇹 +39</option>
-                <option value="+34">🇪🇸 +34</option>
-                <option value="+31">🇳🇱 +31</option>
-                <option value="+46">🇸🇪 +46</option>
-                <option value="+41">🇨🇭 +41</option>
-                <option value="+64">🇳🇿 +64</option>
-                <option value="+353">🇮🇪 +353</option>
-                <option value="+972">🇮🇱 +972</option>
-                <option value="+27">🇿🇦 +27</option>
-                <option value="+234">🇳🇬 +234</option>
-                <option value="+254">🇰🇪 +254</option>
-                <option value="+63">🇵🇭 +63</option>
-                <option value="+66">🇹🇭 +66</option>
-                <option value="+60">🇲🇾 +60</option>
-                <option value="+62">🇮🇩 +62</option>
-                <option value="+92">🇵🇰 +92</option>
-                <option value="+880">🇧🇩 +880</option>
-                <option value="+94">🇱🇰 +94</option>
-                <option value="+977">🇳🇵 +977</option>
-                <option value="+7">🇷🇺 +7</option>
-                <option value="+48">🇵🇱 +48</option>
-                <option value="+90">🇹🇷 +90</option>
-                <option value="+20">🇪🇬 +20</option>
-              </select>
-              <input class="phone-input" id="phone" name="phone" type="tel" placeholder="Phone number" required>
-            </div></div>
+        <div class="field wide" style="grid-column:span 6"><label for="email">Email Address:</label><input id="email" name="email" type="email" placeholder="example@gmail.com" required></div>
+        <div class="field country-field">
+          <label for="phoneCountry">Country Code:</label>
+          <select id="phoneCountry" name="phoneCountry" aria-label="Country code">
+            <option value="+1" selected>🇺🇸 United States (+1)</option>
+            <option value="+1CA">🇨🇦 Canada (+1)</option>
+            <option value="+44">🇬🇧 United Kingdom (+44)</option>
+            <option value="+91">🇮🇳 India (+91)</option>
+            <option value="+61">🇦🇺 Australia (+61)</option>
+            <option value="+49">🇩🇪 Germany (+49)</option>
+            <option value="+33">🇫🇷 France (+33)</option>
+            <option value="+81">🇯🇵 Japan (+81)</option>
+            <option value="+86">🇨🇳 China (+86)</option>
+            <option value="+55">🇧🇷 Brazil (+55)</option>
+            <option value="+52">🇲🇽 Mexico (+52)</option>
+            <option value="+971">🇦🇪 UAE (+971)</option>
+            <option value="+966">🇸🇦 Saudi Arabia (+966)</option>
+            <option value="+65">🇸🇬 Singapore (+65)</option>
+            <option value="+82">🇰🇷 South Korea (+82)</option>
+            <option value="+39">🇮🇹 Italy (+39)</option>
+            <option value="+34">🇪🇸 Spain (+34)</option>
+            <option value="+31">🇳🇱 Netherlands (+31)</option>
+            <option value="+46">🇸🇪 Sweden (+46)</option>
+            <option value="+41">🇨🇭 Switzerland (+41)</option>
+            <option value="+64">🇳🇿 New Zealand (+64)</option>
+            <option value="+353">🇮🇪 Ireland (+353)</option>
+            <option value="+972">🇮🇱 Israel (+972)</option>
+            <option value="+27">🇿🇦 South Africa (+27)</option>
+            <option value="+92">🇵🇰 Pakistan (+92)</option>
+            <option value="+880">🇧🇩 Bangladesh (+880)</option>
+            <option value="+63">🇵🇭 Philippines (+63)</option>
+            <option value="+62">🇮🇩 Indonesia (+62)</option>
+          </select>
+        </div>
+        <div class="field phone-field">
+          <label for="phone">Phone Number:</label>
+          <input id="phone" name="phone" type="tel" placeholder="Enter Phone Number (e.g. 555-0199)" required>
+        </div>
         <div class="submit-field"><button class="quote-btn" id="quoteBtn" type="submit">FREE QUOTE</button></div>
       </div>
     </form>
@@ -609,32 +604,35 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
           <input type="email" id="inqEmail" placeholder="you@email.com" required>
         </div>
       </div>
-      <div class="inquiry-field">
-        <label>Phone Number *</label>
-        <div class="inquiry-phone-combo">
+      <div class="inquiry-row">
+        <div class="inquiry-field">
+          <label>Country Code *</label>
           <select id="inqPhoneCountry" aria-label="Country code">
-            <option value="+1" selected>🇺🇸 +1</option>
-            <option value="+1CA">🇨🇦 +1</option>
-            <option value="+44">🇬🇧 +44</option>
-            <option value="+91">🇮🇳 +91</option>
-            <option value="+61">🇦🇺 +61</option>
-            <option value="+49">🇩🇪 +49</option>
-            <option value="+33">🇫🇷 +33</option>
-            <option value="+81">🇯🇵 +81</option>
-            <option value="+86">🇨🇳 +86</option>
-            <option value="+52">🇲🇽 +52</option>
-            <option value="+971">🇦🇪 +971</option>
-            <option value="+65">🇸🇬 +65</option>
-            <option value="+39">🇮🇹 +39</option>
-            <option value="+34">🇪🇸 +34</option>
-            <option value="+55">🇧🇷 +55</option>
-            <option value="+82">🇰🇷 +82</option>
-            <option value="+27">🇿🇦 +27</option>
-            <option value="+92">🇵🇰 +92</option>
-            <option value="+880">🇧🇩 +880</option>
-            <option value="+62">🇮🇩 +62</option>
+            <option value="+1" selected>🇺🇸 United States (+1)</option>
+            <option value="+1CA">🇨🇦 Canada (+1)</option>
+            <option value="+44">🇬🇧 United Kingdom (+44)</option>
+            <option value="+91">🇮🇳 India (+91)</option>
+            <option value="+61">🇦🇺 Australia (+61)</option>
+            <option value="+49">🇩🇪 Germany (+49)</option>
+            <option value="+33">🇫🇷 France (+33)</option>
+            <option value="+81">🇯🇵 Japan (+81)</option>
+            <option value="+86">🇨🇳 China (+86)</option>
+            <option value="+52">🇲🇽 Mexico (+52)</option>
+            <option value="+971">🇦🇪 UAE (+971)</option>
+            <option value="+65">🇸🇬 Singapore (+65)</option>
+            <option value="+39">🇮🇹 Italy (+39)</option>
+            <option value="+34">🇪🇸 Spain (+34)</option>
+            <option value="+55">🇧🇷 Brazil (+55)</option>
+            <option value="+82">🇰🇷 South Korea (+82)</option>
+            <option value="+27">🇿🇦 South Africa (+27)</option>
+            <option value="+92">🇵🇰 Pakistan (+92)</option>
+            <option value="+880">🇧🇩 Bangladesh (+880)</option>
+            <option value="+62">🇮🇩 Indonesia (+62)</option>
           </select>
-          <input type="tel" id="inqPhone" placeholder="Phone number" required>
+        </div>
+        <div class="inquiry-field">
+          <label>Phone Number *</label>
+          <input type="tel" id="inqPhone" placeholder="Enter phone number" required>
         </div>
       </div>
       <div class="inquiry-row">
@@ -966,7 +964,12 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
       passengers: parseInt(d.get("passengers"), 10) || 1,
       flight_class: d.get("class"),
       email: d.get("email"),
-      phone: d.get("phone"),
+      phone: (() => {
+        const c = document.getElementById("phoneCountry");
+        const code = c ? c.value.replace("CA","") : "+1";
+        const raw = (d.get("phone") || "").trim();
+        return raw.startsWith("+") ? raw : (code + " " + raw);
+      })(),
       status: 'pending'
     };
   }
@@ -1464,21 +1467,7 @@ async function submitInquiry(e) {
   document.getElementById("inquiryForm").reset();
 }
 
-// Update phone value to include country code on form submit
-const mainForm = document.getElementById("quoteForm");
-if (mainForm) {
-  const origSubmitHandler = mainForm.onsubmit;
-  mainForm.addEventListener("submit", function() {
-    const countrySelect = document.getElementById("phoneCountry");
-    const phoneInput = document.getElementById("phone");
-    if (countrySelect && phoneInput) {
-      const code = countrySelect.value.replace("CA","");
-      if (!phoneInput.value.startsWith(code)) {
-        phoneInput.value = code + " " + phoneInput.value;
-      }
-    }
-  }, true);
-}
+
 
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
