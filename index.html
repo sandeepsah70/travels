@@ -95,6 +95,36 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
   .mc-from-wrap,.mc-to-wrap,.mc-date-wrap{grid-column:span 12}
   .mc-remove-wrap{grid-column:span 12;justify-content:flex-end}
 }
+
+/* Phone Country Code Selector */
+.phone-combo{display:flex;gap:0;width:100%;height:37px}
+.phone-country{width:90px;height:37px;border:1px solid #e7e7e7;border-right:0;background:#fafafa;border-radius:3px 0 0 3px;padding:0 4px;color:#333;font-size:11px;cursor:pointer;flex-shrink:0}
+.phone-country:focus{outline:1px solid #08aeea}
+.phone-input{flex:1;min-width:0;height:37px;border:1px solid #e7e7e7;background:#fff;border-radius:0 3px 3px 0;padding:0 10px;color:#333;font-size:12px}
+.phone-input::placeholder{color:#888}
+
+/* Inquiry Modal */
+.inquiry-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.inquiry-modal.show{display:flex}
+.inquiry-box{background:#fff;border-radius:14px;padding:0;max-width:520px;width:92%;box-shadow:0 10px 40px rgba(0,0,0,0.35);animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275);max-height:90vh;overflow-y:auto}
+.inquiry-header{background:linear-gradient(135deg,#06399b,#08aeea);padding:22px 26px;border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:center}
+.inquiry-header h3{margin:0;color:#fff;font-size:18px;font-weight:700}
+.inquiry-close{border:0;background:rgba(255,255,255,0.2);color:#fff;width:32px;height:32px;border-radius:50%;font-size:18px;cursor:pointer;display:grid;place-items:center;transition:background .2s}
+.inquiry-close:hover{background:rgba(255,255,255,0.4)}
+.inquiry-form{padding:24px 26px 28px;display:grid;gap:16px}
+.inquiry-field{display:flex;flex-direction:column;gap:5px}
+.inquiry-field label{font-size:12px;font-weight:700;color:#06399b}
+.inquiry-field input,.inquiry-field select,.inquiry-field textarea{height:40px;border:1.5px solid #e1e8f0;border-radius:6px;padding:0 12px;font-size:13px;color:#333;transition:border-color .2s}
+.inquiry-field textarea{height:80px;padding:10px 12px;resize:vertical;font-family:inherit}
+.inquiry-field input:focus,.inquiry-field select:focus,.inquiry-field textarea:focus{border-color:#08aeea;outline:none}
+.inquiry-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.inquiry-phone-combo{display:flex;gap:0;height:40px}
+.inquiry-phone-combo select{width:85px;height:40px;border:1.5px solid #e1e8f0;border-right:0;background:#fafafa;border-radius:6px 0 0 6px;padding:0 4px;font-size:11px;cursor:pointer}
+.inquiry-phone-combo input{flex:1;min-width:0;height:40px;border:1.5px solid #e1e8f0;border-radius:0 6px 6px 0;padding:0 12px;font-size:13px;color:#333}
+.inquiry-submit{background:linear-gradient(135deg,#06399b,#08aeea);color:#fff;border:0;padding:13px 28px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:4px}
+.inquiry-submit:hover{opacity:0.9}
+.inquiry-deal-tag{background:#e8f4fd;color:#06399b;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;text-align:center;margin-bottom:4px}
+@media(max-width:500px){.inquiry-row{grid-template-columns:1fr}}
 .phone-field{grid-column:span 4}
 .submit-field{grid-column:span 3;display:flex;align-items:end}
 .quote-btn{border:0;background:#06aeea;color:#fff;font-size:12px;font-weight:700;padding:12px 22px;cursor:pointer;min-height:38px;transition:all 0.2s}
@@ -226,7 +256,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
       <a class="nav-item" href="#top">Home</a>
       <a class="nav-item" href="about.html">About Us</a>
       <a class="nav-item" href="contact.html">Contact Us</a>
-      <a class="nav-item" href="#blogs">Blog</a>
+      <a class="nav-item" href="blog.html">Blog</a>
       <a class="nav-item" href="#airlines">Routes</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation menu" type="button">☰</button>
@@ -235,7 +265,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
     <a class="mobile-nav-item" href="#top">Home</a>
     <a class="mobile-nav-item" href="about.html">About Us</a>
     <a class="mobile-nav-item" href="contact.html">Contact Us</a>
-    <a class="mobile-nav-item" href="#blogs">Blog</a>
+    <a class="mobile-nav-item" href="blog.html">Blog</a>
     <a class="mobile-nav-item" href="#airlines">Routes</a>
   </div>
   <div class="container call-row">
@@ -336,7 +366,50 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
         <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder=" " required></div>
         <div class="field"><label for="class">Class:</label><select id="class" name="class"><option>Economy</option><option>Premium Economy</option><option>Business</option><option>First Class</option></select></div>
         <div class="field wide"><label for="email">Email:</label><input id="email" name="email" type="email" placeholder="*****@gmail.com" required></div>
-        <div class="field phone-field"><label for="phone">Phone No.:</label><input id="phone" name="phone" type="tel" placeholder="🇺🇸 +1  Phone number" required></div>
+        <div class="field phone-field"><label for="phone">Phone No.:</label>
+            <div class="phone-combo">
+              <select class="phone-country" id="phoneCountry" aria-label="Country code">
+                <option value="+1" selected>🇺🇸 +1</option>
+                <option value="+1CA">🇨🇦 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+91">🇮🇳 +91</option>
+                <option value="+61">🇦🇺 +61</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+33">🇫🇷 +33</option>
+                <option value="+81">🇯🇵 +81</option>
+                <option value="+86">🇨🇳 +86</option>
+                <option value="+55">🇧🇷 +55</option>
+                <option value="+52">🇲🇽 +52</option>
+                <option value="+971">🇦🇪 +971</option>
+                <option value="+966">🇸🇦 +966</option>
+                <option value="+65">🇸🇬 +65</option>
+                <option value="+82">🇰🇷 +82</option>
+                <option value="+39">🇮🇹 +39</option>
+                <option value="+34">🇪🇸 +34</option>
+                <option value="+31">🇳🇱 +31</option>
+                <option value="+46">🇸🇪 +46</option>
+                <option value="+41">🇨🇭 +41</option>
+                <option value="+64">🇳🇿 +64</option>
+                <option value="+353">🇮🇪 +353</option>
+                <option value="+972">🇮🇱 +972</option>
+                <option value="+27">🇿🇦 +27</option>
+                <option value="+234">🇳🇬 +234</option>
+                <option value="+254">🇰🇪 +254</option>
+                <option value="+63">🇵🇭 +63</option>
+                <option value="+66">🇹🇭 +66</option>
+                <option value="+60">🇲🇾 +60</option>
+                <option value="+62">🇮🇩 +62</option>
+                <option value="+92">🇵🇰 +92</option>
+                <option value="+880">🇧🇩 +880</option>
+                <option value="+94">🇱🇰 +94</option>
+                <option value="+977">🇳🇵 +977</option>
+                <option value="+7">🇷🇺 +7</option>
+                <option value="+48">🇵🇱 +48</option>
+                <option value="+90">🇹🇷 +90</option>
+                <option value="+20">🇪🇬 +20</option>
+              </select>
+              <input class="phone-input" id="phone" name="phone" type="tel" placeholder="Phone number" required>
+            </div></div>
         <div class="submit-field"><button class="quote-btn" id="quoteBtn" type="submit">FREE QUOTE</button></div>
       </div>
     </form>
@@ -367,15 +440,15 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
     <div class="deals-list" id="deals">
       <article class="deal-card">
         <img class="deal-img" src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=1000&q=85" alt="Friends enjoying a group trip" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=1000&q=85'">
-        <div class="deal-body"><h3 class="deal-title">Group Travel Deals</h3><p class="deal-desc">At First, Planning Flights For A Big Group May Appear Like A Challenging Task. However, You Can Make Your Journey Easy And Avail Excellent Discoun...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
+        <div class="deal-body"><h3 class="deal-title">Group Travel Deals</h3><p class="deal-desc">At First, Planning Flights For A Big Group May Appear Like A Challenging Task. However, You Can Make Your Journey Easy And Avail Excellent Discoun...</p><a class="explore" href="javascript:void(0)" onclick="openInquiryModal('Group Travel Deals')">Explore Now</a></div>
       </article>
       <article class="deal-card">
         <img class="deal-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1000&q=85" alt="Domestic and international scenic flight deals" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1000&q=85'">
-        <div class="deal-body"><h3 class="deal-title">Domestic And International Deals</h3><p class="deal-desc">Exploring The Best Tourist Locations Across The Globe Is Always Thrilling, But Coupled With Reasonable Flight Deals, It Becomes Icing On The Cake. Whe...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
+        <div class="deal-body"><h3 class="deal-title">Domestic And International Deals</h3><p class="deal-desc">Exploring The Best Tourist Locations Across The Globe Is Always Thrilling, But Coupled With Reasonable Flight Deals, It Becomes Icing On The Cake. Whe...</p><a class="explore" href="javascript:void(0)" onclick="openInquiryModal('Domestic And International Deals')">Explore Now</a></div>
       </article>
       <article class="deal-card">
         <img class="deal-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1000&q=85" alt="Airplane business class cabin" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85'">
-        <div class="deal-body"><h3 class="deal-title">Business Class Deals</h3><p class="deal-desc">Are You Looking For The Best Business Class Deals? Our Attractive Flight Offers Are Tailored For A Superior Travel Experience, Whether Y...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
+        <div class="deal-body"><h3 class="deal-title">Business Class Deals</h3><p class="deal-desc">Are You Looking For The Best Business Class Deals? Our Attractive Flight Offers Are Tailored For A Superior Travel Experience, Whether Y...</p><a class="explore" href="javascript:void(0)" onclick="openInquiryModal('Business Class Deals')">Explore Now</a></div>
       </article>
     </div>
   </div>
@@ -412,11 +485,11 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
 <section class="section blog-section" id="blogs">
   <div class="container">
     <h2 class="section-title">Our <span>Blogs</span></h2>
-    <a class="view-link" href="#blogs">View All Blogs →</a>
+    <a class="view-link" href="blog.html">View All Blogs →</a>
     <div class="blog-list">
-      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1000&q=85" alt="Friends exploring a scenic destination"><div class="blog-body"><h3>Everything About American Airlines Boarding Groups &amp; Its Priority</h3><p>American Airlines - An airline that is known for its ultimate services. Right from the flight boarding to the departure, everything of the airline is...</p><a href="#quoteForm">Know More</a></div></article>
-      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85" alt="Airline cabin and passenger service"><div class="blog-body"><h3>How to Connect with Air France Group Booking Customer Service</h3><p>Flying with the one-minded travelers could make a trip more exciting and captive. However, arranging a trip for such numerous travelers in one itinerary...</p><a href="#quoteForm">Know More</a></div></article>
-      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=85" alt="Group of friends enjoying an outdoor adventure"><div class="blog-body"><h3>United Airlines Boarding Group - A Complete Guide for You</h3><p>Are you flying with United Airlines? Well, there is nothing wrong in flying with United Airlines, it's just you need to understand certain rules a...</p><a href="#quoteForm">Know More</a></div></article>
+      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1000&q=85" alt="Friends exploring a scenic destination"><div class="blog-body"><h3>Everything About American Airlines Boarding Groups &amp; Its Priority</h3><p>American Airlines - An airline that is known for its ultimate services. Right from the flight boarding to the departure, everything of the airline is...</p><a href="blog.html">Know More →</a></div></article>
+      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85" alt="Airline cabin and passenger service"><div class="blog-body"><h3>How to Connect with Air France Group Booking Customer Service</h3><p>Flying with the one-minded travelers could make a trip more exciting and captive. However, arranging a trip for such numerous travelers in one itinerary...</p><a href="blog.html">Know More →</a></div></article>
+      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=85" alt="Group of friends enjoying an outdoor adventure"><div class="blog-body"><h3>United Airlines Boarding Group - A Complete Guide for You</h3><p>Are you flying with United Airlines? Well, there is nothing wrong in flying with United Airlines, it's just you need to understand certain rules a...</p><a href="blog.html">Know More →</a></div></article>
     </div>
   </div>
 </section>
@@ -516,6 +589,76 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
     <form class="newsletter-form" id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="Your Email Address" aria-label="Your Email Address" required><button type="submit">Subscribe</button></form>
   </div>
 </section>
+
+<!-- Inquiry Modal (Explore Now) -->
+<div class="inquiry-modal" id="inquiryModal" role="dialog" aria-modal="true">
+  <div class="inquiry-box">
+    <div class="inquiry-header">
+      <h3>✈ Get a Free Quote</h3>
+      <button type="button" class="inquiry-close" onclick="closeInquiryModal()">✕</button>
+    </div>
+    <form class="inquiry-form" id="inquiryForm" onsubmit="submitInquiry(event)">
+      <div class="inquiry-deal-tag" id="inquiryDealTag">Group Travel Deals</div>
+      <div class="inquiry-row">
+        <div class="inquiry-field">
+          <label>Your Name *</label>
+          <input type="text" id="inqName" placeholder="Full Name" required>
+        </div>
+        <div class="inquiry-field">
+          <label>Email Address *</label>
+          <input type="email" id="inqEmail" placeholder="you@email.com" required>
+        </div>
+      </div>
+      <div class="inquiry-field">
+        <label>Phone Number *</label>
+        <div class="inquiry-phone-combo">
+          <select id="inqPhoneCountry" aria-label="Country code">
+            <option value="+1" selected>🇺🇸 +1</option>
+            <option value="+1CA">🇨🇦 +1</option>
+            <option value="+44">🇬🇧 +44</option>
+            <option value="+91">🇮🇳 +91</option>
+            <option value="+61">🇦🇺 +61</option>
+            <option value="+49">🇩🇪 +49</option>
+            <option value="+33">🇫🇷 +33</option>
+            <option value="+81">🇯🇵 +81</option>
+            <option value="+86">🇨🇳 +86</option>
+            <option value="+52">🇲🇽 +52</option>
+            <option value="+971">🇦🇪 +971</option>
+            <option value="+65">🇸🇬 +65</option>
+            <option value="+39">🇮🇹 +39</option>
+            <option value="+34">🇪🇸 +34</option>
+            <option value="+55">🇧🇷 +55</option>
+            <option value="+82">🇰🇷 +82</option>
+            <option value="+27">🇿🇦 +27</option>
+            <option value="+92">🇵🇰 +92</option>
+            <option value="+880">🇧🇩 +880</option>
+            <option value="+62">🇮🇩 +62</option>
+          </select>
+          <input type="tel" id="inqPhone" placeholder="Phone number" required>
+        </div>
+      </div>
+      <div class="inquiry-row">
+        <div class="inquiry-field">
+          <label>Estimated Passengers *</label>
+          <input type="number" id="inqPassengers" min="1" max="500" placeholder="Number of travelers" required>
+        </div>
+        <div class="inquiry-field">
+          <label>Travel Date *</label>
+          <input type="date" id="inqDate" required>
+        </div>
+      </div>
+      <div class="inquiry-field">
+        <label>Trip Route *</label>
+        <input type="text" id="inqRoute" placeholder="e.g. New York → Los Angeles, or Multi City" required>
+      </div>
+      <div class="inquiry-field">
+        <label>Special Requests</label>
+        <textarea id="inqSpecial" placeholder="Any special requirements, wheelchair assistance, extra baggage, seating preferences, etc."></textarea>
+      </div>
+      <button type="submit" class="inquiry-submit">📩 Submit Inquiry</button>
+    </form>
+  </div>
+</div>
 </main>
 <footer class="site-footer">
   <div class="footer-panel">
@@ -810,7 +953,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
       passengers: parseInt(d.get("passengers"), 10) || 1,
       flight_class: d.get("class"),
       email: d.get("email"),
-      phone: d.get("phone"),
+      phone: (() => { const c = document.getElementById("phoneCountry"); const code = c ? c.value.replace("CA","") : "+1"; const raw = (d.get("phone") || "").trim(); return raw.startsWith("+") ? raw : (code + " " + raw); })(),
       status: 'pending'
     };
   } else {
@@ -1250,6 +1393,92 @@ function closeLeadsModal() {
     }
   });
 })();
+
+
+
+// ── Inquiry Modal (Explore Now deals) ──
+function openInquiryModal(dealName) {
+  const tag = document.getElementById("inquiryDealTag");
+  if (tag) tag.textContent = dealName || "Group Travel Deals";
+  document.getElementById("inquiryModal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeInquiryModal() {
+  document.getElementById("inquiryModal").classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("inquiryModal").addEventListener("click", function(e) {
+  if (e.target === this) closeInquiryModal();
+});
+
+async function submitInquiry(e) {
+  e.preventDefault();
+  const name = document.getElementById("inqName").value.trim();
+  const email = document.getElementById("inqEmail").value.trim();
+  const countryCode = document.getElementById("inqPhoneCountry").value.replace("CA","");
+  const phone = countryCode + " " + document.getElementById("inqPhone").value.trim();
+  const passengers = document.getElementById("inqPassengers").value;
+  const route = document.getElementById("inqRoute").value.trim();
+  const date = document.getElementById("inqDate").value;
+  const special = document.getElementById("inqSpecial").value.trim();
+  const dealName = document.getElementById("inquiryDealTag").textContent;
+
+  if (!name || !email || !phone || !passengers || !route || !date) {
+    showToast("Please fill all required fields.");
+    return;
+  }
+
+  const quoteData = {
+    trip_type: "Inquiry - " + dealName,
+    flying_from: name + " [Inquiry]",
+    destination: route,
+    departure_date: date,
+    return_date: null,
+    passengers: parseInt(passengers, 10) || 1,
+    flight_class: "Economy",
+    email: email,
+    phone: phone,
+    status: "pending"
+  };
+
+  if (supabaseClient) {
+    try {
+      const { error } = await supabaseClient.from("flight_quotes").insert([quoteData]);
+      if (error) {
+        console.error("Supabase insert error:", error);
+        showToast("Error saving inquiry. Please try again.");
+        return;
+      }
+      loadSupabaseLeads();
+    } catch (err) {
+      console.error("Supabase request error:", err);
+      showToast("Network error. Please try again.");
+      return;
+    }
+  }
+
+  closeInquiryModal();
+  openSuccessModal("Thank you, " + name + "! Your inquiry for " + dealName + " has been submitted successfully. Our travel specialists will contact you shortly with the best group rates.");
+  document.getElementById("inquiryForm").reset();
+}
+
+// Update phone value to include country code on form submit
+const mainForm = document.getElementById("quoteForm");
+if (mainForm) {
+  const origSubmitHandler = mainForm.onsubmit;
+  mainForm.addEventListener("submit", function() {
+    const countrySelect = document.getElementById("phoneCountry");
+    const phoneInput = document.getElementById("phone");
+    if (countrySelect && phoneInput) {
+      const code = countrySelect.value.replace("CA","");
+      if (!phoneInput.value.startsWith(code)) {
+        phoneInput.value = code + " " + phoneInput.value;
+      }
+    }
+  }, true);
+}
 
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>

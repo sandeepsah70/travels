@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog & Group Travel Guides | Group Travel Desk</title>
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+:root{--blue:#08aeea;--navy:#06399b;--ink:#292d32;--muted:#666;--bg:#f8fafc}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{width:min(1100px,92%);margin:auto}
+header{background:#fff;border-bottom:1px solid #edf2f7;position:relative}
+.topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-logo-img{height:46px;width:auto;max-width:160px;object-fit:contain;display:block}
+.brand-name{display:inline-flex;align-items:center;white-space:nowrap;font-size:22px;letter-spacing:-0.2px;line-height:1}
+.brand-name span{display:inline;color:#06399b;font-weight:800}.brand-name b{color:#00aeea;margin-left:5px;font-weight:800}
+.main-nav{display:flex;align-items:center;gap:24px;margin-left:auto}
+.nav-item{font-size:13.5px;font-weight:700;color:#06399b;padding:8px 0;position:relative;transition:color 0.2s;text-decoration:none}
+.nav-item:hover,.nav-item.active{color:#08aeea}
+.nav-item.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#08aeea}
+.menu-btn{display:none;border:1px solid #cbe4fc;background:#f0f8ff;border-radius:4px;width:40px;height:36px;font-size:22px;color:#06399b;cursor:pointer}
+.mobile-nav{display:none;background:#fff;border-top:1px solid #eef2f6;border-bottom:2px solid #08aeea;box-shadow:0 8px 24px rgba(6,57,155,0.12);padding:6px 0}
+.mobile-nav.open{display:block}
+.mobile-nav-item{display:block;padding:12px 24px;font-size:14px;font-weight:700;color:#06399b;border-bottom:1px solid #f8fafc;text-decoration:none}
+.mobile-nav-item:hover{background:#eff8ff;color:#08aeea}
+.call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px}
+.call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
+.call-pill strong{color:#078a32}
+@media(max-width:850px){.main-nav{display:none}.menu-btn{display:grid;place-items:center}}
+
+.hero-banner{background:linear-gradient(rgba(8,28,62,.65),rgba(6,57,155,.55)),url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1920&q=85') center/cover no-repeat;color:#fff;padding:60px 0;text-align:center}
+.hero-banner h1{margin:0 0 10px;font-size:clamp(26px,3.5vw,36px);font-weight:700}
+.hero-banner p{margin:0;opacity:0.95;font-size:15px;max-width:680px;margin:auto}
+
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:32px auto 10px}
+.filter-btn{background:#fff;border:1px solid #cbd5e1;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:700;color:#06399b;cursor:pointer;transition:all .2s}
+.filter-btn:hover,.filter-btn.active{background:#08aeea;color:#fff;border-color:#08aeea}
+
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin:35px auto 60px}
+.blog-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.06);border:1px solid #eef2f6;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.blog-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(6,57,155,0.12)}
+.blog-img-wrap{position:relative;height:210px;overflow:hidden;background:#e2e8f0}
+.blog-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.blog-card:hover .blog-img-wrap img{transform:scale(1.05)}
+.blog-category{position:absolute;top:12px;left:12px;background:rgba(6,57,155,0.9);color:#fff;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.blog-body{padding:22px 20px;display:flex;flex-direction:column;flex:1}
+.blog-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:#718096;margin-bottom:10px}
+.blog-meta span{display:flex;align-items:center;gap:4px}
+.blog-title{font-size:17px;font-weight:700;color:#06399b;line-height:1.45;margin:0 0 12px;cursor:pointer}
+.blog-title:hover{color:#08aeea}
+.blog-excerpt{font-size:13px;color:#4a5568;line-height:1.7;margin:0 0 18px;flex:1}
+.blog-author-bar{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f1f5f9;padding-top:14px;margin-top:auto}
+.blog-author{display:flex;align-items:center;gap:8px;font-size:12px;color:#06399b;font-weight:700}
+.blog-author-avatar{width:28px;height:28px;border-radius:50%;background:#e0f2fe;color:#08aeea;display:grid;place-items:center;font-size:12px;font-weight:bold}
+.read-more-btn{font-size:12px;font-weight:700;color:#08aeea;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.read-more-btn:hover{color:#06399b}
+
+/* Article Modal */
+.article-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.article-modal.show{display:flex}
+.article-box{background:#fff;border-radius:14px;max-width:760px;width:92%;max-height:88vh;overflow-y:auto;box-shadow:0 12px 40px rgba(0,0,0,0.3);position:relative}
+.article-header-img{width:100%;height:260px;object-fit:cover;display:block}
+.article-close{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.6);color:#fff;border:0;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:20px;display:grid;place-items:center;z-index:2;transition:background .2s}
+.article-close:hover{background:#000}
+.article-content{padding:32px 36px 40px}
+.article-content h2{color:#06399b;font-size:24px;margin-top:0;line-height:1.35}
+.article-content p{color:#4a5568;font-size:14.5px;line-height:1.85;margin-bottom:18px}
+.article-content ul{padding-left:22px;color:#4a5568;font-size:14px;line-height:1.8;margin-bottom:20px}
+.article-content li{margin-bottom:8px}
+.article-takeaway{background:#eff6ff;border-left:4px solid #08aeea;padding:16px 20px;border-radius:0 8px 8px 0;margin:22px 0}
+.article-takeaway strong{color:#06399b;display:block;margin-bottom:6px;font-size:14px}
+.article-takeaway p{margin:0;font-size:13.5px;color:#334155}
+
+.cta-box{background:linear-gradient(135deg,#06399b,#08aeea);color:#fff;border-radius:12px;padding:42px 30px;text-align:center;margin:40px auto 60px}
+.cta-box h3{font-size:24px;margin:0 0 10px}
+.cta-box p{color:#e0f2fe;margin-bottom:24px;font-size:15px;max-width:620px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-block;background:#fff;color:#06399b;font-weight:700;padding:13px 32px;border-radius:6px;font-size:14px;transition:all .2s}
+.cta-btn:hover{background:#f0f9ff;color:#08aeea;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+
+.site-footer{padding:50px 0 22px;background:#202a3b;color:#cbd5e1}
+.footer-panel{width:min(900px,92%);margin:auto;background:#fff;border-radius:16px;padding:36px 7%;color:#555}
+.copyright{text-align:center;background:#18202c;color:#94a3b8;font-size:11px;padding:16px 8px}
+
+@media(max-width:960px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.blog-grid{grid-template-columns:1fr}.article-content{padding:22px 20px}.hero-banner{padding:42px 0}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container topbar">
+    <a class="brand" href="index.html" aria-label="Group Travel Desk home">
+      <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
+      <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item" href="about.html">About Us</a>
+      <a class="nav-item" href="contact.html">Contact Us</a>
+      <a class="nav-item active" href="blog.html">Blog</a>
+      <a class="nav-item" href="index.html#airlines">Routes</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" type="button">☰</button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a class="mobile-nav-item" href="index.html">Home</a>
+    <a class="mobile-nav-item" href="about.html">About Us</a>
+    <a class="mobile-nav-item" href="contact.html">Contact Us</a>
+    <a class="mobile-nav-item" href="blog.html">Blog</a>
+    <a class="mobile-nav-item" href="index.html#airlines">Routes</a>
+  </div>
+  <div class="container call-row">
+    <div class="call-pill">☎ &nbsp; Book a Group – Call us 24/7 &nbsp; <strong>+1-XXX-XXX-XXXX</strong></div>
+  </div>
+</header>
+
+<section class="hero-banner">
+  <div class="container">
+    <h1>Group Travel Desk Blog</h1>
+    <p>Expert insights, airline contract strategies, and practical advice for organizing group flights for corporate, educational, sports, and family trips.</p>
+  </div>
+</section>
+
+<main class="container">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCategory('all', this)">All Posts</button>
+    <button class="filter-btn" onclick="filterCategory('guides', this)">Money-Saving Guides</button>
+    <button class="filter-btn" onclick="filterCategory('corporate', this)">Corporate & Events</button>
+    <button class="filter-btn" onclick="filterCategory('students', this)">Students & Sports</button>
+    <button class="filter-btn" onclick="filterCategory('weddings', this)">Weddings & Family</button>
+  </div>
+
+  <div class="blog-grid" id="blogGrid">
+    <!-- Article 1 -->
+    <article class="blog-card" data-category="guides">
+      <div class="blog-img-wrap">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=85" alt="Airplane flying in clear sky">
+        <span class="blog-category">Guide</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>📅 Oct 2026</span>
+          <span>⏱ 6 min read</span>
+        </div>
+        <h2 class="blog-title" onclick="openArticle(1)">How Group Travel Desk Saves Big Groups Up to 35% on Airline Tickets</h2>
+        <p class="blog-excerpt">Booking 10+ plane tickets on consumer websites triggers dynamic pricing algorithms that increase fares with every seat. Here is how Group Travel Desk locks in negotiated airline contracts...</p>
+        <div class="blog-author-bar">
+          <div class="blog-author">
+            <span class="blog-author-avatar">✈</span>
+            <span>Group Travel Desk Editorial</span>
+          </div>
+          <span class="read-more-btn" onclick="openArticle(1)">Read Guide →</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 2 -->
+    <article class="blog-card" data-category="corporate">
+      <div class="blog-img-wrap">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=85" alt="Business conference attendees">
+        <span class="blog-category">Corporate</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>📅 Oct 2026</span>
+          <span>⏱ 5 min read</span>
+        </div>
+        <h2 class="blog-title" onclick="openArticle(2)">Corporate & Conference Flights: Multi-City Departures Made Effortless</h2>
+        <p class="blog-excerpt">When 50 colleagues need to fly from 12 different US airports into one convention city like Las Vegas or Orlando, decentralized booking becomes a disaster. Discover our multi-origin solution...</p>
+        <div class="blog-author-bar">
+          <div class="blog-author">
+            <span class="blog-author-avatar">💼</span>
+            <span>Group Travel Desk Business</span>
+          </div>
+          <span class="read-more-btn" onclick="openArticle(2)">Read Guide →</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 3 -->
+    <article class="blog-card" data-category="students">
+      <div class="blog-img-wrap">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=85" alt="Youth group and students travelling">
+        <span class="blog-category">Students</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>📅 Sep 2026</span>
+          <span>⏱ 7 min read</span>
+        </div>
+        <h2 class="blog-title" onclick="openArticle(3)">School & University Group Flights: Band, Sports Teams & Educational Tours</h2>
+        <p class="blog-excerpt">Coordinating university choir instruments or varsity athletic equipment? Learn about oversized luggage fee waivers, delayed name submission rules, and school board PO payment terms...</p>
+        <div class="blog-author-bar">
+          <div class="blog-author">
+            <span class="blog-author-avatar">🎓</span>
+            <span>Group Travel Desk Youth</span>
+          </div>
+          <span class="read-more-btn" onclick="openArticle(3)">Read Guide →</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 4 -->
+    <article class="blog-card" data-category="weddings">
+      <div class="blog-img-wrap">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=85" alt="Destination wedding celebration">
+        <span class="blog-category">Weddings</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>📅 Sep 2026</span>
+          <span>⏱ 5 min read</span>
+        </div>
+        <h2 class="blog-title" onclick="openArticle(4)">Destination Weddings & Family Reunions: Zero-Stress Flight Coordination</h2>
+        <p class="blog-excerpt">Never front $25,000 on your personal credit card for wedding guests. Group Travel Desk sets up customized booking links where every guest pays for their own ticket at the agreed group rate...</p>
+        <div class="blog-author-bar">
+          <div class="blog-author">
+            <span class="blog-author-avatar">💍</span>
+            <span>Group Travel Desk Leisure</span>
+          </div>
+          <span class="read-more-btn" onclick="openArticle(4)">Read Guide →</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 5 -->
+    <article class="blog-card" data-category="guides">
+      <div class="blog-img-wrap">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=85" alt="Scenic airplane view over landscape">
+        <span class="blog-category">Guide</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>📅 Aug 2026</span>
+          <span>⏱ 8 min read</span>
+        </div>
+        <h2 class="blog-title" onclick="openArticle(5)">American, Delta, United & Southwest: Group Booking Rules Compared (2026)</h2>
+        <p class="blog-excerpt">A comprehensive comparison of major US domestic carriers: minimum seat requirements, deposit schedules, free name change windows, and complimentary escort ticket perks...</p>
+        <div class="blog-author-bar">
+          <div class="blog-author">
+            <span class="blog-author-avatar">✈</span>
+            <span>Group Travel Desk Specialists</span>
+          </div>
+          <span class="read-more-btn" onclick="openArticle(5)">Read Guide →</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Article 6 -->
+    <article class="blog-card" data-category="corporate">
+      <div class="blog-img-wrap">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?auto=format&fit=crop&w=800&q=85" alt="Las Vegas neon strip at night">
+        <span class="blog-category">Destinations</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta">
+          <span>📅 Aug 2026</span>
+          <span>⏱ 6 min read</span>
+        </div>
+        <h2 class="blog-title" onclick="openArticle(6)">Top 10 US Destinations for Large Group Flights in 2026</h2>
+        <p class="blog-excerpt">From Orlando and Las Vegas to Chicago and Miami, discover which US cities offer the highest volume of non-stop flights and the most competitive group contract discounts...</p>
+        <div class="blog-author-bar">
+          <div class="blog-author">
+            <span class="blog-author-avatar">🌟</span>
+            <span>Group Travel Desk Research</span>
+          </div>
+          <span class="read-more-btn" onclick="openArticle(6)">Read Guide →</span>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="cta-box">
+    <h3>Planning a Flight for 10 or More Travelers?</h3>
+    <p>Let Group Travel Desk handle the airline negotiations, seat blocks, flexible payments, and passenger rosters so you get the lowest guaranteed rate.</p>
+    <a href="index.html#quoteForm" class="cta-btn">✈ Request a Free Group Quote</a>
+  </div>
+</main>
+
+<!-- Interactive Article Modal -->
+<div class="article-modal" id="articleModal" role="dialog" aria-modal="true">
+  <div class="article-box">
+    <button type="button" class="article-close" onclick="closeArticle()" aria-label="Close article">✕</button>
+    <img id="modalImg" class="article-header-img" src="" alt="Article cover">
+    <div class="article-content" id="modalBody"></div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-panel">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <img src="logo.png" alt="Group Travel Desk Logo" style="height:38px;width:auto">
+      <span style="font-size:20px;font-weight:800;color:#06399b">Group Travel <b style="color:#00aeea">Desk</b></span>
+    </div>
+    <p style="font-size:12px;color:#666;line-height:1.8;margin:0 0 20px">
+      Group Travel Desk LLC is America's leading group airfare specialist. We negotiate directly with domestic and international airlines to deliver wholesale group contracts, flexible payment milestones, and dedicated 24/7 coordinator support.
+    </p>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:12px;font-weight:700;color:#06399b;margin-bottom:18px">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="blog.html">Blog</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="refund-policy.html">Refund Policy</a>
+      <a href="terms-conditions.html">Terms &amp; Conditions</a>
+    </div>
+    <div style="font-size:12px;color:#777;border-top:1px solid #edf2f7;padding-top:14px">
+      <span>📍 Group Travel Desk LLC &nbsp;|&nbsp; ✉ info@grouptraveldesk.com &nbsp;|&nbsp; ☎ 24/7 Desk: +1-800-XXX-XXXX</span>
+    </div>
+  </div>
+  <div class="copyright">
+    &copy; <span id="year">2026</span> Group Travel Desk LLC. All Rights Reserved.
+  </div>
+</footer>
+
+<script>
+const ARTICLES = {
+  1: {
+    title: "How Group Travel Desk Saves Big Groups Up to 35% on Airline Tickets",
+    img: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=85",
+    author: "Group Travel Desk Editorial Team | Oct 2026",
+    html: `
+      <h2>How Group Travel Desk Saves Big Groups Up to 35% on Airline Tickets</h2>
+      <p><em>Published by Group Travel Desk &bull; Reading time: 6 minutes</em></p>
+      
+      <p>Anyone who has attempted to purchase airline tickets for 15, 30, or 60 people on standard travel websites knows the painful reality of <strong>algorithmic seat jumping</strong>. You search for 10 tickets, and the price shows \$220 each. But when you attempt to checkout, the system recalculates: the first 4 seats were in fare bucket 'T' (\$220), the next 4 were in bucket 'L' (\$310), and the final 2 were forced into bucket 'M' (\$440). Suddenly, your per-person average has skyrocketed, and half the group is upset.</p>
+
+      <div class="article-takeaway">
+        <strong>💡 Key Insight from Group Travel Desk:</strong>
+        <p>Airlines manage inventory through segmented 'fare buckets'. When you buy more than 8 or 9 retail tickets, consumer engines automatically price the entire block at the highest bucket. Group Travel Desk bypasses retail buckets entirely by writing contracted group agreements directly with airline sales departments.</p>
+      </div>
+
+      <h3>Why Booking with Group Travel Desk Outperforms Retail Sites:</h3>
+      <ul>
+        <li><strong>Unified Pricing:</strong> Every traveler in your group pays the exact same locked-in fare, regardless of when their ticket is finalized.</li>
+        <li><strong>Low Initial Deposit:</strong> Rather than paying 100% upfront, you only put down a nominal seat deposit (often \$50 to \$100 per seat).</li>
+        <li><strong>No Names Needed at Booking:</strong> You can hold 40 seats in January even if you won't know the exact list of attendees until April.</li>
+        <li><strong>Complimentary Name Substitutions:</strong> Employee or student couldn't make it? Group Travel Desk allows penalty-free name changes up to 72 hours before departure.</li>
+        <li><strong>Payment Schedule Milestones:</strong> Final payments are typically due 30 to 45 days before takeoff, giving trip leaders ample time to collect funds.</li>
+      </ul>
+
+      <p>Whether you are taking a high school debate team across state lines or transporting an entire company to a national summit, Group Travel Desk is your dedicated partner to protect your budget.</p>
+    `
+  },
+  2: {
+    title: "Corporate & Conference Flights: Multi-City Departures Made Effortless",
+    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=85",
+    author: "Group Travel Desk Corporate Division | Oct 2026",
+    html: `
+      <h2>Corporate & Conference Flights: Multi-City Departures Made Effortless</h2>
+      <p><em>Published by Group Travel Desk &bull; Reading time: 5 minutes</em></p>
+      
+      <p>For executive assistants, HR leaders, and event planners, organizing annual summits is one of the most stressful assignments on the calendar. The primary headache? Attendees are not departing from the same city. You have 12 executives flying out of New York, 8 from Dallas, 15 from Chicago, and 6 from Seattle, all needing to arrive at Las Vegas Harry Reid International (LAS) within a 2-hour window.</p>
+
+      <div class="article-takeaway">
+        <strong>🏢 The Group Travel Desk Multi-Origin Solution:</strong>
+        <p>Our dedicated corporate desk structures a single master agreement that encompasses flights originating across 10+ airports into a single destination, synchronized for group airport shuttles.</p>
+      </div>
+
+      <h3>Corporate Travel Benefits:</h3>
+      <ul>
+        <li><strong>Consolidated Invoicing:</strong> Eliminate hundreds of separate expense reimbursements with one centralized company invoice.</li>
+        <li><strong>Flight Alignment:</strong> We schedule flights so teams land together, cutting limousine and shuttle transfer expenses by up to 60%.</li>
+        <li><strong>Corporate Duty of Care:</strong> In the event of weather cancellations or mechanical delays, our 24/7 desk coordinates directly with airline station managers to reroute your personnel first.</li>
+        <li><strong>Frequent Flyer Mileage Retained:</strong> All passengers still earn their individual airline status miles while benefiting from negotiated corporate perks.</li>
+      </ul>
+    `
+  },
+  3: {
+    title: "School & University Group Flights: Band, Sports Teams & Educational Tours",
+    img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=85",
+    author: "Group Travel Desk Youth & Sports Division | Sep 2026",
+    html: `
+      <h2>School & University Group Flights: Band, Sports Teams & Educational Tours</h2>
+      <p><em>Published by Group Travel Desk &bull; Reading time: 7 minutes</em></p>
+      
+      <p>School and collegiate travel demands strict attention to safety regulations, purchase order cycles, and baggage allowances. Whether it is an orchestra carrying cellos and tubas or a hockey team with oversized gear bags, retail flight bookings almost always run into check-in rejections.</p>
+
+      <div class="article-takeaway">
+        <strong>🎓 Special Student Perks with Group Travel Desk:</strong>
+        <p>We work directly with airline cargo and station heads to pre-clear athletic gear, secure group baggage waivers, and ensure minors are always seated together in continuous blocks.</p>
+      </div>
+
+      <h3>Key Educational Travel Protections:</h3>
+      <ul>
+        <li><strong>School Purchase Orders Accepted:</strong> We understand public school board accounting timelines and support delayed warrant payments.</li>
+        <li><strong>Free Chaperone / Escort Tickets:</strong> Depending on the carrier and group size, many contracts earn 1 complimentary ticket for every 20 or 25 students booked.</li>
+        <li><strong>Chaperone Seating Priority:</strong> Ensures adult supervisors are distributed strategically across aisle and emergency exit rows.</li>
+        <li><strong>Zero Penalties for Student Roster Swaps:</strong> Replace an injured athlete or sick student without losing the value of the seat.</li>
+      </ul>
+    `
+  },
+  4: {
+    title: "Destination Weddings & Family Reunions: Zero-Stress Flight Coordination",
+    img: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85",
+    author: "Group Travel Desk Leisure Team | Sep 2026",
+    html: `
+      <h2>Destination Weddings & Family Reunions: Zero-Stress Flight Coordination</h2>
+      <p><em>Published by Group Travel Desk &bull; Reading time: 5 minutes</em></p>
+      
+      <p>Planning a wedding in Cancun, Hawaii, or Puerto Rico? The fastest way to create tension with family members is asking them to send you \$600 each for their flights. Nobody wants to be a collection agency for their aunts, uncles, and college buddies.</p>
+
+      <div class="article-takeaway">
+        <strong>💍 Individual Guest Payment Links:</strong>
+        <p>With Group Travel Desk, the wedding couple locks in the group seats with a tiny deposit. We then provide a secure, personalized portal where each guest logs in and pays for their own ticket directly!</p>
+      </div>
+
+      <h3>Why Brides & Grooms Trust Us:</h3>
+      <ul>
+        <li><strong>Locked-In Fares for Everyone:</strong> Guests who book 3 months late still pay the exact same discount price as early birds.</li>
+        <li><strong>Gown & Suit Carry-On Coordination:</strong> We notify airlines in advance so your wedding dress receives priority overhead or closet space.</li>
+        <li><strong>Group Check-In Counters:</strong> When traveling together, enjoy dedicated group check-in desks at major airports to breeze through bag drops.</li>
+      </ul>
+    `
+  },
+  5: {
+    title: "American, Delta, United & Southwest: Group Booking Rules Compared (2026)",
+    img: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1200&q=85",
+    author: "Group Travel Desk Flight Specialists | Aug 2026",
+    html: `
+      <h2>American, Delta, United & Southwest: Group Booking Rules Compared (2026)</h2>
+      <p><em>Published by Group Travel Desk &bull; Reading time: 8 minutes</em></p>
+      
+      <p>Every major US carrier maintains a dedicated group sales department, but their contractual terms vary widely in terms of minimum passenger thresholds, payment schedules, and baggage benefits.</p>
+
+      <h3>Carrier Breakdown:</h3>
+      <ul>
+        <li><strong>American Airlines (AA):</strong> Minimum 10 passengers on common flights. Offers competitive zone fares and allows name changes up to 48 hours before departure. Free seat assignments in main cabin.</li>
+        <li><strong>Delta Air Lines (DL):</strong> Minimum 10 passengers. Highly reliable for corporate groups with SkyMiles accrual. Excellent baggage transfer agreements on multi-leg journeys.</li>
+        <li><strong>United Airlines (UA):</strong> Minimum 10 passengers. Generous contract flexibility with United Meetings and GroupPlus agreements. Free seat blocking in economy.</li>
+        <li><strong>Southwest Airlines (WN):</strong> Minimum 10 passengers. Famous for 2 free checked bags per person, making them the #1 choice for youth sports and budget-conscious student tours.</li>
+      </ul>
+      <p>At Group Travel Desk, our agents cross-compare quotes across all four carriers simultaneously to find you the optimal combination of timing, non-stop routes, and net ticket price.</p>
+    `
+  },
+  6: {
+    title: "Top 10 US Destinations for Large Group Flights in 2026",
+    img: "https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?auto=format&fit=crop&w=1200&q=85",
+    author: "Group Travel Desk Research | Aug 2026",
+    html: `
+      <h2>Top 10 US Destinations for Large Group Flights in 2026</h2>
+      <p><em>Published by Group Travel Desk &bull; Reading time: 6 minutes</em></p>
+      
+      <p>Choosing the right destination for a group of 20 to 200 people requires balancing airport accessibility, hotel capacity, and total flight costs. Here are the top 10 US group destinations for 2026:</p>
+      <ol>
+        <li><strong>Orlando, FL (MCO):</strong> The undisputed king for families, cheerleading competitions, and mega-conventions. Excellent flight frequency from virtually every US city.</li>
+        <li><strong>Las Vegas, NV (LAS):</strong> Best overall value for corporate trade shows, offering hundreds of daily nonstop arrivals.</li>
+        <li><strong>New York City (JFK/LGA/EWR):</strong> High demand for educational theater trips, finance summits, and holiday tours.</li>
+        <li><strong>Chicago, IL (ORD/MDW):</strong> Central geographical hub that minimizes flight times for coast-to-coast teams.</li>
+        <li><strong>Miami, FL (MIA):</strong> Top choice for cruise extensions and international corporate gatherings.</li>
+        <li><strong>Nashville, TN (BNA):</strong> The fastest-growing destination for company retreats and bachelor/bachelorette celebrations.</li>
+        <li><strong>Denver, CO (DEN):</strong> Perfect gateway for ski groups, outdoor retreats, and tech meetups.</li>
+        <li><strong>Honolulu, HI (HNL):</strong> The ultimate incentive trip and destination wedding paradise.</li>
+        <li><strong>New Orleans, LA (MSY):</strong> Renowned for culinary festivals, medical conventions, and cultural tours.</li>
+        <li><strong>San Diego, CA (SAN):</strong> Year-round ideal climate for sports clinics, military reunions, and biotech summits.</li>
+      </ol>
+      <p>Reach out to Group Travel Desk today to secure group contracts to any of these vibrant destinations!</p>
+    `
+  }
+};
+
+function openArticle(id) {
+  const art = ARTICLES[id];
+  if (!art) return;
+  document.getElementById("modalImg").src = art.img;
+  document.getElementById("modalBody").innerHTML = art.html;
+  document.getElementById("articleModal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeArticle() {
+  document.getElementById("articleModal").classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+document.getElementById("articleModal").addEventListener("click", function(e) {
+  if (e.target === this) closeArticle();
+});
+
+function filterCategory(cat, btn) {
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  const cards = document.querySelectorAll(".blog-card");
+  cards.forEach(card => {
+    if (cat === "all" || card.dataset.category === cat) {
+      card.style.display = "flex";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+// Mobile menu toggle
+const menuBtn = document.getElementById("menuBtn");
+const mobileNav = document.getElementById("mobileNav");
+if (menuBtn && mobileNav) {
+  menuBtn.addEventListener("click", () => {
+    mobileNav.classList.toggle("open");
+  });
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
