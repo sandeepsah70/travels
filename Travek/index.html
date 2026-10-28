@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Group Travel Desk</title>
-<link rel="icon" type="image/jpeg" href="logo-icon.jpg">
+<link rel="icon" type="image/png" href="logo.png">
 <!-- Supabase JS Client Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -17,11 +17,10 @@ button,input,select{font:inherit}
 .container{width:min(1100px,92%);margin:auto}
 .site-header{background:#fff}
 .topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;text-decoration:none}
-.brand-mark{width:48px;height:48px;border-radius:50%;overflow:hidden;display:grid;place-items:center;box-shadow:0 2px 8px rgba(6,57,155,0.18);flex-shrink:0;background:#fff}
-.brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
-.brand-name{display:inline-flex;align-items:center;white-space:nowrap;font-size:19px;letter-spacing:-0.2px;line-height:1}
-.brand-name span{display:inline;color:#06399b}.brand-name b{color:#00aeea;margin-left:4px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-logo-img{height:46px;width:auto;max-width:160px;object-fit:contain;display:block}
+.brand-name{display:inline-flex;align-items:center;white-space:nowrap;font-size:20px;letter-spacing:-0.2px;line-height:1}
+.brand-name span{display:inline;color:#06399b;font-weight:800}.brand-name b{color:#00aeea;margin-left:4px;font-weight:800}
 .menu-btn{border:1px solid #ddd;background:white;border-radius:3px;width:42px;height:34px;font-size:21px;color:#777;cursor:pointer}
 .call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px;flex-wrap:wrap}
 .call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
@@ -100,17 +99,37 @@ h1 span,.section-title span{color:var(--blue)}
 .blog-body h3{font-size:15px;font-weight:400;margin:0 0 9px;line-height:1.45}
 .blog-body p{font-size:12px;color:#888;line-height:1.65;margin:0 0 24px}
 .blog-body a{font-size:11px;color:#00a9e9}
-.testimonials-section{background:#f0f0f0;text-align:center}
-.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:20px;text-align:left;margin-top:36px}
-.testimonial-card{background:#fff;border-radius:10px;padding:22px;box-shadow:0 2px 8px rgba(0,0,0,0.06);display:flex;flex-direction:column;justify-content:space-between;transition:transform .2s ease,box-shadow .2s ease}
-.testimonial-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,0.09)}
+.testimonials-section{background:#f0f0f0;text-align:center;position:relative}
+.testimonial-slider-wrap{position:relative;margin-top:36px;display:flex;align-items:center}
+.testimonial-track{display:flex;gap:20px;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x mandatory;padding:12px 6px 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%}
+.testimonial-track::-webkit-scrollbar{display:none}
+.testimonial-card{flex:0 0 calc(33.333% - 14px);min-width:280px;background:#fff;border-radius:12px;padding:24px 20px;box-shadow:0 2px 10px rgba(0,0,0,0.06);display:flex;flex-direction:column;justify-content:space-between;scroll-snap-align:start;transition:transform .2s ease,box-shadow .2s ease;border:1px solid #eef2f6}
+.testimonial-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,0.1)}
 .testimonial-header{display:flex;align-items:center;gap:13px;margin-bottom:12px}
-.avatar{width:54px;height:54px;object-fit:cover;border-radius:50%;display:block;border:2px solid #e0f2fe;flex-shrink:0}
+.avatar{width:54px;height:54px;object-fit:cover;border-radius:50%;display:block;border:2.5px solid #00aeea;flex-shrink:0}
 .testimonial-author{display:flex;flex-direction:column}
-.testimonial-author strong{font-size:14px;color:#06399b;font-weight:700}
+.testimonial-author strong{font-size:14.5px;color:#06399b;font-weight:700}
 .testimonial-author span{font-size:11.5px;color:#777;margin-top:2px}
 .stars{color:#ffb703;letter-spacing:2px;font-size:15px;margin-bottom:10px}
 .testimonial-card p{font-size:12px;color:#555;line-height:1.68;margin:0;font-style:italic}
+
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid #d5e3ec;box-shadow:0 4px 14px rgba(6,57,155,0.18);color:#06399b;font-size:22px;font-weight:bold;cursor:pointer;display:grid;place-items:center;z-index:10;transition:all .2s ease;user-select:none}
+.slider-btn:hover{background:#00aeea;color:#fff;border-color:#00aeea;transform:translateY(-50%) scale(1.1)}
+.prev-btn{left:-22px}
+.next-btn{right:-22px}
+
+.slider-dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+.slider-dot{width:9px;height:9px;border-radius:50%;background:#cbd5e1;border:0;cursor:pointer;padding:0;transition:all .25s ease}
+.slider-dot.active{background:#00aeea;width:26px;border-radius:5px}
+
+@media(max-width:960px){
+  .testimonial-card{flex:0 0 calc(50% - 10px)}
+}
+@media(max-width:640px){
+  .testimonial-card{flex:0 0 100%}
+  .prev-btn{left:-10px;width:38px;height:38px;font-size:18px}
+  .next-btn{right:-10px;width:38px;height:38px;font-size:18px}
+}
 .newsletter{background:var(--feature);color:#fff;padding:58px 0 74px}
 .newsletter h2{font-size:23px;font-weight:400;margin:0 0 8px}
 .newsletter h2 span{color:var(--blue)}
@@ -139,7 +158,7 @@ h1 span,.section-title span{color:var(--blue)}
 @media(max-width:380px){.destination-card{height:245px}.destination-grid{gap:20px 12px}.destination-card span{font-size:16px;bottom:38px}.testimonial-grid{grid-template-columns:1fr}.footer-columns{grid-template-columns:1fr 1fr;gap:12px}}
 
 @media(min-width:850px){.deals-list{grid-template-columns:repeat(3,1fr);gap:24px}.deal-img{height:190px}.deal-title{font-size:14px}.deal-body{padding-left:14px;padding-right:14px}}
-@media(max-width:640px){.topbar{min-height:76px}.hero{padding-top:38px}.booking-box{padding:20px 12px 16px}.form-grid{gap:12px}.field,.field.wide{grid-column:span 6}.phone-field{grid-column:span 7}.submit-field{grid-column:span 5}.quote-btn{width:100%;padding:11px 7px}.airline-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 5px}.airline{font-size:10px;line-height:1.3}.section{padding:48px 0}.deal-img{height:210px}.deal-body{padding:0 14px 20px}.deal-title{margin-top:-28px}.feature-grid{gap:25px 8px}.feature{padding:0 4px}.features{padding:48px 0}.call-pill{font-size:10px}.brand{font-size:14px}.brand-mark{width:48px;height:43px}}
+@media(max-width:640px){.topbar{min-height:76px}.hero{padding-top:38px}.booking-box{padding:20px 12px 16px}.form-grid{gap:12px}.field,.field.wide{grid-column:span 6}.phone-field{grid-column:span 7}.submit-field{grid-column:span 5}.quote-btn{width:100%;padding:11px 7px}.airline-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 5px}.airline{font-size:10px;line-height:1.3}.section{padding:48px 0}.deal-img{height:210px}.deal-body{padding:0 14px 20px}.deal-title{margin-top:-28px}.feature-grid{gap:25px 8px}.feature{padding:0 4px}.features{padding:48px 0}.call-pill{font-size:10px}.brand{font-size:14px}.brand-logo-img{height:38px}}
 @media(max-width:380px){.field,.field.wide{grid-column:span 6}.phone-field{grid-column:span 12}.submit-field{grid-column:span 6}.airline-grid{grid-template-columns:repeat(2,1fr)}.deal-img{height:180px}}
 </style>
 </head>
@@ -147,7 +166,7 @@ h1 span,.section-title span{color:var(--blue)}
 <header class="site-header" id="top">
   <div class="container topbar">
     <a class="brand" href="#" aria-label="Group Travel Desk home">
-      <span class="brand-mark"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
+      <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
       <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
     </a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
@@ -268,91 +287,96 @@ h1 span,.section-title span{color:var(--blue)}
 <section class="section testimonials-section" id="testimonials">
   <div class="container">
     <h2 class="section-title">Our Client <span>Testimonials</span></h2>
-    <div class="testimonial-grid">
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-marcus.jpg" alt="Marcus Vance">
-          <div class="testimonial-author">
-            <strong>Marcus Vance</strong>
-            <span>United States</span>
+    <div class="testimonial-slider-wrap">
+      <button class="slider-btn prev-btn" id="prevTestimonial" aria-label="Previous testimonial" type="button">❮</button>
+      <div class="testimonial-track" id="testimonialTrack">
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-marcus.jpg" alt="Marcus Vance">
+            <div class="testimonial-author">
+              <strong>Marcus Vance</strong>
+              <span>United States</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"Organizing flights for a 34-person corporate conference in Chicago seemed daunting until we handed it over to Group Travel Desk. They locked in contracted group rates well below published economy prices, allowed us to hold the block with just a deposit, and accommodated late attendee name swaps without penalty fees. Outstanding coordination from start to finish."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"Organizing flights for a 34-person corporate conference in Chicago seemed daunting until we handed it over to Group Travel Desk. They locked in contracted group rates well below published economy prices, allowed us to hold the block with just a deposit, and accommodated late attendee name swaps without penalty fees. Outstanding coordination from start to finish."</p>
+        </article>
 
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-sophie.jpg" alt="Sophie Moreau">
-          <div class="testimonial-author">
-            <strong>Sophie Moreau</strong>
-            <span>France</span>
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-sophie.jpg" alt="Sophie Moreau">
+            <div class="testimonial-author">
+              <strong>Sophie Moreau</strong>
+              <span>France</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"We used Group Travel Desk for our university choir tour across Italy. Coordinating 28 students and bulky instrument luggage usually leads to check-in chaos, but their team handled seat blocks together and arranged pre-cleared baggage allowances. Their proactive communication took an enormous burden off my shoulders."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"We used Group Travel Desk for our university choir tour across Italy. Coordinating 28 students and bulky instrument luggage usually leads to check-in chaos, but their team handled seat blocks together and arranged pre-cleared baggage allowances. Their proactive communication took an enormous burden off my shoulders."</p>
+        </article>
 
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-liam.jpg" alt="Liam O'Connor">
-          <div class="testimonial-author">
-            <strong>Liam O'Connor</strong>
-            <span>Australia</span>
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-liam.jpg" alt="Liam O'Connor">
+            <div class="testimonial-author">
+              <strong>Liam O'Connor</strong>
+              <span>Australia</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"Booking an overseas destination wedding with 45 guests departing from Sydney and Brisbane felt like a logistical nightmare. The specialists at Group Travel Desk managed multiple departure cities, aligned arrival times into Denpasar, and set up individual payment links so I didn't have to collect money from everyone. Truly first-class service."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"Booking an overseas destination wedding with 45 guests departing from Sydney and Brisbane felt like a logistical nightmare. The specialists at Group Travel Desk managed multiple departure cities, aligned arrival times into Denpasar, and set up individual payment links so I didn't have to collect money from everyone. Truly first-class service."</p>
+        </article>
 
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-hannah.jpg" alt="Hannah Wright">
-          <div class="testimonial-author">
-            <strong>Hannah Wright</strong>
-            <span>United Kingdom</span>
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-hannah.jpg" alt="Hannah Wright">
+            <div class="testimonial-author">
+              <strong>Hannah Wright</strong>
+              <span>United Kingdom</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"Planning our multi-generational family reunion flight from London to Orlando required special assistance for grandparents and adjacent seating for small children. Group Travel Desk secured excellent direct fares on Virgin Atlantic and assigned our seats together months ahead of time. Whenever flight schedules shifted slightly, they notified us immediately."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"Planning our multi-generational family reunion flight from London to Orlando required special assistance for grandparents and adjacent seating for small children. Group Travel Desk secured excellent direct fares on Virgin Atlantic and assigned our seats together months ahead of time. Whenever flight schedules shifted slightly, they notified us immediately."</p>
+        </article>
 
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-lukas.jpg" alt="Lukas Weber">
-          <div class="testimonial-author">
-            <strong>Lukas Weber</strong>
-            <span>Germany</span>
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-lukas.jpg" alt="Lukas Weber">
+            <div class="testimonial-author">
+              <strong>Lukas Weber</strong>
+              <span>Germany</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"As an athletic director managing 18 players and coaching staff traveling for an international tournament, flexibility is essential. Group Travel Desk provided clear ticketing deadlines, transparent contract terms, and 24/7 emergency support when bad weather triggered a connection rebooking. They kept our entire team on the same replacement flight."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"As an athletic director managing 18 players and coaching staff traveling for an international tournament, flexibility is essential. Group Travel Desk provided clear ticketing deadlines, transparent contract terms, and 24/7 emergency support when bad weather triggered a connection rebooking. They kept our entire team on the same replacement flight."</p>
+        </article>
 
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-elena.jpg" alt="Elena Rostova">
-          <div class="testimonial-author">
-            <strong>Elena Rostova</strong>
-            <span>Australia</span>
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-elena.jpg" alt="Elena Rostova">
+            <div class="testimonial-author">
+              <strong>Elena Rostova</strong>
+              <span>Australia</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"Our annual company incentive trip took 22 staff members from Melbourne to Queenstown. Group Travel Desk found peak-season inventory when airlines showed zero retail availability for large parties. The dedicated agent assigned to our file answered every query within an hour, making the entire booking process effortless."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"Our annual company incentive trip took 22 staff members from Melbourne to Queenstown. Group Travel Desk found peak-season inventory when airlines showed zero retail availability for large parties. The dedicated agent assigned to our file answered every query within an hour, making the entire booking process effortless."</p>
+        </article>
 
-      <article class="testimonial-card">
-        <div class="testimonial-header">
-          <img class="avatar" loading="lazy" src="avatar-david.jpg" alt="David Miller">
-          <div class="testimonial-author">
-            <strong>David Miller</strong>
-            <span>United States</span>
+        <article class="testimonial-card">
+          <div class="testimonial-header">
+            <img class="avatar" loading="lazy" src="avatar-david.jpg" alt="David Miller">
+            <div class="testimonial-author">
+              <strong>David Miller</strong>
+              <span>United States</span>
+            </div>
           </div>
-        </div>
-        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
-        <p>"I run high school educational trips and have booked group airline tickets for over a decade. Group Travel Desk is easily the most reliable agency I've partnered with. Their ability to hold seats while school boards finalize funding approvals saves trips from getting canceled. Reliable, cost-effective, and deeply knowledgeable about airline group contracts."</p>
-      </article>
+          <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"I run high school educational trips and have booked group airline tickets for over a decade. Group Travel Desk is easily the most reliable agency I've partnered with. Their ability to hold seats while school boards finalize funding approvals saves trips from getting canceled. Reliable, cost-effective, and deeply knowledgeable about airline group contracts."</p>
+        </article>
+      </div>
+      <button class="slider-btn next-btn" id="nextTestimonial" aria-label="Next testimonial" type="button">❯</button>
     </div>
+    <div class="slider-dots" id="sliderDots"></div>
   </div>
 </section>
 <section class="newsletter">
@@ -366,9 +390,9 @@ h1 span,.section-title span{color:var(--blue)}
 <footer class="site-footer">
   <div class="footer-panel">
     <div>
-      <a class="footer-brand" href="#top" style="text-decoration:none">
-        <span class="brand-mark" style="width:44px;height:44px;"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
-        <span class="brand-name" style="font-size:18px;font-weight:700;display:inline-flex;align-items:center;white-space:nowrap"><span style="color:#00b5ef">Group Travel</span><b style="color:#06399b;margin-left:4px">Desk</b></span>
+      <a class="footer-brand" href="#top" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px">
+        <img src="logo.png" alt="Group Travel Desk Logo" style="height:40px;width:auto;object-fit:contain;display:block">
+        <span class="brand-name" style="font-size:18px;font-weight:700;display:inline-flex;align-items:center;white-space:nowrap"><span style="color:#00b5ef">Group Travel</span><b style="color:#ffffff;margin-left:4px">Desk</b></span>
       </a>
       <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
       <div class="footer-columns">
@@ -649,6 +673,53 @@ function closeLeadsModal() {
   const modal = document.getElementById("leadsModal");
   if (modal) modal.classList.remove("show");
 }
+
+// Testimonials Slider Interaction
+(function initTestimonialSlider() {
+  const track = document.getElementById("testimonialTrack");
+  const prevBtn = document.getElementById("prevTestimonial");
+  const nextBtn = document.getElementById("nextTestimonial");
+  const dotsContainer = document.getElementById("sliderDots");
+
+  if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
+
+  const cards = track.querySelectorAll(".testimonial-card");
+  if (!cards.length) return;
+
+  // Build dots
+  dotsContainer.innerHTML = "";
+  cards.forEach((_, i) => {
+    const dot = document.createElement("button");
+    dot.className = "slider-dot" + (i === 0 ? " active" : "");
+    dot.setAttribute("type", "button");
+    dot.setAttribute("aria-label", "Go to testimonial " + (i + 1));
+    dot.addEventListener("click", () => {
+      cards[i].scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    });
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = dotsContainer.querySelectorAll(".slider-dot");
+
+  function getStep() {
+    return cards[0].offsetWidth + 20;
+  }
+
+  prevBtn.addEventListener("click", () => {
+    track.scrollBy({ left: -getStep(), behavior: "smooth" });
+  });
+
+  nextBtn.addEventListener("click", () => {
+    track.scrollBy({ left: getStep(), behavior: "smooth" });
+  });
+
+  // Track active dot on scroll
+  track.addEventListener("scroll", () => {
+    const step = getStep();
+    const idx = Math.min(Math.round(track.scrollLeft / step), cards.length - 1);
+    dots.forEach((dot, dIdx) => dot.classList.toggle("active", dIdx === idx));
+  }, { passive: true });
+})();
 
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
