@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirlinesGroup Travel | Fly Together, Save Together</title>
+<!-- Supabase JS Client Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--blue:#08aeea;--navy:#06399b;--cyan:#aeeeff;--red:#ff3030;--ink:#292d32;--muted:#777;--light:#f7f7f7;--feature:#5279c4}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fafafa}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+.container{width:min(1100px,92%);margin:auto}
+.site-header{background:#fff}
+.topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;line-height:1.02}
+.brand-mark{width:54px;height:48px;border:3px solid #00b8ef;border-right-color:transparent;border-radius:50%;display:grid;place-items:center;color:#00aeea;font-size:29px;transform:rotate(-12deg)}
+.brand-name span{display:block;color:#00b5ef}.brand-name b{color:#ff2525}
+.menu-btn{border:1px solid #ddd;background:white;border-radius:3px;width:42px;height:34px;font-size:21px;color:#777;cursor:pointer}
+.call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px;flex-wrap:wrap}
+.call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
+.call-pill strong{color:#078a32}
+.leads-pill-btn{border:1px solid #08aeea;background:#f0faff;border-radius:20px;padding:8px 14px;font-size:12px;color:#06399b;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.2s}
+.leads-pill-btn:hover{background:#ddf2ff}
+.hero{background:linear-gradient(90deg,rgba(255,255,255,.30),rgba(255,255,255,.15)),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;padding:40px 0 0}
+.hero-inner{max-width:1000px;margin:auto;width:92%}
+.eyebrow{font-size:15px;margin:0 0 7px}
+h1{font-size:clamp(23px,3.2vw,34px);font-weight:400;margin:0 0 20px}
+h1 span,.section-title span{color:var(--blue)}
+.trip-tabs{display:flex;gap:2px;width:min(600px,100%);margin-bottom:8px}
+.trip-tab{flex:1;background:var(--navy);color:#fff;border:0;padding:14px 7px;cursor:pointer;font-size:13px}
+.trip-tab.active{background:#05aeea}
+.booking-box{background:#fafafa;padding:24px 16px 16px;box-shadow:0 2px 5px #0000000d;max-width:1000px}
+.form-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px 18px}
+.field{grid-column:span 3;min-width:0}
+.field.wide{grid-column:span 4}
+.field label{display:block;font-size:12px;color:#666;margin:0 0 10px}
+.field input,.field select{width:100%;height:37px;border:1px solid #e7e7e7;background:#fff;border-radius:3px;padding:0 10px;color:#666;font-size:12px}
+.field input::placeholder{color:#888}
+.phone-field{grid-column:span 4}
+.submit-field{grid-column:span 3;display:flex;align-items:end}
+.quote-btn{border:0;background:#06aeea;color:#fff;font-size:12px;font-weight:700;padding:12px 22px;cursor:pointer;min-height:38px;transition:all 0.2s}
+.quote-btn:hover{background:#078ec5}
+.quote-btn:disabled{opacity:0.6;cursor:not-allowed}
+.section{padding:58px 0}
+.group-section{background:#f0f0f0;text-align:center}
+.section-title{font-size:23px;font-weight:400;margin:0 0 8px}
+.view-link{color:red;font-size:12px;display:inline-block;margin-bottom:32px}
+.airline-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:25px 12px}
+.airline{font-size:12px;color:#555;display:flex;align-items:center;flex-direction:column;gap:10px}
+.plane-icon{font-size:29px;line-height:1;color:#00c9dc;text-shadow:2px 3px 0 #222}
+.deals-section{text-align:center;background:#fafafa}
+.deals-list{display:grid;gap:30px;margin-top:38px}
+.deal-card{background:white;box-shadow:0 2px 8px #00000012;text-align:center;overflow:hidden}
+.deal-img{width:100%;height:245px;object-fit:cover;display:block}
+.deal-body{padding:0 20px 22px}
+.deal-title{background:#afefff;border-radius:8px;padding:15px 8px;margin:-28px 0 9px;position:relative;font-size:15px;font-weight:400}
+.deal-desc{font-size:12px;line-height:1.65;color:#888;max-width:760px;margin:0 auto 22px}
+.explore{font-size:12px;color:#00a9e9;display:inline-block;padding:4px}
+.features{background:var(--feature);color:#fff;text-align:center;padding:58px 0}
+.features h2{font-size:23px;font-weight:400;margin:0 0 34px}
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 38px}
+.feature{padding:0 12px}
+.feature-icon{font-size:36px;display:block;margin-bottom:14px}
+.feature h3{font-size:13px;margin:0 0 8px}
+.feature p{font-size:12px;line-height:1.6;margin:0 auto;max-width:330px}
+.footer{background:#202a3b;color:#eee;padding:28px 0;text-align:center;font-size:12px}
+.toast{display:none;position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#202a3b;color:white;padding:12px 18px;border-radius:8px;z-index:9999;font-size:13px;max-width:90%;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.25)}
+
+/* Success Modal */
+.success-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.success-modal.show{display:flex}
+.success-box{background:#fff;border-radius:12px;padding:32px 26px;max-width:440px;width:92%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,0.3);animation:popIn 0.3s cubic-bezier(0.175,0.885,0.32,1.275)}
+@keyframes popIn{from{transform:scale(0.85);opacity:0}to{transform:scale(1);opacity:1}}
+.success-icon{width:64px;height:64px;background:#e6f9f0;color:#078a32;border-radius:50%;display:grid;place-items:center;font-size:34px;margin:0 auto 16px;font-weight:bold}
+.success-box h3{margin:0 0 10px;font-size:21px;color:#06399b}
+.success-box p{font-size:13px;color:#555;line-height:1.6;margin:0 0 22px}
+.success-btn{background:#08aeea;color:#fff;border:0;padding:11px 28px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px;transition:background 0.2s}
+.success-btn:hover{background:#068ec5}
+
+/* Added sections based on the supplied destination, blog, testimonial and footer screenshots */
+.destinations-section{background:#f0f0f0;text-align:center}
+.destination-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px;text-align:center}
+.destination-card{position:relative;height:295px;border-radius:4px;overflow:hidden;background:#ddd;display:block;color:white;isolation:isolate}
+.destination-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.destination-card:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.65));z-index:0}
+.destination-card:hover img{transform:scale(1.04)}
+.destination-card span{position:absolute;bottom:48px;left:8px;right:8px;z-index:1;color:#fff;font-size:18px;text-shadow:0 1px 3px #222}
+.blog-section{background:#fafafa;text-align:center}
+.blog-list{display:grid;gap:30px;margin-top:8px;text-align:left}
+.blog-card{background:#fff;box-shadow:0 2px 8px #00000012;overflow:hidden}
+.blog-card img{width:100%;height:245px;object-fit:cover;display:block}
+.blog-body{padding:14px 20px 22px}
+.blog-body h3{font-size:15px;font-weight:400;margin:0 0 9px;line-height:1.45}
+.blog-body p{font-size:12px;color:#888;line-height:1.65;margin:0 0 24px}
+.blog-body a{font-size:11px;color:#00a9e9}
+.testimonials-section{background:#f0f0f0;text-align:center}
+.testimonial-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;text-align:left;margin-top:38px}
+.testimonial-card{background:#fff;border-radius:9px;padding:22px 20px;box-shadow:0 2px 7px #00000012}
+.avatar{width:52px;height:52px;object-fit:cover;border-radius:50%;display:block;margin-bottom:5px}
+.stars{color:#ffc400;letter-spacing:1px;font-size:17px;margin-bottom:6px}
+.testimonial-card p{font-size:12px;color:#888;line-height:1.65;margin:0 0 7px}
+.testimonial-card strong{font-size:12px;font-weight:600}
+.dots{display:flex;justify-content:center;gap:20px;margin-top:28px}
+.dots span{width:9px;height:9px;border-radius:50%;background:#d8d8d8;display:block}
+.dots span:first-child{background:#08aeea}
+.newsletter{background:var(--feature);color:#fff;padding:58px 0 74px}
+.newsletter h2{font-size:23px;font-weight:400;margin:0 0 8px}
+.newsletter h2 span{color:var(--blue)}
+.newsletter p{font-size:12px;margin:0 0 18px;line-height:1.6}
+.newsletter-form{display:flex;background:#fff;border-radius:30px;overflow:hidden;max-width:760px;height:43px}
+.newsletter-form input{flex:1;min-width:0;border:0;outline:0;padding:0 20px;font-size:11px;color:#555}
+.newsletter-form button{width:145px;border:0;border-radius:30px;background:#08aeea;color:#fff;font-size:12px;font-weight:700;cursor:pointer}
+.site-footer{padding:60px 0 22px;background:linear-gradient(#ffffff25,#ffffff20),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat}
+.footer-panel{width:min(1100px,96%);margin:auto;background:rgba(255,255,255,.88);border-radius:18px;padding:42px 7%;display:grid;grid-template-columns:1.1fr .9fr;gap:38px;color:#777}
+.footer-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-bottom:16px}
+.footer-brand .brand-mark{flex-shrink:0}
+.footer-brand .brand-name{line-height:1.05}
+.footer-about{font-size:11px;line-height:1.9;margin:0;max-width:430px}
+.footer-columns{display:grid;grid-template-columns:1fr 1.15fr;gap:28px;margin-top:36px}
+.footer-heading{font-size:11px;color:#444;margin:0 0 16px}
+.footer-links{display:grid;gap:12px;font-size:11px}
+.footer-links a:hover{color:#00aeea}
+.footer-contact{font-size:11px;line-height:1.8;display:grid;gap:8px;overflow-wrap:anywhere}
+.footer-contact strong{color:#777}
+.socials{display:flex;gap:10px;margin-top:32px;flex-wrap:wrap}
+.socials a{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#080808;color:#fff;font-size:11px;font-weight:700}
+.trust{display:inline-block;border:1px solid #8aa6a0;border-radius:4px;padding:5px 8px;color:#333;margin-top:12px;font-size:10px}
+.copyright{text-align:center;background:#eee;color:#777;font-size:10px;padding:16px 8px}
+@media(min-width:850px){.destination-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}.destination-card{height:245px}.blog-list{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.blog-card img{height:190px}.blog-body{padding:14px 16px 22px}.testimonial-card{padding:25px}}
+@media(max-width:640px){.destination-card{height:295px}.destination-grid{gap:28px 24px}.blog-card img{height:245px}.blog-body{padding:14px 20px 22px}.testimonial-grid{gap:12px}.testimonial-card{padding:18px 15px}.newsletter{padding:58px 0 74px}.newsletter-form button{width:120px}.footer-panel{grid-template-columns:1fr;gap:0;padding:34px 9%}.footer-columns{margin-top:36px;gap:20px}.site-footer{padding:60px 0 22px}.footer-contact{font-size:11px}}
+@media(max-width:380px){.destination-card{height:245px}.destination-grid{gap:20px 12px}.destination-card span{font-size:16px;bottom:38px}.testimonial-grid{grid-template-columns:1fr}.footer-columns{grid-template-columns:1fr 1fr;gap:12px}}
+
+@media(min-width:850px){.deals-list{grid-template-columns:repeat(3,1fr);gap:24px}.deal-img{height:190px}.deal-title{font-size:14px}.deal-body{padding-left:14px;padding-right:14px}}
+@media(max-width:640px){.topbar{min-height:76px}.hero{padding-top:38px}.booking-box{padding:20px 12px 16px}.form-grid{gap:12px}.field,.field.wide{grid-column:span 6}.phone-field{grid-column:span 7}.submit-field{grid-column:span 5}.quote-btn{width:100%;padding:11px 7px}.airline-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px 5px}.airline{font-size:10px;line-height:1.3}.section{padding:48px 0}.deal-img{height:210px}.deal-body{padding:0 14px 20px}.deal-title{margin-top:-28px}.feature-grid{gap:25px 8px}.feature{padding:0 4px}.features{padding:48px 0}.call-pill{font-size:10px}.brand{font-size:14px}.brand-mark{width:48px;height:43px}}
+@media(max-width:380px){.field,.field.wide{grid-column:span 6}.phone-field{grid-column:span 12}.submit-field{grid-column:span 6}.airline-grid{grid-template-columns:repeat(2,1fr)}.deal-img{height:180px}}
+</style>
+</head>
+<body>
+<header class="site-header" id="top">
+  <div class="container topbar">
+    <a class="brand" href="#" aria-label="AirlinesGroup Travel home">
+      <span class="brand-mark">✈</span>
+      <span class="brand-name"><span>AirlinesGroup</span><b>Travel</b></span>
+    </a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+  </div>
+  <div class="container call-row">
+    <!-- Live Supabase Leads Viewer Button -->
+    <button type="button" class="leads-pill-btn" onclick="openLeadsModal()" title="Click to view all live leads stored in Supabase">
+      <span>📊 Supabase Database:</span>
+      <strong id="leadsCount">5 Leads Saved</strong>
+    </button>
+    <div class="call-pill">☎ &nbsp; Book a Group – Call us 24/7 &nbsp; <strong>+1-888-829-1288</strong></div>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Reserve Your Dream Experiences Here</p>
+    <h1>FLY TOGETHER, <span>SAVE TOGETHER</span></h1>
+    <div class="trip-tabs" role="tablist" aria-label="Trip type">
+      <button class="trip-tab active" data-trip="round" type="button">✈ &nbsp;Round Trip</button>
+      <button class="trip-tab" data-trip="one" type="button">✈ &nbsp;One Way</button>
+      <button class="trip-tab" data-trip="multi" type="button">✈ &nbsp;Multi City</button>
+    </div>
+    <form class="booking-box" id="quoteForm">
+      <div class="form-grid">
+        <div class="field wide"><label for="from">Flying from:</label><input id="from" name="from" placeholder="Start Searching..." required></div>
+        <div class="field wide"><label for="to">To:</label><input id="to" name="to" placeholder="Start Searching..." required></div>
+        <div class="field"><label for="departure">Departure:</label><input id="departure" name="departure" type="date" required></div>
+        <div class="field" id="returnField"><label for="returnDate">Return Date:</label><input id="returnDate" name="returnDate" type="date"></div>
+        <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder=" " required></div>
+        <div class="field"><label for="class">Class:</label><select id="class" name="class"><option>Economy</option><option>Premium Economy</option><option>Business</option><option>First Class</option></select></div>
+        <div class="field wide"><label for="email">Email:</label><input id="email" name="email" type="email" placeholder="*****@gmail.com" required></div>
+        <div class="field phone-field"><label for="phone">Phone No.:</label><input id="phone" name="phone" type="tel" placeholder="🇺🇸 +1  Phone number" required></div>
+        <div class="submit-field"><button class="quote-btn" id="quoteBtn" type="submit">FREE QUOTE</button></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section group-section">
+  <div class="container">
+    <h2 class="section-title">Airlines <span>Group Travel</span></h2>
+    <a class="view-link" href="#airlines">View all Groups →</a>
+    <div class="airline-grid" id="airlines">
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>American Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>Delta Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>United Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>Lufthansa Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>Alaska Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>JetBlue Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>Southwest Group Booking</a>
+      <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>Qatar Group Booking</a>
+    </div>
+  </div>
+</section>
+
+<section class="section deals-section">
+  <div class="container">
+    <h2 class="section-title">Popular <span>Deals</span></h2>
+    <a class="view-link" href="#deals">View all Deals →</a>
+    <div class="deals-list" id="deals">
+      <article class="deal-card">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1529159136881-3be5a745e9d4?auto=format&fit=crop&w=1000&q=85" alt="Friends enjoying a group trip">
+        <div class="deal-body"><h3 class="deal-title">Group Travel Deals</h3><p class="deal-desc">At First, Planning Flights For A Big Group May Appear Like A Challenging Task. However, You Can Make Your Journey Easy And Avail Excellent Discoun...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
+      </article>
+      <article class="deal-card">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1516979187457-637Abb4f9353?auto=format&fit=crop&w=1000&q=85" alt="Travel map and planning" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85'">
+        <div class="deal-body"><h3 class="deal-title">Domestic And International Deals</h3><p class="deal-desc">Exploring The Best Tourist Locations Across The Globe Is Always Thrilling, But Coupled With Reasonable Flight Deals, It Becomes Icing On The Cake. Whe...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
+      </article>
+      <article class="deal-card">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85" alt="Airplane business class cabin">
+        <div class="deal-body"><h3 class="deal-title">Business Class Deals</h3><p class="deal-desc">Are You Looking For The Best Business Class Deals? Our Attractive Flight Offers Are Tailored For A Superior Travel Experience, Whether Y...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2>Why Choose Airlines Group Travel</h2>
+    <div class="feature-grid">
+      <div class="feature"><span class="feature-icon">♧%</span><h3>Attractive Deals &amp; Discounts</h3><p>We regularly provide fair deals and discounts for group bookings.</p></div>
+      <div class="feature"><span class="feature-icon">▤◷</span><h3>Book Now, Pay Later</h3><p>Passengers can avail of this attractive option to book instantly, and the payment can be made later.</p></div>
+      <div class="feature"><span class="feature-icon">◴</span><h3>24/7 Travel Assistance</h3><p>Experts are available round-the-clock to assist customers with any queries.</p></div>
+      <div class="feature"><span class="feature-icon">▱</span><h3>Flexible Payment Modes</h3><p>A range of payment modes for your convenience - debit, credit, online banking, etc.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section destinations-section" id="destinations">
+  <div class="container">
+    <h2 class="section-title">Choose <span>your Destination</span></h2>
+    <a class="view-link" href="#destinations">Explore our top destinations →</a>
+    <div class="destination-grid">
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=85" alt="Paris and Eiffel Tower"><span>Paris</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=85" alt="London and Big Ben"><span>London</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?auto=format&fit=crop&w=800&q=85" alt="Las Vegas hotels at night"><span>Las Vegas</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=85" alt="Singapore waterfront"><span>Singapore</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=85" alt="Dubai skyline"><span>Dubai</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=85" alt="Mount Fuji in Japan"><span>Tokyo</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?auto=format&fit=crop&w=800&q=85" alt="Mediterranean coastal city"><span>Tel Aviv</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?auto=format&fit=crop&w=800&q=85" alt="Miami waterfront skyline"><span>Miami</span></a>
+    </div>
+  </div>
+</section>
+<section class="section blog-section" id="blogs">
+  <div class="container">
+    <h2 class="section-title">Our <span>Blogs</span></h2>
+    <a class="view-link" href="#blogs">View All Blogs →</a>
+    <div class="blog-list">
+      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1000&q=85" alt="Friends exploring a scenic destination"><div class="blog-body"><h3>Everything About American Airlines Boarding Groups &amp; Its Priority</h3><p>American Airlines - An airline that is known for its ultimate services. Right from the flight boarding to the departure, everything of the airline is...</p><a href="#quoteForm">Know More</a></div></article>
+      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85" alt="Airline cabin and passenger service"><div class="blog-body"><h3>How to Connect with Air France Group Booking Customer Service</h3><p>Flying with the one-minded travelers could make a trip more exciting and captive. However, arranging a trip for such numerous travelers in one itinerary...</p><a href="#quoteForm">Know More</a></div></article>
+      <article class="blog-card"><img loading="lazy" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=85" alt="Group of friends enjoying an outdoor adventure"><div class="blog-body"><h3>United Airlines Boarding Group - A Complete Guide for You</h3><p>Are you flying with United Airlines? Well, there is nothing wrong in flying with United Airlines, it's just you need to understand certain rules a...</p><a href="#quoteForm">Know More</a></div></article>
+    </div>
+  </div>
+</section>
+<section class="section testimonials-section" id="testimonials">
+  <div class="container">
+    <h2 class="section-title">Our Client <span>Testimonials</span></h2>
+    <div class="testimonial-grid">
+      <article class="testimonial-card"><img class="avatar" loading="lazy" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="Customer portrait"><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><p>Our Team had a fantastic travel experience, agent assists well to match our tournament schedule, also the group booking discount were a game changer.</p><strong>Sam Weiss</strong></article>
+      <article class="testimonial-card"><img class="avatar" loading="lazy" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Customer portrait"><div class="stars" aria-label="5 out of 5 stars">★★★★★</div><p>Kudos to team for making booking for my group, our travel experience was truly memorable, their support team assisted us well. Looking forward to planning our next adventure with them!</p><strong>Olivia Dunham</strong></article>
+    </div>
+    <div class="dots" aria-label="Testimonials pages"><span></span><span></span><span></span><span></span></div>
+  </div>
+</section>
+<section class="newsletter">
+  <div class="container">
+    <h2>Newsletter <span>Signup</span></h2>
+    <p>Get Email Update to avail Exclusive Group Deals, Awesome Discounts, and Travel Tips straight to your Inbox! →</p>
+    <form class="newsletter-form" id="newsletterForm"><input type="email" id="newsletterEmail" placeholder="Your Email Address" aria-label="Your Email Address" required><button type="submit">Subscribe</button></form>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="footer-panel">
+    <div>
+      <a class="footer-brand" href="#top"><span class="brand-mark">✈</span><span class="brand-name"><span style="color:#00b5ef">AirlinesGroup</span><b style="color:#ff2525">Travel</b></span></a>
+      <p class="footer-about">Established in the year 2022, we at Airlines Group Travel aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
+      <div class="footer-columns">
+        <div><p class="footer-heading">QUICK LINKS</p><div class="footer-links"><a href="#">Privacy policy</a><a href="#">Refund Policy</a><a href="#">Terms &amp; Condition</a><a href="#blogs">News</a><a href="#destinations">Destination</a><a href="#">Sitemap</a></div></div>
+        <div><p class="footer-heading">ADDRESS</p><div class="footer-contact"><strong>📍 &nbsp; Airfare Services USA LLC</strong><span>8 The Green, Suite A, Dover, Delaware 19901</span><span>✉ &nbsp; info@airlinesgrouptravel.com</span><span>☎ &nbsp; +1-888-829-1288</span><span class="trust">Review us on ★ Trustpilot</span><span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span></div></div>
+      </div>
+      <div class="socials"><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Pinterest">p</a></div>
+    </div>
+    <div><p class="footer-heading">COMPANY</p><div class="footer-links"><a href="#">Home</a><a href="#">About Us</a><a href="#quoteForm">Contact us</a><a href="#blogs">Blog</a><a href="#airlines">Routes</a><a href="#deals">Deals</a></div></div>
+  </div>
+</footer>
+<div class="copyright">Copyright by © <span id="year"></span> Airlines Group Travel</div>
+<div class="toast" id="toast" role="status"></div>
+
+<!-- Success Modal Popup -->
+<div class="success-modal" id="successModal" role="dialog" aria-modal="true">
+  <div class="success-box">
+    <div class="success-icon">✓</div>
+    <h3>Quote Request Submitted!</h3>
+    <p id="successModalMsg">Your flight details have been successfully saved to our database. Our travel specialists will contact you shortly with the best group rates.</p>
+    <button class="success-btn" type="button" onclick="closeSuccessModal()">OK, Great!</button>
+  </div>
+</div>
+
+<!-- Live Supabase Leads Viewer Modal -->
+<div class="success-modal" id="leadsModal" role="dialog" aria-modal="true">
+  <div class="success-box" style="max-width:760px;text-align:left;">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:12px;margin-bottom:14px;">
+      <div>
+        <h3 style="margin:0;font-size:18px;color:#06399b;">📋 Live Leads in Supabase</h3>
+        <span style="font-size:11px;color:#666;">Project: <strong>Travel (whwbtirsjbzyecciovyp)</strong> | Table: <strong>public.flight_quotes</strong></span>
+      </div>
+      <button type="button" onclick="closeLeadsModal()" style="border:0;background:#f0f0f0;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;font-weight:bold;">✕</button>
+    </div>
+    <div style="overflow-x:auto;max-height:380px;border:1px solid #eee;border-radius:6px;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="background:#f5f9fc;color:#333;position:sticky;top:0;">
+            <th style="padding:9px 10px;border-bottom:1px solid #ddd;">Email</th>
+            <th style="padding:9px 10px;border-bottom:1px solid #ddd;">Phone</th>
+            <th style="padding:9px 10px;border-bottom:1px solid #ddd;">Route</th>
+            <th style="padding:9px 10px;border-bottom:1px solid #ddd;">Trip Type</th>
+            <th style="padding:9px 10px;border-bottom:1px solid #ddd;">Passengers</th>
+            <th style="padding:9px 10px;border-bottom:1px solid #ddd;">Saved Time</th>
+          </tr>
+        </thead>
+        <tbody id="leadsTableBody">
+          <tr><td colspan="6" style="padding:16px;text-align:center;">Loading data from Supabase...</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+      <a href="https://supabase.com/dashboard/project/whwbtirsjbzyecciovyp/editor" target="_blank" style="font-size:12px;color:#08aeea;font-weight:bold;text-decoration:underline;">🔗 Open Supabase Dashboard Table Editor ↗</a>
+      <button type="button" class="success-btn" onclick="closeLeadsModal()" style="padding:8px 20px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/*
+  Supabase Backend Configuration
+  Project: Travel (whwbtirsjbzyecciovyp)
+*/
+const SUPABASE_URL = "https://whwbtirsjbzyecciovyp.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indod2J0aXJzamJ6eWVjY2lvdnlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMzc3NzUsImV4cCI6MjEwODcxMzc3NX0.osCSW1rrBou-t1X8x68NmFrRd9Z_87icd1byTr15dyg";
+
+let supabaseClient = null;
+if (window.supabase && typeof window.supabase.createClient === "function") {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
+// Function to fetch and display live Supabase lead count and records
+async function loadSupabaseLeads() {
+  if (!supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient
+      .from('flight_quotes')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.error('Supabase fetch error:', error);
+      return;
+    }
+    const countEl = document.getElementById("leadsCount");
+    if (countEl && data) {
+      countEl.textContent = data.length + " Leads Saved";
+    }
+
+    const tbody = document.getElementById("leadsTableBody");
+    if (tbody && data) {
+      if (data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="padding:16px;text-align:center;color:#888;">No leads submitted yet.</td></tr>';
+      } else {
+        tbody.innerHTML = data.map(row => `
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 10px;font-weight:600;color:#06399b;">${row.email || '-'}</td>
+            <td style="padding:8px 10px;">${row.phone || '-'}</td>
+            <td style="padding:8px 10px;">${row.flying_from || '-'} ➔ ${row.destination || '-'}</td>
+            <td style="padding:8px 10px;"><span style="background:#e8f4fd;color:#08aeea;padding:2px 6px;border-radius:4px;font-size:11px;">${row.trip_type || '-'}</span></td>
+            <td style="padding:8px 10px;text-align:center;">${row.passengers || 1}</td>
+            <td style="padding:8px 10px;color:#888;font-size:11px;">${new Date(row.created_at).toLocaleString()}</td>
+          </tr>
+        `).join('');
+      }
+    }
+  } catch (err) {
+    console.error('Failed to load leads:', err);
+  }
+}
+
+// Auto load live leads on page load
+loadSupabaseLeads();
+
+/*
+  IMPORTANT: Replace WHATSAPP_NUMBER with your WhatsApp number in international format,
+  digits only (example India: 919876543210).
+  If you do NOT want WhatsApp to open automatically, leave it empty.
+*/
+const WHATSAPP_NUMBER = "";
+
+const tabs = document.querySelectorAll(".trip-tab");
+let tripType = "Round Trip";
+tabs.forEach(tab => tab.addEventListener("click", () => {
+  tabs.forEach(t => t.classList.remove("active"));
+  tab.classList.add("active");
+  tripType = tab.dataset.trip === "one" ? "One Way" : tab.dataset.trip === "multi" ? "Multi City" : "Round Trip";
+  const returnField = document.getElementById("returnField");
+  const returnInput = document.getElementById("returnDate");
+  returnField.style.display = tripType === "One Way" ? "none" : "block";
+  returnInput.required = tripType === "Round Trip";
+  if (tripType === "Multi City") showToast("Multi City selected — please mention extra stops in route or details.");
+}));
+
+document.getElementById("quoteForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const quoteBtn = document.getElementById("quoteBtn");
+  if (quoteBtn) {
+    quoteBtn.disabled = true;
+    quoteBtn.textContent = "SAVING TO SUPABASE...";
+  }
+
+  const d = new FormData(this);
+  const quoteData = {
+    trip_type: tripType,
+    flying_from: d.get("from"),
+    destination: d.get("to"),
+    departure_date: d.get("departure"),
+    return_date: tripType !== "One Way" ? (d.get("returnDate") || null) : null,
+    passengers: parseInt(d.get("passengers"), 10) || 1,
+    flight_class: d.get("class"),
+    email: d.get("email"),
+    phone: d.get("phone"),
+    status: 'pending'
+  };
+
+  let savedSuccessfully = false;
+
+  // Save quote request directly to Supabase
+  if (supabaseClient) {
+    try {
+      const { error } = await supabaseClient
+        .from('flight_quotes')
+        .insert([quoteData]);
+      if (error) {
+        console.error("Supabase insert error:", error);
+        alert("Supabase Error: " + error.message);
+      } else {
+        savedSuccessfully = true;
+        // Refresh leads count & table
+        loadSupabaseLeads();
+      }
+    } catch (err) {
+      console.error("Supabase request error:", err);
+      alert("Network Error saving to Supabase: " + err.message);
+    }
+  } else {
+    alert("Supabase client library not loaded. Please check your internet connection.");
+  }
+
+  if (quoteBtn) {
+    quoteBtn.disabled = false;
+    quoteBtn.textContent = "FREE QUOTE";
+  }
+
+  if (savedSuccessfully) {
+    // Show clear confirmation modal to user
+    openSuccessModal("Success! Your flight details have been received and saved in Supabase database. Click 'Supabase Database' button in the top bar to verify all saved leads.");
+    
+    // Reset form after successful submission
+    this.reset();
+    tripType = "Round Trip";
+    tabs.forEach(t => t.classList.toggle("active", t.dataset.trip === "round"));
+    const returnField = document.getElementById("returnField");
+    if (returnField) returnField.style.display = "block";
+
+    // Optional: Only redirect to WhatsApp if a real custom WhatsApp number is provided
+    if (WHATSAPP_NUMBER && WHATSAPP_NUMBER !== "919999999999") {
+      const lines = [
+        "Hello AirlinesGroup Travel! I want a free flight quote.",
+        "Trip Type: " + quoteData.trip_type,
+        "Flying From: " + quoteData.flying_from,
+        "Destination: " + quoteData.destination,
+        "Departure: " + quoteData.departure_date,
+        ...(quoteData.return_date ? ["Return Date: " + quoteData.return_date] : []),
+        "Passengers: " + quoteData.passengers,
+        "Class: " + quoteData.flight_class,
+        "Email: " + quoteData.email,
+        "Phone: " + quoteData.phone
+      ];
+      const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(lines.join("\n"));
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  }
+});
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+  const links = ["#quoteForm", "#airlines", "#deals", "#destinations", "#blogs", "#testimonials"];
+  const choice = prompt("Go to: 1 Booking, 2 Airlines, 3 Deals, 4 Destinations, 5 Blogs, 6 Testimonials");
+  const target = links[Number(choice)-1];
+  if (target) document.querySelector(target)?.scrollIntoView({behavior:"smooth"});
+  else if (choice !== null) showToast("Please choose a number from 1 to 6.");
+});
+
+document.getElementById("newsletterForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const emailInput = document.getElementById("newsletterEmail");
+  const email = emailInput ? emailInput.value.trim() : "";
+
+  if (email && supabaseClient) {
+    try {
+      const { error } = await supabaseClient
+        .from('newsletter_subscribers')
+        .insert([{ email: email, status: 'active' }]);
+      if (error) {
+        console.error("Newsletter error:", error);
+        showToast("Subscribed! " + error.message);
+      } else {
+        openSuccessModal("✓ Thank you! You have successfully subscribed to our newsletter.");
+      }
+    } catch (err) {
+      console.error("Newsletter request error:", err);
+      showToast("Thanks for subscribing!");
+    }
+  } else {
+    showToast("Thanks for subscribing!");
+  }
+
+  this.reset();
+});
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => toast.style.display = "none", 4200);
+}
+
+function openSuccessModal(message) {
+  const modal = document.getElementById("successModal");
+  const msgEl = document.getElementById("successModalMsg");
+  if (msgEl && message) msgEl.textContent = message;
+  if (modal) modal.classList.add("show");
+}
+
+function closeSuccessModal() {
+  const modal = document.getElementById("successModal");
+  if (modal) modal.classList.remove("show");
+}
+
+function openLeadsModal() {
+  loadSupabaseLeads();
+  const modal = document.getElementById("leadsModal");
+  if (modal) modal.classList.add("show");
+}
+
+function closeLeadsModal() {
+  const modal = document.getElementById("leadsModal");
+  if (modal) modal.classList.remove("show");
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
