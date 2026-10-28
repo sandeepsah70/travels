@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | Group Travel Desk</title>
+<link rel="icon" type="image/png" href="logo.png">
+<!-- Supabase JS Client Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--blue:#08aeea;--navy:#06399b;--ink:#292d32;--muted:#666;--bg:#f8fafc}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);line-height:1.7}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{width:min(1100px,92%);margin:auto}
+header{background:#fff;border-bottom:1px solid #edf2f7;position:relative}
+.topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-logo-img{height:46px;width:auto;max-width:160px;object-fit:contain;display:block}
+.brand-name{display:inline-flex;align-items:center;white-space:nowrap;font-size:22px;letter-spacing:-0.2px;line-height:1}
+.brand-name span{display:inline;color:#06399b;font-weight:800}.brand-name b{color:#00aeea;margin-left:5px;font-weight:800}
+.main-nav{display:flex;align-items:center;gap:24px;margin-left:auto}
+.nav-item{font-size:13.5px;font-weight:700;color:#06399b;padding:8px 0;position:relative;transition:color 0.2s;text-decoration:none}
+.nav-item:hover,.nav-item.active{color:#08aeea}
+.nav-item.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#08aeea}
+.menu-btn{display:none;border:1px solid #cbe4fc;background:#f0f8ff;border-radius:4px;width:40px;height:36px;font-size:22px;color:#06399b;cursor:pointer}
+.mobile-nav{display:none;background:#fff;border-top:1px solid #eef2f6;border-bottom:2px solid #08aeea;box-shadow:0 8px 24px rgba(6,57,155,0.12);padding:6px 0}
+.mobile-nav.open{display:block}
+.mobile-nav-item{display:block;padding:12px 24px;font-size:14px;font-weight:700;color:#06399b;border-bottom:1px solid #f8fafc;text-decoration:none}
+.mobile-nav-item:hover{background:#eff8ff;color:#08aeea}
+.call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px}
+.call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
+.call-pill strong{color:#078a32}
+@media(max-width:850px){.main-nav{display:none}.menu-btn{display:grid;place-items:center}}
+.hero-banner{background:linear-gradient(rgba(8,28,62,.65),rgba(6,57,155,.55)),url('https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=1920&q=85') center/cover no-repeat;color:#fff;padding:60px 0;text-align:center}
+.hero-banner h1{margin:0 0 10px;font-size:clamp(26px,3.5vw,36px);font-weight:700}
+.hero-banner p{margin:0;opacity:0.95;font-size:15px;max-width:640px;margin:auto}
+.contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:36px;margin:40px auto;align-items:start}
+.contact-card{background:#fff;border-radius:12px;padding:34px;box-shadow:0 4px 18px rgba(0,0,0,0.04);border:1px solid #edf2f7}
+.contact-item{display:flex;gap:14px;align-items:flex-start;margin-bottom:24px}
+.contact-icon{width:42px;height:42px;border-radius:50%;background:#e0f2fe;color:#0284c7;display:grid;place-items:center;font-size:18px;flex-shrink:0}
+.contact-info h4{margin:0 0 4px;font-size:15px;color:#06399b}
+.contact-info p{margin:0;font-size:13px;color:#666;line-height:1.6}
+.helpdesk-badge{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46;border-radius:8px;padding:14px 16px;font-size:12.5px;margin-top:20px}
+.form-card{background:#fff;border-radius:12px;padding:34px;box-shadow:0 4px 18px rgba(0,0,0,0.04);border:1px solid #edf2f7}
+.form-card h2{color:#06399b;font-size:22px;margin:0 0 8px}
+.form-card p{color:#666;font-size:13px;margin:0 0 22px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:#555;margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;height:40px;border:1px solid #cbd5e1;background:#fff;border-radius:6px;padding:0 12px;font-size:13px;color:#333}
+.form-group textarea{height:95px;padding:10px 12px;resize:vertical}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#08aeea;outline:none;box-shadow:0 0 0 3px rgba(8,174,234,0.15)}
+.submit-btn{background:#08aeea;color:#fff;border:0;padding:12px 28px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;width:100%;transition:background .2s}
+.submit-btn:hover{background:#068ec5}
+.site-footer{padding:50px 0 22px;background:#202a3b;color:#cbd5e1}
+.footer-panel{width:min(900px,92%);margin:auto;background:#fff;border-radius:16px;padding:36px 7%;color:#555}
+.copyright{text-align:center;background:#18202c;color:#94a3b8;font-size:11px;padding:16px 8px}
+@media(max-width:768px){.contact-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container topbar">
+    <a class="brand" href="index.html" aria-label="Group Travel Desk home">
+      <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
+      <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
+    </a>
+    <nav class="main-nav" id="mainNav">
+      <a class="nav-item" href="index.html">Home</a>
+      <a class="nav-item" href="about.html">About Us</a>
+      <a class="nav-item active" href="contact.html">Contact Us</a>
+      <a class="nav-item" href="index.html#blogs">Blog</a>
+      <a class="nav-item" href="index.html#airlines">Routes</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" type="button">☰</button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a class="mobile-nav-item" href="index.html">Home</a>
+    <a class="mobile-nav-item" href="about.html">About Us</a>
+    <a class="mobile-nav-item" href="contact.html">Contact Us</a>
+    <a class="mobile-nav-item" href="index.html#blogs">Blog</a>
+    <a class="mobile-nav-item" href="index.html#airlines">Routes</a>
+  </div>
+  <div class="container call-row">
+    <div class="call-pill">☎ &nbsp; Book a Group – Call us 24/7 &nbsp; <strong>+1-XXX-XXX-XXXX</strong></div>
+  </div>
+</header>
+
+<section class="hero-banner">
+  <div class="container">
+    <h1>Contact Our Group Travel Desk</h1>
+    <p>Speak with an experienced US group flight coordinator 24 hours a day, 7 days a week.</p>
+  </div>
+</section>
+
+<main class="container">
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-info">
+          <h4>24/7 Toll-Free Group Desk</h4>
+          <p><a href="tel:+1800XXXXXXX" style="font-weight:700;color:#08aeea;font-size:15px;">+1-800-XXX-XXXX</a><br>Immediate assistance for bookings, date adjustments &amp; flight status.</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        <div class="contact-info">
+          <h4>Group Support Email</h4>
+          <p><a href="mailto:info@grouptraveldesk.com" style="font-weight:700;color:#08aeea;">info@grouptraveldesk.com</a><br>Send manifests, flight RFP tenders &amp; custom route requests.</p>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">🏢</div>
+        <div class="contact-info">
+          <h4>Headquarters</h4>
+          <p>Group Travel Desk LLC<br>United States</p>
+        </div>
+      </div>
+
+      <div class="helpdesk-badge">
+        <strong>⚡ Rapid Response Commitment:</strong> All online inquiries submitted through our desk are answered within 15 minutes by an accredited group ticketing specialist.
+      </div>
+    </div>
+
+    <div class="form-card">
+      <h2>Send Us a Message</h2>
+      <p>Have a custom itinerary or special passenger requirement? Let us know below.</p>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="cName">Your Name / Group Coordinator Name *</label>
+          <input id="cName" name="name" placeholder="Full Name" required>
+        </div>
+        <div class="form-group">
+          <label for="cEmail">Email Address *</label>
+          <input id="cEmail" name="email" type="email" placeholder="name@organization.com" required>
+        </div>
+        <div class="form-group">
+          <label for="cPhone">Phone Number *</label>
+          <input id="cPhone" name="phone" type="tel" placeholder="+1 (XXX) XXX-XXXX" required>
+        </div>
+        <div class="form-group">
+          <label for="cSize">Estimated Number of Passengers *</label>
+          <input id="cSize" name="passengers" type="number" min="1" max="500" placeholder="e.g. 24" required>
+        </div>
+        <div class="form-group">
+          <label for="cMsg">Trip Route, Dates or Special Requests</label>
+          <textarea id="cMsg" name="message" placeholder="Please mention departure city, destination, preferred dates, and any special luggage or seating needs..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn" id="cSubmitBtn">Submit Inquiry</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-panel">
+    <a class="brand" href="index.html" aria-label="Group Travel Desk home" style="margin-bottom:14px;display:inline-flex">
+      <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
+      <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
+    </a>
+    <p style="font-size:12px;line-height:1.7;color:#666;margin:0 0 16px;">Specialized group air travel management across the United States. Delivering contracted group fares, flexible deposit terms, and 24/7 coordinator assistance.</p>
+    <div style="font-size:12px;line-height:1.8;color:#555;margin-bottom:16px;">
+      <div>📞 <strong>Help Desk:</strong> +1-800-XXX-XXXX</div>
+      <div>✉ <strong>Email:</strong> info@grouptraveldesk.com</div>
+      <div style="margin-top:8px;">
+        <a href="privacy-policy.html" style="margin-right:12px;">Privacy Policy</a>
+        <a href="refund-policy.html" style="margin-right:12px;">Refund Policy</a>
+        <a href="terms-conditions.html">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<div class="copyright">Copyright by © <span id="year"></span> Group Travel Desk</div>
+
+<script>
+const SUPABASE_URL = "https://whwbtirsjbzyecciovyp.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indod2J0aXJzamJ6eWVjY2lvdnlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMxMzc3NzUsImV4cCI6MjEwODcxMzc3NX0.osCSW1rrBou-t1X8x68NmFrRd9Z_87icd1byTr15dyg";
+let supabaseClient = null;
+if (window.supabase && typeof window.supabase.createClient === "function") {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+}
+
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById("cSubmitBtn");
+  btn.disabled = true;
+  btn.textContent = "Sending...";
+
+  const d = new FormData(this);
+  const data = {
+    trip_type: "Contact Message",
+    flying_from: "General Inquiry",
+    destination: d.get("message") || "Contact Inquiry",
+    departure_date: new Date().toISOString().split("T")[0],
+    passengers: parseInt(d.get("passengers"), 10) || 1,
+    flight_class: "Group",
+    email: d.get("email"),
+    phone: d.get("phone") + " (" + d.get("name") + ")",
+    status: 'pending'
+  };
+
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from("flight_quotes").insert([data]);
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
+  alert("Thank you, " + d.get("name") + "! Your inquiry has been sent. A group travel specialist will contact you shortly.");
+  this.reset();
+  btn.disabled = false;
+  btn.textContent = "Submit Inquiry";
+});
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileNav = document.getElementById("mobileNav");
+if (menuBtn && mobileNav) {
+  menuBtn.addEventListener("click", () => mobileNav.classList.toggle("open"));
+}
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+

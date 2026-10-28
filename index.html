@@ -71,25 +71,29 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
 .airport-code{font-size:11px;font-weight:800;color:#06399b;background:#e2f2ff;padding:2px 7px;border-radius:4px;letter-spacing:.5px;flex-shrink:0;margin-left:8px}
 
 /* Multi City Dynamic Booking Styles */
-.multi-city-wrap{display:none;grid-column:span 12;margin-bottom:8px}
-.multi-city-row{background:#fff;border:1px solid #dbe6ef;border-radius:6px;padding:12px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);position:relative}
-.multi-city-row-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.multi-city-title{font-size:12.5px;font-weight:700;color:#06399b;display:inline-flex;align-items:center;gap:6px}
-.multi-city-fields{display:grid;grid-template-columns:repeat(12,1fr);gap:10px 14px}
-.mc-from-wrap{grid-column:span 5}
-.mc-to-wrap{grid-column:span 5}
-.mc-date-wrap{grid-column:span 2}
-.mc-from-wrap label,.mc-to-wrap label,.mc-date-wrap label{display:block;font-size:12px;color:#666;margin:0 0 8px}
-.remove-leg-btn{background:none;border:none;color:#ef4444;font-size:11.5px;font-weight:700;cursor:pointer;padding:2px 8px;border-radius:4px;transition:background .2s}
+.multi-city-wrap{display:none;grid-column:span 12;margin-bottom:0}
+.multi-city-leg{grid-column:span 12;display:grid;grid-template-columns:repeat(12,1fr);gap:12px 18px;margin-bottom:0}
+.mc-leg-label{grid-column:span 12;font-size:11.5px;font-weight:700;color:#06399b;padding:2px 0 0;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mc-leg-label span{display:flex;align-items:center;gap:6px}
+.mc-from-wrap{grid-column:span 4;min-width:0}
+.mc-to-wrap{grid-column:span 4;min-width:0}
+.mc-date-wrap{grid-column:span 3;min-width:0}
+.mc-remove-wrap{grid-column:span 1;display:flex;align-items:flex-end;padding-bottom:2px}
+.mc-from-wrap label,.mc-to-wrap label,.mc-date-wrap label{display:block;font-size:12px;color:#666;margin:0 0 10px}
+.mc-from-wrap input,.mc-to-wrap input,.mc-date-wrap input{width:100%;height:37px;border:1px solid #e7e7e7;background:#fff;border-radius:3px;padding:0 10px;color:#333;font-size:12px}
+.remove-leg-btn{background:none;border:none;color:#ef4444;font-size:11.5px;font-weight:700;cursor:pointer;padding:2px 8px;border-radius:4px;transition:background .2s;white-space:nowrap}
 .remove-leg-btn:hover{background:#fee2e2}
-.add-leg-btn{background:#f0f9ff;border:1.5px dashed #08aeea;color:#06399b;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;margin-bottom:12px}
+.add-leg-wrap{grid-column:span 12;padding:4px 0 8px}
+.add-leg-btn{background:#f0f9ff;border:1.5px dashed #08aeea;color:#06399b;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s}
 .add-leg-btn:hover{background:#ddf2ff;color:#078ec5}
 @media(max-width:768px){
   .mc-from-wrap,.mc-to-wrap{grid-column:span 6}
-  .mc-date-wrap{grid-column:span 12}
+  .mc-date-wrap{grid-column:span 10}
+  .mc-remove-wrap{grid-column:span 2}
 }
 @media(max-width:480px){
-  .mc-from-wrap,.mc-to-wrap{grid-column:span 12}
+  .mc-from-wrap,.mc-to-wrap,.mc-date-wrap{grid-column:span 12}
+  .mc-remove-wrap{grid-column:span 12;justify-content:flex-end}
 }
 .phone-field{grid-column:span 4}
 .submit-field{grid-column:span 3;display:flex;align-items:end}
@@ -187,7 +191,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
 .newsletter-form input{flex:1;min-width:0;border:0;outline:0;padding:0 20px;font-size:11px;color:#555}
 .newsletter-form button{width:145px;border:0;border-radius:30px;background:#08aeea;color:#fff;font-size:12px;font-weight:700;cursor:pointer}
 .site-footer{padding:60px 0 22px;background:linear-gradient(#ffffff25,#ffffff20),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat}
-.footer-panel{width:min(1100px,96%);margin:auto;background:rgba(255,255,255,.88);border-radius:18px;padding:42px 7%;display:grid;grid-template-columns:1.1fr .9fr;gap:38px;color:#777}
+.footer-panel{width:min(860px,94%);margin:auto;background:rgba(255,255,255,.94);border-radius:18px;padding:38px 6%;display:block;color:#777}
 .footer-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-bottom:16px}
 .footer-brand .brand-mark{flex-shrink:0}
 .footer-brand .brand-name{line-height:1.05}
@@ -220,8 +224,8 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
     </a>
     <nav class="main-nav" id="mainNav" aria-label="Primary navigation">
       <a class="nav-item" href="#top">Home</a>
-      <a class="nav-item" href="#about">About Us</a>
-      <a class="nav-item" href="#quoteForm">Contact Us</a>
+      <a class="nav-item" href="about.html">About Us</a>
+      <a class="nav-item" href="contact.html">Contact Us</a>
       <a class="nav-item" href="#blogs">Blog</a>
       <a class="nav-item" href="#airlines">Routes</a>
     </nav>
@@ -229,8 +233,8 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
   </div>
   <div class="mobile-nav" id="mobileNav">
     <a class="mobile-nav-item" href="#top">Home</a>
-    <a class="mobile-nav-item" href="#about">About Us</a>
-    <a class="mobile-nav-item" href="#quoteForm">Contact Us</a>
+    <a class="mobile-nav-item" href="about.html">About Us</a>
+    <a class="mobile-nav-item" href="contact.html">Contact Us</a>
     <a class="mobile-nav-item" href="#blogs">Blog</a>
     <a class="mobile-nav-item" href="#airlines">Routes</a>
   </div>
@@ -261,14 +265,14 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
           <div class="field wide">
             <label for="from">Flying from:</label>
             <div class="airport-field-wrap">
-              <input id="from" name="from" placeholder="Enter City, Airport, or Code (e.g. Delhi)" autocomplete="off" required>
+              <input id="from" name="from" placeholder="Enter US City or Airport Code (e.g. New York)" autocomplete="off" required>
               <div class="airport-dropdown" id="fromDropdown"></div>
             </div>
           </div>
           <div class="field wide">
             <label for="to">To:</label>
             <div class="airport-field-wrap">
-              <input id="to" name="to" placeholder="Enter Destination City or Code (e.g. Mumbai)" autocomplete="off" required>
+              <input id="to" name="to" placeholder="Enter US Destination City or Code (e.g. Chicago)" autocomplete="off" required>
               <div class="airport-dropdown" id="toDropdown"></div>
             </div>
           </div>
@@ -276,66 +280,57 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
           <div class="field" id="returnField"><label for="returnDate">Return Date:</label><input id="returnDate" name="returnDate" type="date"></div>
         </div>
 
-        <!-- Multi City Route Fields (MakeMyTrip / Skyscanner Style) -->
+        <!-- Multi City Route Fields -->
         <div id="multiCityContainer" class="multi-city-wrap">
-          <div id="multiCityRows">
-            <!-- Flight 1 -->
-            <div class="multi-city-row" data-index="1">
-              <div class="multi-city-row-header">
-                <span class="multi-city-title">✈ Flight 1</span>
-              </div>
-              <div class="multi-city-fields">
-                <div class="mc-from-wrap">
-                  <label>Flying from:</label>
-                  <div class="airport-field-wrap">
-                    <input class="mc-from" placeholder="Origin City or Code (e.g. Delhi)" autocomplete="off">
-                    <div class="airport-dropdown"></div>
-                  </div>
-                </div>
-                <div class="mc-to-wrap">
-                  <label>To:</label>
-                  <div class="airport-field-wrap">
-                    <input class="mc-to" placeholder="Destination City or Code (e.g. Mumbai)" autocomplete="off">
-                    <div class="airport-dropdown"></div>
-                  </div>
-                </div>
-                <div class="mc-date-wrap">
-                  <label>Departure:</label>
-                  <input class="mc-date" type="date">
-                </div>
+          <!-- Flight 1 -->
+          <div class="multi-city-leg" data-index="1">
+            <div class="mc-leg-label"><span>✈ Flight 1</span></div>
+            <div class="mc-from-wrap">
+              <label>Flying from:</label>
+              <div class="airport-field-wrap">
+                <input class="mc-from" placeholder="Enter US City or Airport Code (e.g. New York)" autocomplete="off">
+                <div class="airport-dropdown"></div>
               </div>
             </div>
-
-            <!-- Flight 2 -->
-            <div class="multi-city-row" data-index="2">
-              <div class="multi-city-row-header">
-                <span class="multi-city-title">✈ Flight 2</span>
-                <button type="button" class="remove-leg-btn" onclick="removeFlightLeg(this)">✕ Remove</button>
-              </div>
-              <div class="multi-city-fields">
-                <div class="mc-from-wrap">
-                  <label>Flying from:</label>
-                  <div class="airport-field-wrap">
-                    <input class="mc-from" placeholder="Origin City or Code (e.g. Mumbai)" autocomplete="off">
-                    <div class="airport-dropdown"></div>
-                  </div>
-                </div>
-                <div class="mc-to-wrap">
-                  <label>To:</label>
-                  <div class="airport-field-wrap">
-                    <input class="mc-to" placeholder="Destination City or Code (e.g. Dubai)" autocomplete="off">
-                    <div class="airport-dropdown"></div>
-                  </div>
-                </div>
-                <div class="mc-date-wrap">
-                  <label>Departure:</label>
-                  <input class="mc-date" type="date">
-                </div>
+            <div class="mc-to-wrap">
+              <label>To:</label>
+              <div class="airport-field-wrap">
+                <input class="mc-to" placeholder="Enter US Destination City or Code (e.g. Chicago)" autocomplete="off">
+                <div class="airport-dropdown"></div>
               </div>
             </div>
+            <div class="mc-date-wrap">
+              <label>Departure:</label>
+              <input class="mc-date" type="date">
+            </div>
+            <div class="mc-remove-wrap"></div>
           </div>
-
-          <button type="button" class="add-leg-btn" id="addFlightBtn">＋ Add Another Flight</button>
+          <!-- Flight 2 -->
+          <div class="multi-city-leg" data-index="2">
+            <div class="mc-leg-label"><span>✈ Flight 2</span><button type="button" class="remove-leg-btn" onclick="removeFlightLeg(this)">✕ Remove</button></div>
+            <div class="mc-from-wrap">
+              <label>Flying from:</label>
+              <div class="airport-field-wrap">
+                <input class="mc-from" placeholder="Enter US City or Airport Code (e.g. Los Angeles)" autocomplete="off">
+                <div class="airport-dropdown"></div>
+              </div>
+            </div>
+            <div class="mc-to-wrap">
+              <label>To:</label>
+              <div class="airport-field-wrap">
+                <input class="mc-to" placeholder="Enter US Destination City or Code (e.g. Miami)" autocomplete="off">
+                <div class="airport-dropdown"></div>
+              </div>
+            </div>
+            <div class="mc-date-wrap">
+              <label>Departure:</label>
+              <input class="mc-date" type="date">
+            </div>
+            <div class="mc-remove-wrap"></div>
+          </div>
+          <div class="add-leg-wrap">
+            <button type="button" class="add-leg-btn" id="addFlightBtn">＋ Add Another Flight</button>
+          </div>
         </div>
 
         <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder=" " required></div>
@@ -529,7 +524,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
         <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
         <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
       </a>
-      <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
+      <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services across the United States. We have an excellent team of travel experts who look after the group flight requirements of customers.</p>
       <div class="footer-columns">
         <div>
           <p class="footer-heading">QUICK LINKS</p>
@@ -550,7 +545,6 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
             <span>✉ &nbsp; info@grouptraveldesk.com</span>
             <span>☎ &nbsp; +1-XXX-XXX-XXXX</span>
             <span class="trust">Review us on ★ Trustpilot</span>
-            <span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span>
           </div>
         </div>
       </div>
@@ -569,7 +563,6 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
         </div>
       </div>
     </div>
-    <div><p class="footer-heading">COMPANY</p><div class="footer-links"><a href="#">Home</a><a href="#">About Us</a><a href="#quoteForm">Contact us</a><a href="#blogs">Blog</a><a href="#airlines">Routes</a><a href="#deals">Deals</a></div></div>
   </div>
 </footer>
 <div class="copyright">Copyright by © <span id="year"></span> Group Travel Desk</div>
@@ -703,7 +696,7 @@ tabs.forEach(tab => tab.addEventListener("click", () => {
     if (toInput) toInput.required = false;
     if (departureInput) departureInput.required = false;
     if (returnInput) returnInput.required = false;
-    document.querySelectorAll("#multiCityRows .mc-from, #multiCityRows .mc-to, #multiCityRows .mc-date").forEach(inp => inp.required = true);
+    document.querySelectorAll("#multiCityContainer .mc-from, #multiCityContainer .mc-to, #multiCityContainer .mc-date").forEach(inp => inp.required = true);
   } else {
     if (standardFields) standardFields.style.display = "contents";
     if (multiCityContainer) multiCityContainer.style.display = "none";
@@ -712,80 +705,63 @@ tabs.forEach(tab => tab.addEventListener("click", () => {
     if (departureInput) departureInput.required = true;
     if (returnField) returnField.style.display = tripType === "One Way" ? "none" : "block";
     if (returnInput) returnInput.required = tripType === "Round Trip";
-    document.querySelectorAll("#multiCityRows .mc-from, #multiCityRows .mc-to, #multiCityRows .mc-date").forEach(inp => inp.required = false);
+    document.querySelectorAll("#multiCityContainer .mc-from, #multiCityContainer .mc-to, #multiCityContainer .mc-date").forEach(inp => inp.required = false);
   }
 }));
 
 function removeFlightLeg(btn) {
-  const container = document.getElementById("multiCityRows");
-  const rows = container.querySelectorAll(".multi-city-row");
-  if (rows.length <= 2) {
-    showToast("A minimum of 2 flights is required for Multi City.");
-    return;
+    const leg = btn.closest('.multi-city-leg');
+    if (leg) leg.remove();
   }
-  btn.closest(".multi-city-row").remove();
-  renumberFlightLegs();
-}
 
-function renumberFlightLegs() {
-  const rows = document.querySelectorAll("#multiCityRows .multi-city-row");
-  rows.forEach((r, idx) => {
-    const num = idx + 1;
-    r.dataset.index = num;
-    const title = r.querySelector(".multi-city-title");
-    if (title) title.innerHTML = `✈ Flight ${num}`;
-  });
-}
+
 
 const addFlightBtn = document.getElementById("addFlightBtn");
 if (addFlightBtn) {
   addFlightBtn.addEventListener("click", () => {
-    const container = document.getElementById("multiCityRows");
-    const rows = container.querySelectorAll(".multi-city-row");
-    if (rows.length >= 5) {
+    const container = document.getElementById("multiCityContainer");
+    const legs = container.querySelectorAll(".multi-city-leg");
+    if (legs.length >= 5) {
       showToast("Maximum 5 flight segments allowed in Multi City.");
       return;
     }
-    const nextNum = rows.length + 1;
-    const lastToInput = rows[rows.length - 1].querySelector(".mc-to");
+    const nextNum = legs.length + 1;
+    const lastToInput = legs[legs.length - 1].querySelector(".mc-to");
     const lastToVal = lastToInput ? lastToInput.value : "";
 
-    const newRow = document.createElement("div");
-    newRow.className = "multi-city-row";
-    newRow.dataset.index = nextNum;
-    newRow.innerHTML = `
-      <div class="multi-city-row-header">
-        <span class="multi-city-title">✈ Flight ${nextNum}</span>
-        <button type="button" class="remove-leg-btn" onclick="removeFlightLeg(this)">✕ Remove</button>
-      </div>
-      <div class="multi-city-fields">
-        <div class="mc-from-wrap">
-          <label>Flying from:</label>
-          <div class="airport-field-wrap">
-            <input class="mc-from" placeholder="Origin City or Code" value="${lastToVal}" autocomplete="off" required>
-            <div class="airport-dropdown"></div>
-          </div>
-        </div>
-        <div class="mc-to-wrap">
-          <label>To:</label>
-          <div class="airport-field-wrap">
-            <input class="mc-to" placeholder="Destination City or Code" autocomplete="off" required>
-            <div class="airport-dropdown"></div>
-          </div>
-        </div>
-        <div class="mc-date-wrap">
-          <label>Departure:</label>
-          <input class="mc-date" type="date" required>
+    const newLeg = document.createElement("div");
+    newLeg.className = "multi-city-leg";
+    newLeg.dataset.index = nextNum;
+    newLeg.innerHTML = `
+      <div class="mc-leg-label"><span>✈ Flight ${nextNum}</span><button type="button" class="remove-leg-btn" onclick="removeFlightLeg(this)">✕ Remove</button></div>
+      <div class="mc-from-wrap">
+        <label>Flying from:</label>
+        <div class="airport-field-wrap">
+          <input class="mc-from" placeholder="Enter US City or Airport Code" value="${lastToVal}" autocomplete="off" required>
+          <div class="airport-dropdown"></div>
         </div>
       </div>
+      <div class="mc-to-wrap">
+        <label>To:</label>
+        <div class="airport-field-wrap">
+          <input class="mc-to" placeholder="Enter US Destination City or Code" autocomplete="off" required>
+          <div class="airport-dropdown"></div>
+        </div>
+      </div>
+      <div class="mc-date-wrap">
+        <label>Departure:</label>
+        <input class="mc-date" type="date" required>
+      </div>
+      <div class="mc-remove-wrap"></div>
     `;
-    container.appendChild(newRow);
+    const addWrap = container.querySelector(".add-leg-wrap");
+    container.insertBefore(newLeg, addWrap);
 
-    const fromInp = newRow.querySelector(".mc-from");
-    const fromDrop = newRow.querySelector(".mc-from-wrap .airport-dropdown");
-    const toInp = newRow.querySelector(".mc-to");
-    const toDrop = newRow.querySelector(".mc-to-wrap .airport-dropdown");
-    const dateInp = newRow.querySelector(".mc-date");
+    const fromInp = newLeg.querySelector(".mc-from");
+    const fromDrop = newLeg.querySelector(".mc-from-wrap .airport-dropdown");
+    const toInp = newLeg.querySelector(".mc-to");
+    const toDrop = newLeg.querySelector(".mc-to-wrap .airport-dropdown");
+    const dateInp = newLeg.querySelector(".mc-date");
 
     if (window.bindAirportAutocomplete) {
       window.bindAirportAutocomplete(fromInp, fromDrop, toInp);
@@ -806,7 +782,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
   let quoteData = null;
 
   if (tripType === "Multi City") {
-    const rows = document.querySelectorAll("#multiCityRows .multi-city-row");
+    const rows = document.querySelectorAll("#multiCityContainer .multi-city-leg");
     const legs = [];
     let firstDate = null;
     let lastDate = null;
@@ -882,7 +858,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
 
   if (savedSuccessfully) {
     const successMsg = tripType === "Multi City" 
-      ? `Success! Your Multi-City itinerary with ${document.querySelectorAll('#multiCityRows .multi-city-row').length} flights has been received and stored in Supabase.`
+      ? `Success! Your Multi-City itinerary with ${document.querySelectorAll('#multiCityContainer .multi-city-leg').length} flights has been received and stored in Supabase.`
       : "Success! Your flight details have been received and saved in Supabase database. Click 'Supabase Database' button in the top bar to verify all saved leads.";
     
     openSuccessModal(successMsg);
@@ -1040,265 +1016,91 @@ function closeLeadsModal() {
 // MakeMyTrip-Style Airport Autocomplete
 (function initAirportSearch() {
   const AIRPORTS = [
-    // India - Domestic & International Hubs
-    { code: "DEL", city: "New Delhi", country: "India", name: "Indira Gandhi International Airport", popular: true },
-    { code: "BOM", city: "Mumbai", country: "India", name: "Chhatrapati Shivaji Maharaj International Airport", popular: true },
-    { code: "BLR", city: "Bengaluru", country: "India", name: "Kempegowda International Airport", popular: true },
-    { code: "HYD", city: "Hyderabad", country: "India", name: "Rajiv Gandhi International Airport", popular: true },
-    { code: "CCU", city: "Kolkata", country: "India", name: "Netaji Subhash Chandra Bose International Airport", popular: true },
-    { code: "MAA", city: "Chennai", country: "India", name: "Chennai International Airport", popular: true },
-    { code: "AMD", city: "Ahmedabad", country: "India", name: "Sardar Vallabhbhai Patel International Airport", popular: true },
-    { code: "GOI", city: "Goa (Dabolim)", country: "India", name: "Dabolim Airport", popular: true },
-    { code: "GOX", city: "Goa (Mopa)", country: "India", name: "Manohar International Airport" },
-    { code: "PNQ", city: "Pune", country: "India", name: "Pune International Airport" },
-    { code: "COK", city: "Kochi", country: "India", name: "Cochin International Airport" },
-    { code: "JAI", city: "Jaipur", country: "India", name: "Jaipur International Airport" },
-    { code: "LKO", city: "Lucknow", country: "India", name: "Chaudhary Charan Singh International Airport" },
-    { code: "IXC", city: "Chandigarh", country: "India", name: "Shaheed Bhagat Singh International Airport" },
-    { code: "ATQ", city: "Amritsar", country: "India", name: "Sri Guru Ram Dass Jee International Airport" },
-    { code: "TRV", city: "Thiruvananthapuram", country: "India", name: "Trivandrum International Airport" },
-    { code: "PAT", city: "Patna", country: "India", name: "Jay Prakash Narayan International Airport" },
-    { code: "GAU", city: "Guwahati", country: "India", name: "Lokpriya Gopinath Bordoloi International Airport" },
-    { code: "BBI", city: "Bhubaneswar", country: "India", name: "Biju Patnaik International Airport" },
-    { code: "IDR", city: "Indore", country: "India", name: "Devi Ahilya Bai Holkar Airport" },
-    { code: "VNS", city: "Varanasi", country: "India", name: "Lal Bahadur Shastri International Airport" },
-    { code: "NAG", city: "Nagpur", country: "India", name: "Dr. Babasaheb Ambedkar International Airport" },
-    { code: "SXR", city: "Srinagar", country: "India", name: "Sheikh ul-Alam International Airport" },
-    { code: "IXB", city: "Bagdogra / Siliguri", country: "India", name: "Bagdogra Airport" },
-    { code: "VTZ", city: "Visakhapatnam", country: "India", name: "Visakhapatnam International Airport" },
-    { code: "CCJ", city: "Kozhikode", country: "India", name: "Calicut International Airport" },
-    { code: "IXR", city: "Ranchi", country: "India", name: "Birsa Munda Airport" },
-    { code: "BDQ", city: "Vadodara", country: "India", name: "Vadodara Airport" },
-    { code: "STV", city: "Surat", country: "India", name: "Surat International Airport" },
-    { code: "RAJ", city: "Rajkot", country: "India", name: "Rajkot International Airport" },
-    { code: "UDR", city: "Udaipur", country: "India", name: "Maharana Pratap Airport" },
-    { code: "JDH", city: "Jodhpur", country: "India", name: "Jodhpur Airport" },
-    { code: "CJB", city: "Coimbatore", country: "India", name: "Coimbatore International Airport" },
-    { code: "IXM", city: "Madurai", country: "India", name: "Madurai Airport" },
-    { code: "TRZ", city: "Tiruchirappalli", country: "India", name: "Tiruchirappalli International Airport" },
-    { code: "IXE", city: "Mangalore", country: "India", name: "Mangaluru International Airport" },
-    { code: "IXJ", city: "Jammu", country: "India", name: "Jammu Airport" },
-    { code: "DED", city: "Dehradun", country: "India", name: "Jolly Grant Airport" },
-    { code: "IXL", city: "Leh Ladakh", country: "India", name: "Kushok Bakula Rimpochee Airport" },
-    { code: "IXA", city: "Agartala", country: "India", name: "Maharaja Bir Bikram Airport" },
-    { code: "IMF", city: "Imphal", country: "India", name: "Bir Tikendrajit International Airport" },
-    { code: "DMU", city: "Dimapur", country: "India", name: "Dimapur Airport" },
-    { code: "DIB", city: "Dibrugarh", country: "India", name: "Dibrugarh Airport" },
-    { code: "SHL", city: "Shillong", country: "India", name: "Shillong Airport" },
-    { code: "IXZ", city: "Port Blair", country: "India", name: "Veer Savarkar International Airport" },
-    { code: "RPR", city: "Raipur", country: "India", name: "Swami Vivekananda Airport" },
-    { code: "BHO", city: "Bhopal", country: "India", name: "Raja Bhoj Airport" },
-    { code: "GWL", city: "Gwalior", country: "India", name: "Rajmata Vijaya Raje Scindia Airport" },
-    { code: "JLR", city: "Jabalpur", country: "India", name: "Jabalpur Airport" },
-    { code: "AGX", city: "Agatti Island", country: "India", name: "Agatti Airport" },
-    { code: "AYJ", city: "Ayodhya", country: "India", name: "Maharishi Valmiki International Airport" },
-
-    // Middle East
-    { code: "DXB", city: "Dubai", country: "United Arab Emirates", name: "Dubai International Airport", popular: true },
-    { code: "DWC", city: "Dubai (Al Maktoum)", country: "United Arab Emirates", name: "Al Maktoum International Airport" },
-    { code: "AUH", city: "Abu Dhabi", country: "United Arab Emirates", name: "Zayed International Airport", popular: true },
-    { code: "SHJ", city: "Sharjah", country: "United Arab Emirates", name: "Sharjah International Airport", popular: true },
-    { code: "RKT", city: "Ras Al Khaimah", country: "United Arab Emirates", name: "Ras Al Khaimah International Airport" },
-    { code: "DOH", city: "Doha", country: "Qatar", name: "Hamad International Airport", popular: true },
-    { code: "JED", city: "Jeddah", country: "Saudi Arabia", name: "King Abdulaziz International Airport", popular: true },
-    { code: "RUH", city: "Riyadh", country: "Saudi Arabia", name: "King Khalid International Airport" },
-    { code: "DMM", city: "Dammam", country: "Saudi Arabia", name: "King Fahd International Airport" },
-    { code: "MED", city: "Medina", country: "Saudi Arabia", name: "Prince Mohammad Bin Abdulaziz Airport" },
-    { code: "MCT", city: "Muscat", country: "Oman", name: "Muscat International Airport" },
-    { code: "SLL", city: "Salalah", country: "Oman", name: "Salalah Airport" },
-    { code: "KWI", city: "Kuwait City", country: "Kuwait", name: "Kuwait International Airport" },
-    { code: "BAH", city: "Manama", country: "Bahrain", name: "Bahrain International Airport" },
-    { code: "TLV", city: "Tel Aviv", country: "Israel", name: "Ben Gurion Airport" },
-    { code: "AMM", city: "Amman", country: "Jordan", name: "Queen Alia International Airport" },
-    { code: "BEY", city: "Beirut", country: "Lebanon", name: "Beirut-Rafic Hariri International Airport" },
-
-    // United Kingdom & Ireland
-    { code: "LHR", city: "London", country: "United Kingdom", name: "Heathrow Airport", popular: true },
-    { code: "LGW", city: "London", country: "United Kingdom", name: "Gatwick Airport", popular: true },
-    { code: "STN", city: "London", country: "United Kingdom", name: "Stansted Airport" },
-    { code: "LTN", city: "London", country: "United Kingdom", name: "Luton Airport" },
-    { code: "LCY", city: "London City", country: "United Kingdom", name: "London City Airport" },
-    { code: "MAN", city: "Manchester", country: "United Kingdom", name: "Manchester Airport", popular: true },
-    { code: "BHX", city: "Birmingham", country: "United Kingdom", name: "Birmingham Airport" },
-    { code: "EDI", city: "Edinburgh", country: "United Kingdom", name: "Edinburgh Airport" },
-    { code: "GLA", city: "Glasgow", country: "United Kingdom", name: "Glasgow Airport" },
-    { code: "DUB", city: "Dublin", country: "Ireland", name: "Dublin Airport", popular: true },
-    { code: "SNN", city: "Shannon", country: "Ireland", name: "Shannon Airport" },
-    { code: "BFS", city: "Belfast", country: "United Kingdom", name: "Belfast International Airport" },
-
-    // Europe (Schengen, Western & Eastern Europe)
-    { code: "CDG", city: "Paris", country: "France", name: "Charles de Gaulle Airport", popular: true },
-    { code: "ORY", city: "Paris", country: "France", name: "Paris Orly Airport" },
-    { code: "NCE", city: "Nice", country: "France", name: "Nice Cote d Azur Airport" },
-    { code: "LYS", city: "Lyon", country: "France", name: "Lyon-Saint Exupery Airport" },
-    { code: "FRA", city: "Frankfurt", country: "Germany", name: "Frankfurt Airport", popular: true },
-    { code: "MUC", city: "Munich", country: "Germany", name: "Munich Airport", popular: true },
-    { code: "BER", city: "Berlin", country: "Germany", name: "Berlin Brandenburg Airport" },
-    { code: "DUS", city: "Dusseldorf", country: "Germany", name: "Dusseldorf Airport" },
-    { code: "HAM", city: "Hamburg", country: "Germany", name: "Hamburg Airport" },
-    { code: "AMS", city: "Amsterdam", country: "Netherlands", name: "Amsterdam Airport Schiphol", popular: true },
-    { code: "BRU", city: "Brussels", country: "Belgium", name: "Brussels Airport" },
-    { code: "ZRH", city: "Zurich", country: "Switzerland", name: "Zurich Airport", popular: true },
-    { code: "GVA", city: "Geneva", country: "Switzerland", name: "Geneva Airport" },
-    { code: "VIE", city: "Vienna", country: "Austria", name: "Vienna International Airport" },
-    { code: "FCO", city: "Rome", country: "Italy", name: "Leonardo da Vinci-Fiumicino Airport", popular: true },
-    { code: "MXP", city: "Milan", country: "Italy", name: "Milan Malpensa Airport" },
-    { code: "LIN", city: "Milan", country: "Italy", name: "Milan Linate Airport" },
-    { code: "VCE", city: "Venice", country: "Italy", name: "Venice Marco Polo Airport" },
-    { code: "NAP", city: "Naples", country: "Italy", name: "Naples International Airport" },
-    { code: "MAD", city: "Madrid", country: "Spain", name: "Adolfo Suarez Madrid-Barajas Airport", popular: true },
-    { code: "BCN", city: "Barcelona", country: "Spain", name: "Josep Tarradellas Barcelona-El Prat Airport", popular: true },
-    { code: "AGP", city: "Malaga", country: "Spain", name: "Malaga-Costa del Sol Airport" },
-    { code: "VLC", city: "Valencia", country: "Spain", name: "Valencia Airport" },
-    { code: "LIS", city: "Lisbon", country: "Portugal", name: "Humberto Delgado Airport" },
-    { code: "OPO", city: "Porto", country: "Portugal", name: "Francisco Sa Carneiro Airport" },
-    { code: "ATH", city: "Athens", country: "Greece", name: "Eleftherios Venizelos Airport" },
-    { code: "HER", city: "Heraklion (Crete)", country: "Greece", name: "Heraklion International Airport" },
-    { code: "IST", city: "Istanbul", country: "Turkey", name: "Istanbul Airport", popular: true },
-    { code: "SAW", city: "Istanbul (Sabiha)", country: "Turkey", name: "Sabiha Gokcen International Airport" },
-    { code: "AYT", city: "Antalya", country: "Turkey", name: "Antalya Airport" },
-    { code: "CPH", city: "Copenhagen", country: "Denmark", name: "Copenhagen Airport" },
-    { code: "ARN", city: "Stockholm", country: "Sweden", name: "Stockholm Arlanda Airport" },
-    { code: "OSL", city: "Oslo", country: "Norway", name: "Oslo Airport Gardermoen" },
-    { code: "HEL", city: "Helsinki", country: "Finland", name: "Helsinki-Vantaa Airport" },
-    { code: "WAW", city: "Warsaw", country: "Poland", name: "Warsaw Chopin Airport" },
-    { code: "PRG", city: "Prague", country: "Czech Republic", name: "Vaclav Havel Airport Prague" },
-    { code: "BUD", city: "Budapest", country: "Hungary", name: "Budapest Ferenc Liszt Airport" },
-    { code: "OTP", city: "Bucharest", country: "Romania", name: "Henri Coanda International Airport" },
-
-    // United States (USA)
-    { code: "JFK", city: "New York", country: "United States", name: "John F. Kennedy International Airport", popular: true },
-    { code: "EWR", city: "Newark / New York", country: "United States", name: "Newark Liberty International Airport", popular: true },
-    { code: "LGA", city: "New York", country: "United States", name: "LaGuardia Airport" },
-    { code: "ORD", city: "Chicago", country: "United States", name: "O Hare International Airport", popular: true },
-    { code: "MDW", city: "Chicago", country: "United States", name: "Chicago Midway International Airport" },
-    { code: "LAX", city: "Los Angeles", country: "United States", name: "Los Angeles International Airport", popular: true },
-    { code: "SFO", city: "San Francisco", country: "United States", name: "San Francisco International Airport", popular: true },
-    { code: "SJC", city: "San Jose", country: "United States", name: "San Jose Mineta International Airport" },
-    { code: "OAK", city: "Oakland / Bay Area", country: "United States", name: "Oakland International Airport" },
-    { code: "DFW", city: "Dallas / Fort Worth", country: "United States", name: "Dallas/Fort Worth International Airport", popular: true },
-    { code: "DAL", city: "Dallas", country: "United States", name: "Dallas Love Field" },
-    { code: "ATL", city: "Atlanta", country: "United States", name: "Hartsfield-Jackson Atlanta International Airport", popular: true },
-    { code: "MIA", city: "Miami", country: "United States", name: "Miami International Airport", popular: true },
-    { code: "FLL", city: "Fort Lauderdale", country: "United States", name: "Fort Lauderdale-Hollywood Airport" },
-    { code: "MCO", city: "Orlando", country: "United States", name: "Orlando International Airport", popular: true },
-    { code: "TPA", city: "Tampa", country: "United States", name: "Tampa International Airport" },
-    { code: "IAD", city: "Washington D.C.", country: "United States", name: "Washington Dulles International Airport", popular: true },
-    { code: "DCA", city: "Washington D.C.", country: "United States", name: "Ronald Reagan Washington National Airport" },
-    { code: "BOS", city: "Boston", country: "United States", name: "Boston Logan International Airport", popular: true },
-    { code: "SEA", city: "Seattle", country: "United States", name: "Seattle-Tacoma International Airport", popular: true },
-    { code: "DEN", city: "Denver", country: "United States", name: "Denver International Airport" },
-    { code: "PHX", city: "Phoenix", country: "United States", name: "Phoenix Sky Harbor International Airport" },
-    { code: "LAS", city: "Las Vegas", country: "United States", name: "Harry Reid International Airport", popular: true },
-    { code: "IAH", city: "Houston", country: "United States", name: "George Bush Intercontinental Airport" },
-    { code: "HOU", city: "Houston", country: "United States", name: "William P. Hobby Airport" },
-    { code: "MSP", city: "Minneapolis", country: "United States", name: "Minneapolis-Saint Paul International Airport" },
-    { code: "DTW", city: "Detroit", country: "United States", name: "Detroit Metropolitan Wayne County Airport" },
-    { code: "PHL", city: "Philadelphia", country: "United States", name: "Philadelphia International Airport" },
-    { code: "CLT", city: "Charlotte", country: "United States", name: "Charlotte Douglas International Airport" },
-    { code: "SLC", city: "Salt Lake City", country: "United States", name: "Salt Lake City International Airport" },
-    { code: "SAN", city: "San Diego", country: "United States", name: "San Diego International Airport" },
-    { code: "PDX", city: "Portland", country: "United States", name: "Portland International Airport" },
-    { code: "HNL", city: "Honolulu", country: "United States", name: "Daniel K. Inouye International Airport" },
-    { code: "AUS", city: "Austin", country: "United States", name: "Austin-Bergstrom International Airport" },
-    { code: "BNA", city: "Nashville", country: "United States", name: "Nashville International Airport" },
-
-    // Canada
-    { code: "YYZ", city: "Toronto", country: "Canada", name: "Toronto Pearson International Airport", popular: true },
-    { code: "YVR", city: "Vancouver", country: "Canada", name: "Vancouver International Airport", popular: true },
-    { code: "YUL", city: "Montreal", country: "Canada", name: "Montreal-Pierre Elliott Trudeau Airport", popular: true },
-    { code: "YYC", city: "Calgary", country: "Canada", name: "Calgary International Airport" },
-    { code: "YEG", city: "Edmonton", country: "Canada", name: "Edmonton International Airport" },
-    { code: "YOW", city: "Ottawa", country: "Canada", name: "Ottawa Macdonald-Cartier International Airport" },
-    { code: "YHZ", city: "Halifax", country: "Canada", name: "Halifax Stanfield International Airport" },
-    { code: "YWG", city: "Winnipeg", country: "Canada", name: "Winnipeg James Armstrong Richardson Airport" },
-
-    // Asia-Pacific, Southeast & East Asia
-    { code: "SIN", city: "Singapore", country: "Singapore", name: "Singapore Changi Airport", popular: true },
-    { code: "BKK", city: "Bangkok", country: "Thailand", name: "Suvarnabhumi Airport", popular: true },
-    { code: "DMK", city: "Bangkok", country: "Thailand", name: "Don Mueang International Airport" },
-    { code: "HKT", city: "Phuket", country: "Thailand", name: "Phuket International Airport", popular: true },
-    { code: "CNX", city: "Chiang Mai", country: "Thailand", name: "Chiang Mai International Airport" },
-    { code: "KUL", city: "Kuala Lumpur", country: "Malaysia", name: "Kuala Lumpur International Airport", popular: true },
-    { code: "PEN", city: "Penang", country: "Malaysia", name: "Penang International Airport" },
-    { code: "DPS", city: "Bali / Denpasar", country: "Indonesia", name: "Ngurah Rai International Airport", popular: true },
-    { code: "CGK", city: "Jakarta", country: "Indonesia", name: "Soekarno-Hatta International Airport" },
-    { code: "SUB", city: "Surabaya", country: "Indonesia", name: "Juanda International Airport" },
-    { code: "MNL", city: "Manila", country: "Philippines", name: "Ninoy Aquino International Airport", popular: true },
-    { code: "CEB", city: "Cebu", country: "Philippines", name: "Mactan-Cebu International Airport" },
-    { code: "SGN", city: "Ho Chi Minh City", country: "Vietnam", name: "Tan Son Nhat International Airport" },
-    { code: "HAN", city: "Hanoi", country: "Vietnam", name: "Noi Bai International Airport" },
-    { code: "DAD", city: "Da Nang", country: "Vietnam", name: "Da Nang International Airport" },
-    { code: "NRT", city: "Tokyo", country: "Japan", name: "Narita International Airport", popular: true },
-    { code: "HND", city: "Tokyo", country: "Japan", name: "Haneda Airport", popular: true },
-    { code: "KIX", city: "Osaka", country: "Japan", name: "Kansai International Airport" },
-    { code: "ITM", city: "Osaka", country: "Japan", name: "Itami Airport" },
-    { code: "CTS", city: "Sapporo", country: "Japan", name: "New Chitose Airport" },
-    { code: "FUK", city: "Fukuoka", country: "Japan", name: "Fukuoka Airport" },
-    { code: "ICN", city: "Seoul", country: "South Korea", name: "Incheon International Airport", popular: true },
-    { code: "GMP", city: "Seoul", country: "South Korea", name: "Gimpo International Airport" },
-    { code: "PUS", city: "Busan", country: "South Korea", name: "Gimhae International Airport" },
-    { code: "CJU", city: "Jeju", country: "South Korea", name: "Jeju International Airport" },
-    { code: "HKG", city: "Hong Kong", country: "Hong Kong", name: "Hong Kong International Airport", popular: true },
-    { code: "TPE", city: "Taipei", country: "Taiwan", name: "Taoyuan International Airport" },
-    { code: "PVG", city: "Shanghai", country: "China", name: "Shanghai Pudong International Airport", popular: true },
-    { code: "SHA", city: "Shanghai", country: "China", name: "Shanghai Hongqiao International Airport" },
-    { code: "PEK", city: "Beijing", country: "China", name: "Beijing Capital International Airport" },
-    { code: "PKX", city: "Beijing", country: "China", name: "Beijing Daxing International Airport" },
-    { code: "CAN", city: "Guangzhou", country: "China", name: "Guangzhou Baiyun International Airport" },
-
-    // South Asia
-    { code: "CMB", city: "Colombo", country: "Sri Lanka", name: "Bandaranaike International Airport", popular: true },
-    { code: "MLE", city: "Male", country: "Maldives", name: "Velana International Airport", popular: true },
-    { code: "KTM", city: "Kathmandu", country: "Nepal", name: "Tribhuvan International Airport", popular: true },
-    { code: "DAC", city: "Dhaka", country: "Bangladesh", name: "Hazrat Shahjalal International Airport" },
-    { code: "ISB", city: "Islamabad", country: "Pakistan", name: "Islamabad International Airport" },
-    { code: "KHI", city: "Karachi", country: "Pakistan", name: "Jinnah International Airport" },
-    { code: "LHE", city: "Lahore", country: "Pakistan", name: "Allama Iqbal International Airport" },
-
-    // Australia & New Zealand
-    { code: "SYD", city: "Sydney", country: "Australia", name: "Sydney Kingsford Smith Airport", popular: true },
-    { code: "MEL", city: "Melbourne", country: "Australia", name: "Melbourne Airport", popular: true },
-    { code: "BNE", city: "Brisbane", country: "Australia", name: "Brisbane Airport" },
-    { code: "PER", city: "Perth", country: "Australia", name: "Perth Airport" },
-    { code: "ADL", city: "Adelaide", country: "Australia", name: "Adelaide Airport" },
-    { code: "OOL", city: "Gold Coast", country: "Australia", name: "Gold Coast Airport" },
-    { code: "CNS", city: "Cairns", country: "Australia", name: "Cairns Airport" },
-    { code: "AKL", city: "Auckland", country: "New Zealand", name: "Auckland Airport", popular: true },
-    { code: "CHC", city: "Christchurch", country: "New Zealand", name: "Christchurch Airport" },
-    { code: "WLG", city: "Wellington", country: "New Zealand", name: "Wellington International Airport" },
-    { code: "ZQN", city: "Queenstown", country: "New Zealand", name: "Queenstown Airport" },
-
-    // Latin America & Caribbean
-    { code: "MEX", city: "Mexico City", country: "Mexico", name: "Benito Juarez International Airport", popular: true },
-    { code: "CUN", city: "Cancun", country: "Mexico", name: "Cancun International Airport", popular: true },
-    { code: "GDL", city: "Guadalajara", country: "Mexico", name: "Miguel Hidalgo y Costilla Guadalajara Airport" },
-    { code: "GRU", city: "Sao Paulo", country: "Brazil", name: "Sao Paulo/Guarulhos International Airport", popular: true },
-    { code: "GIG", city: "Rio de Janeiro", country: "Brazil", name: "Rio de Janeiro/Galeao International Airport" },
-    { code: "EZE", city: "Buenos Aires", country: "Argentina", name: "Ministro Pistarini International Airport" },
-    { code: "SCL", city: "Santiago", country: "Chile", name: "Arturo Merino Benitez International Airport" },
-    { code: "BOG", city: "Bogota", country: "Colombia", name: "El Dorado International Airport" },
-    { code: "LIM", city: "Lima", country: "Peru", name: "Jorge Chavez International Airport" },
-    { code: "PTY", city: "Panama City", country: "Panama", name: "Tocumen International Airport" },
-    { code: "SJU", city: "San Juan", country: "Puerto Rico", name: "Luis Munoz Marin International Airport" },
-    { code: "PUJ", city: "Punta Cana", country: "Dominican Republic", name: "Punta Cana International Airport" },
-    { code: "MBJ", city: "Montego Bay", country: "Jamaica", name: "Sangster International Airport" },
-    { code: "NAS", city: "Nassau", country: "Bahamas", name: "Lynden Pindling International Airport" },
-
-    // Africa
-    { code: "CAI", city: "Cairo", country: "Egypt", name: "Cairo International Airport", popular: true },
-    { code: "JNB", city: "Johannesburg", country: "South Africa", name: "O.R. Tambo International Airport", popular: true },
-    { code: "CPT", city: "Cape Town", country: "South Africa", name: "Cape Town International Airport" },
-    { code: "DUR", city: "Durban", country: "South Africa", name: "King Shaka International Airport" },
-    { code: "NBO", city: "Nairobi", country: "Kenya", name: "Jomo Kenyatta International Airport" },
-    { code: "ADD", city: "Addis Ababa", country: "Ethiopia", name: "Addis Ababa Bole International Airport" },
-    { code: "CMN", city: "Casablanca", country: "Morocco", name: "Mohammed V International Airport" },
-    { code: "RAK", city: "Marrakech", country: "Morocco", name: "Marrakesh Menara Airport" },
-    { code: "LOS", city: "Lagos", country: "Nigeria", name: "Murtala Muhammed International Airport" },
-    { code: "ACC", city: "Accra", country: "Ghana", name: "Kotoka International Airport" },
-    { code: "MRU", city: "Port Louis", country: "Mauritius", name: "Sir Seewoosagur Ramgoolam International Airport" },
-    { code: "SEZ", city: "Mahe", country: "Seychelles", name: "Seychelles International Airport" }
-  ];
+  { code:"ATL", city:"Atlanta, GA", country:"United States", name:"Hartsfield-Jackson Atlanta International Airport", popular:true },
+  { code:"LAX", city:"Los Angeles, CA", country:"United States", name:"Los Angeles International Airport", popular:true },
+  { code:"ORD", city:"Chicago, IL", country:"United States", name:"O'Hare International Airport", popular:true },
+  { code:"DFW", city:"Dallas/Fort Worth, TX", country:"United States", name:"Dallas/Fort Worth International Airport", popular:true },
+  { code:"DEN", city:"Denver, CO", country:"United States", name:"Denver International Airport", popular:true },
+  { code:"JFK", city:"New York, NY", country:"United States", name:"John F. Kennedy International Airport", popular:true },
+  { code:"SFO", city:"San Francisco, CA", country:"United States", name:"San Francisco International Airport", popular:true },
+  { code:"SEA", city:"Seattle, WA", country:"United States", name:"Seattle-Tacoma International Airport", popular:true },
+  { code:"LAS", city:"Las Vegas, NV", country:"United States", name:"Harry Reid International Airport", popular:true },
+  { code:"MCO", city:"Orlando, FL", country:"United States", name:"Orlando International Airport", popular:true },
+  { code:"EWR", city:"Newark, NJ", country:"United States", name:"Newark Liberty International Airport", popular:true },
+  { code:"CLT", city:"Charlotte, NC", country:"United States", name:"Charlotte Douglas International Airport", popular:true },
+  { code:"PHX", city:"Phoenix, AZ", country:"United States", name:"Phoenix Sky Harbor International Airport", popular:true },
+  { code:"IAH", city:"Houston, TX", country:"United States", name:"George Bush Intercontinental Airport", popular:true },
+  { code:"MIA", city:"Miami, FL", country:"United States", name:"Miami International Airport", popular:true },
+  { code:"BOS", city:"Boston, MA", country:"United States", name:"Logan International Airport", popular:true },
+  { code:"MSP", city:"Minneapolis, MN", country:"United States", name:"Minneapolis–Saint Paul International Airport", popular:true },
+  { code:"FLL", city:"Fort Lauderdale, FL", country:"United States", name:"Fort Lauderdale-Hollywood International Airport", popular:true },
+  { code:"DTW", city:"Detroit, MI", country:"United States", name:"Detroit Metropolitan Wayne County Airport", popular:true },
+  { code:"PHL", city:"Philadelphia, PA", country:"United States", name:"Philadelphia International Airport", popular:true },
+  { code:"LGA", city:"New York, NY", country:"United States", name:"LaGuardia Airport", popular:true },
+  { code:"BWI", city:"Baltimore, MD", country:"United States", name:"Baltimore/Washington International Airport", popular:true },
+  { code:"SLC", city:"Salt Lake City, UT", country:"United States", name:"Salt Lake City International Airport", popular:true },
+  { code:"SAN", city:"San Diego, CA", country:"United States", name:"San Diego International Airport", popular:true },
+  { code:"IAD", city:"Washington, DC", country:"United States", name:"Washington Dulles International Airport", popular:true },
+  { code:"DCA", city:"Washington, DC", country:"United States", name:"Ronald Reagan Washington National Airport", popular:true },
+  { code:"TPA", city:"Tampa, FL", country:"United States", name:"Tampa International Airport", popular:true },
+  { code:"PDX", city:"Portland, OR", country:"United States", name:"Portland International Airport", popular:true },
+  { code:"HNL", city:"Honolulu, HI", country:"United States", name:"Daniel K. Inouye International Airport", popular:true },
+  { code:"MDW", city:"Chicago, IL", country:"United States", name:"Chicago Midway International Airport", popular:true },
+  { code:"BNA", city:"Nashville, TN", country:"United States", name:"Nashville International Airport", popular:true },
+  { code:"AUS", city:"Austin, TX", country:"United States", name:"Austin-Bergstrom International Airport", popular:true },
+  { code:"DAL", city:"Dallas, TX", country:"United States", name:"Dallas Love Field Airport", popular:true },
+  { code:"STL", city:"St. Louis, MO", country:"United States", name:"St. Louis Lambert International Airport", popular:true },
+  { code:"SJC", city:"San Jose, CA", country:"United States", name:"Norman Y. Mineta San Jose International Airport", popular:true },
+  { code:"RDU", city:"Raleigh, NC", country:"United States", name:"Raleigh-Durham International Airport", popular:true },
+  { code:"MSY", city:"New Orleans, LA", country:"United States", name:"Louis Armstrong New Orleans International Airport", popular:true },
+  { code:"OAK", city:"Oakland, CA", country:"United States", name:"Oakland International Airport", popular:true },
+  { code:"SMF", city:"Sacramento, CA", country:"United States", name:"Sacramento International Airport", popular:true },
+  { code:"MCI", city:"Kansas City, MO", country:"United States", name:"Kansas City International Airport", popular:true },
+  { code:"SAT", city:"San Antonio, TX", country:"United States", name:"San Antonio International Airport", popular:true },
+  { code:"CLE", city:"Cleveland, OH", country:"United States", name:"Cleveland Hopkins International Airport", popular:true },
+  { code:"IND", city:"Indianapolis, IN", country:"United States", name:"Indianapolis International Airport", popular:true },
+  { code:"PIT", city:"Pittsburgh, PA", country:"United States", name:"Pittsburgh International Airport", popular:true },
+  { code:"CVG", city:"Cincinnati, OH", country:"United States", name:"Cincinnati/Northern Kentucky International Airport", popular:true },
+  { code:"CMH", city:"Columbus, OH", country:"United States", name:"John Glenn Columbus International Airport", popular:true },
+  { code:"RSW", city:"Fort Myers, FL", country:"United States", name:"Southwest Florida International Airport", popular:true },
+  { code:"PBI", city:"West Palm Beach, FL", country:"United States", name:"Palm Beach International Airport", popular:true },
+  { code:"JAX", city:"Jacksonville, FL", country:"United States", name:"Jacksonville International Airport", popular:true },
+  { code:"BDL", city:"Hartford, CT", country:"United States", name:"Bradley International Airport", popular:true },
+  { code:"MKE", city:"Milwaukee, WI", country:"United States", name:"Milwaukee Mitchell International Airport", popular:true },
+  { code:"OGG", city:"Maui, HI", country:"United States", name:"Kahului Airport", popular:true },
+  { code:"ABQ", city:"Albuquerque, NM", country:"United States", name:"Albuquerque International Sunport", popular:true },
+  { code:"OMA", city:"Omaha, NE", country:"United States", name:"Eppley Airfield", popular:true },
+  { code:"MEM", city:"Memphis, TN", country:"United States", name:"Memphis International Airport", popular:true },
+  { code:"RIC", city:"Richmond, VA", country:"United States", name:"Richmond International Airport", popular:true },
+  { code:"BOI", city:"Boise, ID", country:"United States", name:"Boise Airport", popular:true },
+  { code:"RNO", city:"Reno, NV", country:"United States", name:"Reno-Tahoe International Airport", popular:true },
+  { code:"CHS", city:"Charleston, SC", country:"United States", name:"Charleston International Airport", popular:true },
+  { code:"TUS", city:"Tucson, AZ", country:"United States", name:"Tucson International Airport", popular:true },
+  { code:"ORF", city:"Norfolk, VA", country:"United States", name:"Norfolk International Airport", popular:true },
+  { code:"SDF", city:"Louisville, KY", country:"United States", name:"Louisville Muhammad Ali International Airport", popular:true },
+  { code:"BUF", city:"Buffalo, NY", country:"United States", name:"Buffalo Niagara International Airport", popular:true },
+  { code:"GRR", city:"Grand Rapids, MI", country:"United States", name:"Gerald R. Ford International Airport", popular:true },
+  { code:"PVD", city:"Providence, RI", country:"United States", name:"T.F. Green Providence Airport", popular:true },
+  { code:"ELP", city:"El Paso, TX", country:"United States", name:"El Paso International Airport", popular:true },
+  { code:"OKC", city:"Oklahoma City, OK", country:"United States", name:"Will Rogers World Airport", popular:true },
+  { code:"TUL", city:"Tulsa, OK", country:"United States", name:"Tulsa International Airport", popular:true },
+  { code:"ANC", city:"Anchorage, AK", country:"United States", name:"Ted Stevens Anchorage International Airport", popular:true },
+  { code:"BHM", city:"Birmingham, AL", country:"United States", name:"Birmingham-Shuttlesworth International Airport", popular:true },
+  { code:"SYR", city:"Syracuse, NY", country:"United States", name:"Syracuse Hancock International Airport", popular:true },
+  { code:"ROC", city:"Rochester, NY", country:"United States", name:"Greater Rochester International Airport", popular:true },
+  { code:"ALB", city:"Albany, NY", country:"United States", name:"Albany International Airport", popular:true },
+  { code:"SAV", city:"Savannah, GA", country:"United States", name:"Savannah/Hilton Head International Airport", popular:true },
+  { code:"DSM", city:"Des Moines, IA", country:"United States", name:"Des Moines International Airport", popular:true },
+  { code:"LIT", city:"Little Rock, AR", country:"United States", name:"Bill and Hillary Clinton National Airport", popular:true },
+  { code:"PWM", city:"Portland, ME", country:"United States", name:"Portland International Jetport", popular:true },
+  { code:"BTV", city:"Burlington, VT", country:"United States", name:"Burlington International Airport", popular:true },
+  { code:"MHT", city:"Manchester, NH", country:"United States", name:"Manchester-Boston Regional Airport", popular:true },
+  { code:"BZN", city:"Bozeman, MT", country:"United States", name:"Bozeman Yellowstone International Airport", popular:true },
+  { code:"JAC", city:"Jackson Hole, WY", country:"United States", name:"Jackson Hole Airport", popular:true },
+  { code:"FSD", city:"Sioux Falls, SD", country:"United States", name:"Sioux Falls Regional Airport", popular:true },
+  { code:"FAR", city:"Fargo, ND", country:"United States", name:"Hector International Airport", popular:true },
+  { code:"BIL", city:"Billings, MT", country:"United States", name:"Billings Logan International Airport", popular:true }
+];
 
   function attachAirportAutocomplete(inputTarget, dropdownTarget, nextTarget) {
     const input = typeof inputTarget === "string" ? document.getElementById(inputTarget) : inputTarget;
@@ -1431,12 +1233,12 @@ function closeLeadsModal() {
   attachAirportAutocomplete("to", "toDropdown", "departure");
 
   // Bind Initial Multi City Flight Rows
-  document.querySelectorAll("#multiCityRows .multi-city-row").forEach(row => {
-    const fromInp = row.querySelector(".mc-from");
-    const fromDrop = row.querySelector(".mc-from-wrap .airport-dropdown");
-    const toInp = row.querySelector(".mc-to");
-    const toDrop = row.querySelector(".mc-to-wrap .airport-dropdown");
-    const dateInp = row.querySelector(".mc-date");
+  document.querySelectorAll("#multiCityContainer .multi-city-leg").forEach(leg => {
+    const fromInp = leg.querySelector(".mc-from");
+    const fromDrop = leg.querySelector(".mc-from-wrap .airport-dropdown");
+    const toInp = leg.querySelector(".mc-to");
+    const toDrop = leg.querySelector(".mc-to-wrap .airport-dropdown");
+    const dateInp = leg.querySelector(".mc-date");
     attachAirportAutocomplete(fromInp, fromDrop, toInp);
     attachAirportAutocomplete(toInp, toDrop, dateInp);
   });
