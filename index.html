@@ -17,10 +17,11 @@ button,input,select{font:inherit}
 .container{width:min(1100px,92%);margin:auto}
 .site-header{background:#fff}
 .topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;line-height:1.05;text-decoration:none}
-.brand-mark{width:50px;height:50px;border-radius:50%;overflow:hidden;display:grid;place-items:center;box-shadow:0 2px 8px rgba(6,57,155,0.18);flex-shrink:0;background:#fff}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;text-decoration:none}
+.brand-mark{width:48px;height:48px;border-radius:50%;overflow:hidden;display:grid;place-items:center;box-shadow:0 2px 8px rgba(6,57,155,0.18);flex-shrink:0;background:#fff}
 .brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
-.brand-name span{display:block;color:#06399b;font-size:18px;letter-spacing:-0.2px}.brand-name b{color:#00aeea}
+.brand-name{display:inline-flex;align-items:center;white-space:nowrap;font-size:19px;letter-spacing:-0.2px;line-height:1}
+.brand-name span{display:inline;color:#06399b}.brand-name b{color:#00aeea;margin-left:4px}
 .menu-btn{border:1px solid #ddd;background:white;border-radius:3px;width:42px;height:34px;font-size:21px;color:#777;cursor:pointer}
 .call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px;flex-wrap:wrap}
 .call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
@@ -188,7 +189,7 @@ h1 span,.section-title span{color:var(--blue)}
 
 <section class="section group-section">
   <div class="container">
-    <h2 class="section-title">Airlines <span>Group Travel</span></h2>
+    <h2 class="section-title">Group Travel <span>Desk</span></h2>
     <a class="view-link" href="#airlines">View all Groups →</a>
     <div class="airline-grid" id="airlines">
       <a class="airline" href="#quoteForm"><span class="plane-icon">♧✈</span>American Group Booking</a>
@@ -286,12 +287,12 @@ h1 span,.section-title span{color:var(--blue)}
     <div>
       <a class="footer-brand" href="#top" style="text-decoration:none">
         <span class="brand-mark" style="width:44px;height:44px;"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
-        <span class="brand-name"><span style="color:#00b5ef;font-size:17px;font-weight:700">Group Travel <b style="color:#06399b;font-size:17px">Desk</b></span></span>
+        <span class="brand-name" style="font-size:18px;font-weight:700;display:inline-flex;align-items:center;white-space:nowrap"><span style="color:#00b5ef">Group Travel</span><b style="color:#06399b;margin-left:4px">Desk</b></span>
       </a>
       <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
       <div class="footer-columns">
         <div><p class="footer-heading">QUICK LINKS</p><div class="footer-links"><a href="#">Privacy policy</a><a href="#">Refund Policy</a><a href="#">Terms &amp; Condition</a><a href="#blogs">News</a><a href="#destinations">Destination</a><a href="#">Sitemap</a></div></div>
-        <div><p class="footer-heading">ADDRESS</p><div class="footer-contact"><strong>📍 &nbsp; Group Travel Desk LLC</strong><span>8 The Green, Suite A, Dover, Delaware 19901</span><span>✉ &nbsp; info@grouptraveldesk.com</span><span>☎ &nbsp; +1-XXX-XXX-XXXX</span><span class="trust">Review us on ★ Trustpilot</span><span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span></div></div>
+        <div><p class="footer-heading">ADDRESS</p><div class="footer-contact"><strong>📍 &nbsp; Group Travel Desk LLC</strong><span>XXXXX, XXXXX, XXXXX</span><span>✉ &nbsp; info@grouptraveldesk.com</span><span>☎ &nbsp; +1-XXX-XXX-XXXX</span><span class="trust">Review us on ★ Trustpilot</span><span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span></div></div>
       </div>
       <div class="socials"><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Pinterest">p</a></div>
     </div>
