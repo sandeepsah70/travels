@@ -27,21 +27,34 @@ button,input,select{font:inherit}
 .call-pill strong{color:#078a32}
 .leads-pill-btn{border:1px solid #08aeea;background:#f0faff;border-radius:20px;padding:8px 14px;font-size:12px;color:#06399b;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.2s}
 .leads-pill-btn:hover{background:#ddf2ff}
-.hero{background:linear-gradient(90deg,rgba(255,255,255,.30),rgba(255,255,255,.15)),url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;padding:40px 0 0}
+.hero{background:linear-gradient(rgba(8,28,62,.55),rgba(6,57,155,.45)),url('https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=1920&q=85') center/cover no-repeat;padding:46px 0 34px}
 .hero-inner{max-width:1000px;margin:auto;width:92%}
-.eyebrow{font-size:15px;margin:0 0 7px}
-h1{font-size:clamp(23px,3.2vw,34px);font-weight:400;margin:0 0 20px}
-h1 span,.section-title span{color:var(--blue)}
+.eyebrow{font-size:15px;margin:0 0 7px;color:#fff;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+h1{font-size:clamp(23px,3.2vw,34px);font-weight:700;margin:0 0 20px;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
+.section-title span{color:var(--blue)}
 .trip-tabs{display:flex;gap:2px;width:min(600px,100%);margin-bottom:8px}
 .trip-tab{flex:1;background:var(--navy);color:#fff;border:0;padding:14px 7px;cursor:pointer;font-size:13px}
 .trip-tab.active{background:#05aeea}
-.booking-box{background:#fafafa;padding:24px 16px 16px;box-shadow:0 2px 5px #0000000d;max-width:1000px}
+.booking-box{background:#fafafa;padding:24px 16px 16px;box-shadow:0 4px 15px rgba(0,0,0,0.15);max-width:1000px;border-radius:6px}
 .form-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px 18px}
 .field{grid-column:span 3;min-width:0}
 .field.wide{grid-column:span 4}
 .field label{display:block;font-size:12px;color:#666;margin:0 0 10px}
-.field input,.field select{width:100%;height:37px;border:1px solid #e7e7e7;background:#fff;border-radius:3px;padding:0 10px;color:#666;font-size:12px}
+.field input,.field select{width:100%;height:37px;border:1px solid #e7e7e7;background:#fff;border-radius:3px;padding:0 10px;color:#333;font-size:12px}
 .field input::placeholder{color:#888}
+.airport-field-wrap{position:relative;width:100%}
+.airport-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:300px;background:#fff;border:1px solid #cbe4fc;border-radius:8px;box-shadow:0 12px 30px rgba(6,57,155,.2);overflow-y:auto;z-index:99999;display:none}
+.airport-dropdown.open{display:block}
+.airport-dropdown-header{padding:8px 12px;font-size:10.5px;font-weight:700;color:#06399b;background:#f0f8ff;border-bottom:1px solid #e1effe;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0;z-index:2}
+.airport-item{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;cursor:pointer;border-bottom:1px solid #f1f5f9;transition:all .15s ease;border-left:3px solid transparent}
+.airport-item:hover,.airport-item.active{background:#eff8ff;border-left-color:#08aeea}
+.airport-item-left{display:flex;align-items:center;gap:10px;min-width:0}
+.airport-icon{width:26px;height:26px;border-radius:50%;background:#e0f2fe;color:#0284c7;display:grid;place-items:center;font-size:12px;flex-shrink:0}
+.airport-meta{display:flex;flex-direction:column;min-width:0;text-align:left}
+.airport-city{font-size:12px;font-weight:700;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.airport-name{font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.airport-code{font-size:11px;font-weight:800;color:#06399b;background:#e2f2ff;padding:2px 7px;border-radius:4px;letter-spacing:.5px;flex-shrink:0;margin-left:8px}
 .phone-field{grid-column:span 4}
 .submit-field{grid-column:span 3;display:flex;align-items:end}
 .quote-btn{border:0;background:#06aeea;color:#fff;font-size:12px;font-weight:700;padding:12px 22px;cursor:pointer;min-height:38px;transition:all 0.2s}
@@ -193,8 +206,20 @@ h1 span,.section-title span{color:var(--blue)}
     </div>
     <form class="booking-box" id="quoteForm">
       <div class="form-grid">
-        <div class="field wide"><label for="from">Flying from:</label><input id="from" name="from" placeholder="Start Searching..." required></div>
-        <div class="field wide"><label for="to">To:</label><input id="to" name="to" placeholder="Start Searching..." required></div>
+        <div class="field wide">
+          <label for="from">Flying from:</label>
+          <div class="airport-field-wrap">
+            <input id="from" name="from" placeholder="Enter City, Airport, or Code (e.g. Delhi)" autocomplete="off" required>
+            <div class="airport-dropdown" id="fromDropdown"></div>
+          </div>
+        </div>
+        <div class="field wide">
+          <label for="to">To:</label>
+          <div class="airport-field-wrap">
+            <input id="to" name="to" placeholder="Enter Destination City or Code (e.g. Mumbai)" autocomplete="off" required>
+            <div class="airport-dropdown" id="toDropdown"></div>
+          </div>
+        </div>
         <div class="field"><label for="departure">Departure:</label><input id="departure" name="departure" type="date" required></div>
         <div class="field" id="returnField"><label for="returnDate">Return Date:</label><input id="returnDate" name="returnDate" type="date"></div>
         <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder=" " required></div>
@@ -230,15 +255,15 @@ h1 span,.section-title span{color:var(--blue)}
     <a class="view-link" href="#deals">View all Deals →</a>
     <div class="deals-list" id="deals">
       <article class="deal-card">
-        <img class="deal-img" src="https://images.unsplash.com/photo-1529159136881-3be5a745e9d4?auto=format&fit=crop&w=1000&q=85" alt="Friends enjoying a group trip">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?auto=format&fit=crop&w=1000&q=85" alt="Friends enjoying a group trip" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=1000&q=85'">
         <div class="deal-body"><h3 class="deal-title">Group Travel Deals</h3><p class="deal-desc">At First, Planning Flights For A Big Group May Appear Like A Challenging Task. However, You Can Make Your Journey Easy And Avail Excellent Discoun...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
       </article>
       <article class="deal-card">
-        <img class="deal-img" src="https://images.unsplash.com/photo-1516979187457-637Abb4f9353?auto=format&fit=crop&w=1000&q=85" alt="Travel map and planning" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=85'">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1000&q=85" alt="Domestic and international scenic flight deals" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1000&q=85'">
         <div class="deal-body"><h3 class="deal-title">Domestic And International Deals</h3><p class="deal-desc">Exploring The Best Tourist Locations Across The Globe Is Always Thrilling, But Coupled With Reasonable Flight Deals, It Becomes Icing On The Cake. Whe...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
       </article>
       <article class="deal-card">
-        <img class="deal-img" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85" alt="Airplane business class cabin">
+        <img class="deal-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1000&q=85" alt="Airplane business class cabin" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85'">
         <div class="deal-body"><h3 class="deal-title">Business Class Deals</h3><p class="deal-desc">Are You Looking For The Best Business Class Deals? Our Attractive Flight Offers Are Tailored For A Superior Travel Experience, Whether Y...</p><a class="explore" href="#quoteForm">Explore Now</a></div>
       </article>
     </div>
@@ -268,7 +293,7 @@ h1 span,.section-title span{color:var(--blue)}
       <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=85" alt="Singapore waterfront"><span>Singapore</span></a>
       <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=85" alt="Dubai skyline"><span>Dubai</span></a>
       <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=85" alt="Mount Fuji in Japan"><span>Tokyo</span></a>
-      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?auto=format&fit=crop&w=800&q=85" alt="Mediterranean coastal city"><span>Tel Aviv</span></a>
+      <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1544971587-b842c27f8e14?auto=format&fit=crop&w=800&q=85" alt="Mediterranean coastal city of Tel Aviv" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?auto=format&fit=crop&w=800&q=85'"><span>Tel Aviv</span></a>
       <a class="destination-card" href="#quoteForm"><img loading="lazy" src="https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?auto=format&fit=crop&w=800&q=85" alt="Miami waterfront skyline"><span>Miami</span></a>
     </div>
   </div>
@@ -295,7 +320,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-marcus.jpg" alt="Marcus Vance">
             <div class="testimonial-author">
               <strong>Marcus Vance</strong>
-              <span>United States</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -307,7 +332,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-sophie.jpg" alt="Sophie Moreau">
             <div class="testimonial-author">
               <strong>Sophie Moreau</strong>
-              <span>France</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -319,7 +344,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-liam.jpg" alt="Liam O'Connor">
             <div class="testimonial-author">
               <strong>Liam O'Connor</strong>
-              <span>Australia</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -331,7 +356,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-hannah.jpg" alt="Hannah Wright">
             <div class="testimonial-author">
               <strong>Hannah Wright</strong>
-              <span>United Kingdom</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -343,7 +368,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-lukas.jpg" alt="Lukas Weber">
             <div class="testimonial-author">
               <strong>Lukas Weber</strong>
-              <span>Germany</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -355,7 +380,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-elena.jpg" alt="Elena Rostova">
             <div class="testimonial-author">
               <strong>Elena Rostova</strong>
-              <span>Australia</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -367,7 +392,7 @@ h1 span,.section-title span{color:var(--blue)}
             <img class="avatar" loading="lazy" src="avatar-david.jpg" alt="David Miller">
             <div class="testimonial-author">
               <strong>David Miller</strong>
-              <span>United States</span>
+              
             </div>
           </div>
           <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
@@ -396,10 +421,43 @@ h1 span,.section-title span{color:var(--blue)}
       </a>
       <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
       <div class="footer-columns">
-        <div><p class="footer-heading">QUICK LINKS</p><div class="footer-links"><a href="#">Privacy policy</a><a href="#">Refund Policy</a><a href="#">Terms &amp; Condition</a><a href="#blogs">News</a><a href="#destinations">Destination</a><a href="#">Sitemap</a></div></div>
-        <div><p class="footer-heading">ADDRESS</p><div class="footer-contact"><strong>📍 &nbsp; Group Travel Desk LLC</strong><span>XXXXX, XXXXX, XXXXX</span><span>✉ &nbsp; info@grouptraveldesk.com</span><span>☎ &nbsp; +1-XXX-XXX-XXXX</span><span class="trust">Review us on ★ Trustpilot</span><span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span></div></div>
+        <div>
+          <p class="footer-heading">QUICK LINKS</p>
+          <div class="footer-links">
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="refund-policy.html">Refund Policy</a>
+            <a href="terms-conditions.html">Terms &amp; Conditions</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#airlines">Airlines</a>
+            <a href="#deals">Popular Deals</a>
+          </div>
+        </div>
+        <div>
+          <p class="footer-heading">ADDRESS</p>
+          <div class="footer-contact">
+            <strong>📍 &nbsp; Group Travel Desk LLC</strong>
+            <span>XXXXX, XXXXX, XXXXX</span>
+            <span>✉ &nbsp; info@grouptraveldesk.com</span>
+            <span>☎ &nbsp; +1-XXX-XXX-XXXX</span>
+            <span class="trust">Review us on ★ Trustpilot</span>
+            <span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span>
+          </div>
+        </div>
       </div>
       <div class="socials"><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Pinterest">p</a></div>
+      <!-- Group Travel Help Desk -->
+      <div style="margin-top:24px;background:#f0f7ff;border:1px solid #c8e1fb;border-radius:10px;padding:16px 18px;color:#334155;text-align:left">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px;line-height:1">🎧</span>
+          <strong style="color:#06399b;font-size:13px;letter-spacing:0.5px">GROUP TRAVEL HELP DESK</strong>
+        </div>
+        <p style="font-size:11.5px;line-height:1.6;margin:0 0 10px;color:#555">Need assistance with group flight reservations, seat blocks, or custom itineraries? Our dedicated help desk is available 24/7.</p>
+        <div style="display:flex;flex-direction:column;gap:5px;font-size:11.5px">
+          <span style="color:#222">📞 <strong>24/7 Desk Helpline:</strong> <a href="tel:+1800XXXXXXX" style="color:#08aeea;font-weight:700">+1-800-XXX-XXXX</a></span>
+          <span style="color:#222">✉ <strong>Group Help Desk Email:</strong> <a href="mailto:support@grouptraveldesk.com" style="color:#08aeea;font-weight:700">support@grouptraveldesk.com</a></span>
+          <span style="color:#078a32;font-weight:600">✓ Dedicated Specialists for Corporate, Student &amp; Family Groups</span>
+        </div>
+      </div>
     </div>
     <div><p class="footer-heading">COMPANY</p><div class="footer-links"><a href="#">Home</a><a href="#">About Us</a><a href="#quoteForm">Contact us</a><a href="#blogs">Blog</a><a href="#airlines">Routes</a><a href="#deals">Deals</a></div></div>
   </div>
@@ -719,6 +777,245 @@ function closeLeadsModal() {
     const idx = Math.min(Math.round(track.scrollLeft / step), cards.length - 1);
     dots.forEach((dot, dIdx) => dot.classList.toggle("active", dIdx === idx));
   }, { passive: true });
+})();
+
+// MakeMyTrip-Style Airport Autocomplete
+(function initAirportSearch() {
+  const AIRPORTS = [
+    // India - Top Domestic Hubs & Major Cities
+    { code: "DEL", city: "New Delhi", country: "India", name: "Indira Gandhi International Airport", popular: true },
+    { code: "BOM", city: "Mumbai", country: "India", name: "Chhatrapati Shivaji Maharaj International Airport", popular: true },
+    { code: "BLR", city: "Bengaluru", country: "India", name: "Kempegowda International Airport", popular: true },
+    { code: "HYD", city: "Hyderabad", country: "India", name: "Rajiv Gandhi International Airport", popular: true },
+    { code: "CCU", city: "Kolkata", country: "India", name: "Netaji Subhash Chandra Bose International Airport", popular: true },
+    { code: "MAA", city: "Chennai", country: "India", name: "Chennai International Airport", popular: true },
+    { code: "AMD", city: "Ahmedabad", country: "India", name: "Sardar Vallabhbhai Patel International Airport", popular: true },
+    { code: "GOI", city: "Goa (Dabolim)", country: "India", name: "Dabolim Airport", popular: true },
+    { code: "GOX", city: "Goa (Mopa)", country: "India", name: "Manohar International Airport" },
+    { code: "PNQ", city: "Pune", country: "India", name: "Pune International Airport" },
+    { code: "COK", city: "Kochi", country: "India", name: "Cochin International Airport" },
+    { code: "JAI", city: "Jaipur", country: "India", name: "Jaipur International Airport" },
+    { code: "LKO", city: "Lucknow", country: "India", name: "Chaudhary Charan Singh International Airport" },
+    { code: "IXC", city: "Chandigarh", country: "India", name: "Shaheed Bhagat Singh International Airport" },
+    { code: "ATQ", city: "Amritsar", country: "India", name: "Sri Guru Ram Dass Jee International Airport" },
+    { code: "TRV", city: "Thiruvananthapuram", country: "India", name: "Trivandrum International Airport" },
+    { code: "PAT", city: "Patna", country: "India", name: "Jay Prakash Narayan International Airport" },
+    { code: "GAU", city: "Guwahati", country: "India", name: "Lokpriya Gopinath Bordoloi International Airport" },
+    { code: "BBI", city: "Bhubaneswar", country: "India", name: "Biju Patnaik International Airport" },
+    { code: "IDR", city: "Indore", country: "India", name: "Devi Ahilya Bai Holkar Airport" },
+    { code: "VNS", city: "Varanasi", country: "India", name: "Lal Bahadur Shastri International Airport" },
+    { code: "NAG", city: "Nagpur", country: "India", name: "Dr. Babasaheb Ambedkar International Airport" },
+    { code: "SXR", city: "Srinagar", country: "India", name: "Sheikh ul-Alam International Airport" },
+    { code: "IXB", city: "Bagdogra / Siliguri", country: "India", name: "Bagdogra Airport" },
+    { code: "VTZ", city: "Visakhapatnam", country: "India", name: "Visakhapatnam International Airport" },
+    { code: "CCJ", city: "Kozhikode", country: "India", name: "Calicut International Airport" },
+    { code: "IXR", city: "Ranchi", country: "India", name: "Birsa Munda Airport" },
+    { code: "BDQ", city: "Vadodara", country: "India", name: "Vadodara Airport" },
+    { code: "UDR", city: "Udaipur", country: "India", name: "Maharana Pratap Airport" },
+    { code: "CJB", city: "Coimbatore", country: "India", name: "Coimbatore International Airport" },
+    { code: "IXJ", city: "Jammu", country: "India", name: "Jammu Airport" },
+    { code: "DED", city: "Dehradun", country: "India", name: "Jolly Grant Airport" },
+    { code: "IXL", city: "Leh Ladakh", country: "India", name: "Kushok Bakula Rimpochee Airport" },
+    { code: "IXA", city: "Agartala", country: "India", name: "Maharaja Bir Bikram Airport" },
+    { code: "IMF", city: "Imphal", country: "India", name: "Bir Tikendrajit International Airport" },
+    { code: "IXM", city: "Madurai", country: "India", name: "Madurai Airport" },
+    { code: "TRZ", city: "Tiruchirappalli", country: "India", name: "Tiruchirappalli International Airport" },
+    { code: "IXE", city: "Mangalore", country: "India", name: "Mangaluru International Airport" },
+    { code: "RPR", city: "Raipur", country: "India", name: "Swami Vivekananda Airport" },
+    { code: "BHO", city: "Bhopal", country: "India", name: "Raja Bhoj Airport" },
+
+    // Middle East
+    { code: "DXB", city: "Dubai", country: "United Arab Emirates", name: "Dubai International Airport", popular: true },
+    { code: "AUH", city: "Abu Dhabi", country: "United Arab Emirates", name: "Zayed International Airport" },
+    { code: "SHJ", city: "Sharjah", country: "United Arab Emirates", name: "Sharjah International Airport" },
+    { code: "DOH", city: "Doha", country: "Qatar", name: "Hamad International Airport", popular: true },
+    { code: "JED", city: "Jeddah", country: "Saudi Arabia", name: "King Abdulaziz International Airport" },
+    { code: "RUH", city: "Riyadh", country: "Saudi Arabia", name: "King Khalid International Airport" },
+    { code: "MCT", city: "Muscat", country: "Oman", name: "Muscat International Airport" },
+    { code: "KWI", city: "Kuwait City", country: "Kuwait", name: "Kuwait International Airport" },
+    { code: "BAH", city: "Manama", country: "Bahrain", name: "Bahrain International Airport" },
+
+    // Europe & United Kingdom
+    { code: "LHR", city: "London", country: "United Kingdom", name: "Heathrow Airport", popular: true },
+    { code: "LGW", city: "London", country: "United Kingdom", name: "Gatwick Airport" },
+    { code: "CDG", city: "Paris", country: "France", name: "Charles de Gaulle Airport", popular: true },
+    { code: "FRA", city: "Frankfurt", country: "Germany", name: "Frankfurt Airport", popular: true },
+    { code: "AMS", city: "Amsterdam", country: "Netherlands", name: "Amsterdam Airport Schiphol" },
+    { code: "ZRH", city: "Zurich", country: "Switzerland", name: "Zurich Airport" },
+    { code: "FCO", city: "Rome", country: "Italy", name: "Leonardo da Vinci-Fiumicino Airport" },
+    { code: "MXP", city: "Milan", country: "Italy", name: "Milan Malpensa Airport" },
+    { code: "MAD", city: "Madrid", country: "Spain", name: "Adolfo Suarez Madrid-Barajas Airport" },
+    { code: "BCN", city: "Barcelona", country: "Spain", name: "Josep Tarradellas Barcelona-El Prat Airport" },
+    { code: "IST", city: "Istanbul", country: "Turkey", name: "Istanbul Airport" },
+
+    // North America (USA & Canada)
+    { code: "JFK", city: "New York", country: "United States", name: "John F. Kennedy International Airport", popular: true },
+    { code: "EWR", city: "Newark / New York", country: "United States", name: "Newark Liberty International Airport" },
+    { code: "SFO", city: "San Francisco", country: "United States", name: "San Francisco International Airport", popular: true },
+    { code: "LAX", city: "Los Angeles", country: "United States", name: "Los Angeles International Airport" },
+    { code: "ORD", city: "Chicago", country: "United States", name: "O'Hare International Airport", popular: true },
+    { code: "DFW", city: "Dallas / Fort Worth", country: "United States", name: "Dallas/Fort Worth International Airport" },
+    { code: "ATL", city: "Atlanta", country: "United States", name: "Hartsfield-Jackson Atlanta International Airport" },
+    { code: "SEA", city: "Seattle", country: "United States", name: "Seattle-Tacoma International Airport" },
+    { code: "IAD", city: "Washington D.C.", country: "United States", name: "Washington Dulles International Airport" },
+    { code: "BOS", city: "Boston", country: "United States", name: "Boston Logan International Airport" },
+    { code: "MIA", city: "Miami", country: "United States", name: "Miami International Airport" },
+    { code: "YYZ", city: "Toronto", country: "Canada", name: "Toronto Pearson International Airport", popular: true },
+    { code: "YVR", city: "Vancouver", country: "Canada", name: "Vancouver International Airport" },
+
+    // Asia-Pacific & Beyond
+    { code: "SIN", city: "Singapore", country: "Singapore", name: "Singapore Changi Airport", popular: true },
+    { code: "BKK", city: "Bangkok", country: "Thailand", name: "Suvarnabhumi Airport", popular: true },
+    { code: "HKT", city: "Phuket", country: "Thailand", name: "Phuket International Airport" },
+    { code: "KUL", city: "Kuala Lumpur", country: "Malaysia", name: "Kuala Lumpur International Airport", popular: true },
+    { code: "DPS", city: "Bali / Denpasar", country: "Indonesia", name: "Ngurah Rai International Airport", popular: true },
+    { code: "NRT", city: "Tokyo", country: "Japan", name: "Narita International Airport" },
+    { code: "HND", city: "Tokyo", country: "Japan", name: "Haneda Airport" },
+    { code: "ICN", city: "Seoul", country: "South Korea", name: "Incheon International Airport" },
+    { code: "HKG", city: "Hong Kong", country: "Hong Kong", name: "Hong Kong International Airport" },
+    { code: "SYD", city: "Sydney", country: "Australia", name: "Sydney Kingsford Smith Airport", popular: true },
+    { code: "MEL", city: "Melbourne", country: "Australia", name: "Melbourne Airport" },
+    { code: "AKL", city: "Auckland", country: "New Zealand", name: "Auckland Airport" },
+    { code: "CMB", city: "Colombo", country: "Sri Lanka", name: "Bandaranaike International Airport" },
+    { code: "MLE", city: "Male", country: "Maldives", name: "Velana International Airport", popular: true },
+    { code: "KTM", city: "Kathmandu", country: "Nepal", name: "Tribhuvan International Airport" },
+    { code: "CAI", city: "Cairo", country: "Egypt", name: "Cairo International Airport" },
+    { code: "JNB", city: "Johannesburg", country: "South Africa", name: "O.R. Tambo International Airport" }
+  ];
+
+  function setupAutocomplete(inputId, dropdownId, nextInputId) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    if (!input || !dropdown) return;
+
+    let selectedIdx = -1;
+
+    function renderList(list, title) {
+      if (!list.length) {
+        dropdown.innerHTML = `
+          <div class="airport-dropdown-header">${title}</div>
+          <div style="padding:14px 12px;text-align:center;color:#888;font-size:12px;">No matching airport found. Press Enter to use what you typed.</div>
+        `;
+        dropdown.classList.add("open");
+        return;
+      }
+
+      dropdown.innerHTML = `
+        <div class="airport-dropdown-header">${title}</div>
+        ${list.map((item, idx) => `
+          <div class="airport-item" data-index="${idx}" data-code="${item.code}">
+            <div class="airport-item-left">
+              <span class="airport-icon">✈</span>
+              <div class="airport-meta">
+                <span class="airport-city">${item.city}, ${item.country}</span>
+                <span class="airport-name">${item.name}</span>
+              </div>
+            </div>
+            <span class="airport-code">${item.code}</span>
+          </div>
+        `).join('')}
+      `;
+      dropdown.classList.add("open");
+      selectedIdx = -1;
+
+      // Attach click events
+      dropdown.querySelectorAll(".airport-item").forEach((el, idx) => {
+        el.addEventListener("click", () => {
+          selectAirport(list[idx]);
+        });
+      });
+    }
+
+    function selectAirport(item) {
+      input.value = `${item.city} (${item.code}) - ${item.name}`;
+      dropdown.classList.remove("open");
+      if (nextInputId) {
+        const next = document.getElementById(nextInputId);
+        if (next && !next.value.trim()) next.focus();
+      }
+    }
+
+    function filterAirports(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) {
+        const popular = AIRPORTS.filter(a => a.popular);
+        renderList(popular, "POPULAR AIRPORTS & HUBS");
+        return;
+      }
+
+      // Filter matches on city, airport name, or 3-letter IATA code
+      const matched = AIRPORTS.filter(a =>
+        a.code.toLowerCase().includes(q) ||
+        a.city.toLowerCase().includes(q) ||
+        a.name.toLowerCase().includes(q) ||
+        a.country.toLowerCase().includes(q)
+      );
+
+      // Sort by relevance (exact code match or startsWith gets priority)
+      matched.sort((a, b) => {
+        const aCodeMatch = a.code.toLowerCase() === q;
+        const bCodeMatch = b.code.toLowerCase() === q;
+        if (aCodeMatch && !bCodeMatch) return -1;
+        if (!aCodeMatch && bCodeMatch) return 1;
+        const aCityStart = a.city.toLowerCase().startsWith(q);
+        const bCityStart = b.city.toLowerCase().startsWith(q);
+        if (aCityStart && !bCityStart) return -1;
+        if (!aCityStart && bCityStart) return 1;
+        return 0;
+      });
+
+      renderList(matched.slice(0, 15), `SEARCH RESULTS (${matched.length})`);
+    }
+
+    input.addEventListener("focus", () => {
+      filterAirports(input.value);
+    });
+
+    input.addEventListener("input", () => {
+      filterAirports(input.value);
+    });
+
+    input.addEventListener("keydown", (e) => {
+      const items = dropdown.querySelectorAll(".airport-item");
+      if (!items.length || !dropdown.classList.contains("open")) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        selectedIdx = (selectedIdx + 1) % items.length;
+        highlightItem(items);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        selectedIdx = (selectedIdx - 1 + items.length) % items.length;
+        highlightItem(items);
+      } else if (e.key === "Enter" && selectedIdx >= 0 && items[selectedIdx]) {
+        e.preventDefault();
+        items[selectedIdx].click();
+      } else if (e.key === "Escape") {
+        dropdown.classList.remove("open");
+      }
+    });
+
+    function highlightItem(items) {
+      items.forEach((item, idx) => {
+        if (idx === selectedIdx) {
+          item.classList.add("active");
+          item.scrollIntoView({ block: "nearest" });
+        } else {
+          item.classList.remove("active");
+        }
+      });
+    }
+  }
+
+  setupAutocomplete("from", "fromDropdown", "to");
+  setupAutocomplete("to", "toDropdown", "departure");
+
+  // Close dropdowns on outside click
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".airport-field-wrap")) {
+      document.querySelectorAll(".airport-dropdown").forEach(d => d.classList.remove("open"));
+    }
+  });
 })();
 
 document.getElementById("year").textContent = new Date().getFullYear();
