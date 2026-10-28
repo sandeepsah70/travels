@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AirlinesGroup Travel | Fly Together, Save Together</title>
+<title>Group Travel Desk | Plan • Book • Travel Together</title>
+<link rel="icon" type="image/jpeg" href="logo-icon.jpg">
 <!-- Supabase JS Client Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -16,9 +17,11 @@ button,input,select{font:inherit}
 .container{width:min(1100px,92%);margin:auto}
 .site-header{background:#fff}
 .topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:16px;line-height:1.02}
-.brand-mark{width:54px;height:48px;border:3px solid #00b8ef;border-right-color:transparent;border-radius:50%;display:grid;place-items:center;color:#00aeea;font-size:29px;transform:rotate(-12deg)}
-.brand-name span{display:block;color:#00b5ef}.brand-name b{color:#ff2525}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;line-height:1.1;text-decoration:none}
+.brand-mark{width:50px;height:50px;border-radius:50%;overflow:hidden;display:grid;place-items:center;box-shadow:0 2px 8px rgba(6,57,155,0.18);flex-shrink:0;background:#fff}
+.brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
+.brand-name span{display:block;color:#06399b;font-size:17px;letter-spacing:-0.2px}.brand-name b{color:#00aeea}
+.brand-tagline{display:block;font-size:8.5px;color:#555;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
 .menu-btn{border:1px solid #ddd;background:white;border-radius:3px;width:42px;height:34px;font-size:21px;color:#777;cursor:pointer}
 .call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px;flex-wrap:wrap}
 .call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
@@ -142,9 +145,12 @@ h1 span,.section-title span{color:var(--blue)}
 <body>
 <header class="site-header" id="top">
   <div class="container topbar">
-    <a class="brand" href="#" aria-label="AirlinesGroup Travel home">
-      <span class="brand-mark">✈</span>
-      <span class="brand-name"><span>AirlinesGroup</span><b>Travel</b></span>
+    <a class="brand" href="#" aria-label="Group Travel Desk home">
+      <span class="brand-mark"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
+      <div class="brand-name">
+        <span>Group Travel <b>Desk</b></span>
+        <span class="brand-tagline">Plan • Book • Travel Together</span>
+      </div>
     </a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
   </div>
@@ -154,7 +160,7 @@ h1 span,.section-title span{color:var(--blue)}
       <span>📊 Supabase Database:</span>
       <strong id="leadsCount">5 Leads Saved</strong>
     </button>
-    <div class="call-pill">☎ &nbsp; Book a Group – Call us 24/7 &nbsp; <strong>+1-888-829-1288</strong></div>
+    <div class="call-pill">☎ &nbsp; Book a Group – Call us 24/7 &nbsp; <strong>+1-XXX-XXX-XXXX</strong></div>
   </div>
 </header>
 
@@ -224,7 +230,7 @@ h1 span,.section-title span{color:var(--blue)}
 
 <section class="features">
   <div class="container">
-    <h2>Why Choose Airlines Group Travel</h2>
+    <h2>Why Choose Group Travel Desk</h2>
     <div class="feature-grid">
       <div class="feature"><span class="feature-icon">♧%</span><h3>Attractive Deals &amp; Discounts</h3><p>We regularly provide fair deals and discounts for group bookings.</p></div>
       <div class="feature"><span class="feature-icon">▤◷</span><h3>Book Now, Pay Later</h3><p>Passengers can avail of this attractive option to book instantly, and the payment can be made later.</p></div>
@@ -282,18 +288,24 @@ h1 span,.section-title span{color:var(--blue)}
 <footer class="site-footer">
   <div class="footer-panel">
     <div>
-      <a class="footer-brand" href="#top"><span class="brand-mark">✈</span><span class="brand-name"><span style="color:#00b5ef">AirlinesGroup</span><b style="color:#ff2525">Travel</b></span></a>
-      <p class="footer-about">Established in the year 2022, we at Airlines Group Travel aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
+      <a class="footer-brand" href="#top" style="text-decoration:none">
+        <span class="brand-mark" style="width:44px;height:44px;"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
+        <div class="brand-name">
+          <span style="color:#00b5ef;font-size:17px;font-weight:700">Group Travel <b style="color:#06399b;font-size:17px">Desk</b></span>
+          <span class="brand-tagline" style="color:#777">Plan • Book • Travel Together</span>
+        </div>
+      </a>
+      <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
       <div class="footer-columns">
         <div><p class="footer-heading">QUICK LINKS</p><div class="footer-links"><a href="#">Privacy policy</a><a href="#">Refund Policy</a><a href="#">Terms &amp; Condition</a><a href="#blogs">News</a><a href="#destinations">Destination</a><a href="#">Sitemap</a></div></div>
-        <div><p class="footer-heading">ADDRESS</p><div class="footer-contact"><strong>📍 &nbsp; Airfare Services USA LLC</strong><span>8 The Green, Suite A, Dover, Delaware 19901</span><span>✉ &nbsp; info@airlinesgrouptravel.com</span><span>☎ &nbsp; +1-888-829-1288</span><span class="trust">Review us on ★ Trustpilot</span><span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span></div></div>
+        <div><p class="footer-heading">ADDRESS</p><div class="footer-contact"><strong>📍 &nbsp; Group Travel Desk LLC</strong><span>8 The Green, Suite A, Dover, Delaware 19901</span><span>✉ &nbsp; info@grouptraveldesk.com</span><span>☎ &nbsp; +1-XXX-XXX-XXXX</span><span class="trust">Review us on ★ Trustpilot</span><span style="color:#0784b7;font-weight:700">✈ IATA &nbsp; ARC &nbsp; ASTA</span></div></div>
       </div>
       <div class="socials"><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">◎</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="X">𝕏</a><a href="#" aria-label="Pinterest">p</a></div>
     </div>
     <div><p class="footer-heading">COMPANY</p><div class="footer-links"><a href="#">Home</a><a href="#">About Us</a><a href="#quoteForm">Contact us</a><a href="#blogs">Blog</a><a href="#airlines">Routes</a><a href="#deals">Deals</a></div></div>
   </div>
 </footer>
-<div class="copyright">Copyright by © <span id="year"></span> Airlines Group Travel</div>
+<div class="copyright">Copyright by © <span id="year"></span> Group Travel Desk</div>
 <div class="toast" id="toast" role="status"></div>
 
 <!-- Success Modal Popup -->
@@ -480,7 +492,7 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
     // Optional: Only redirect to WhatsApp if a real custom WhatsApp number is provided
     if (WHATSAPP_NUMBER && WHATSAPP_NUMBER !== "919999999999") {
       const lines = [
-        "Hello AirlinesGroup Travel! I want a free flight quote.",
+        "Hello Group Travel Desk! I want a free flight quote.",
         "Trip Type: " + quoteData.trip_type,
         "Flying From: " + quoteData.flying_from,
         "Destination: " + quoteData.destination,
