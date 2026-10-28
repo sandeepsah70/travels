@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Group Travel Desk | Plan • Book • Travel Together</title>
+<title>Group Travel Desk</title>
 <link rel="icon" type="image/jpeg" href="logo-icon.jpg">
 <!-- Supabase JS Client Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -17,11 +17,10 @@ button,input,select{font:inherit}
 .container{width:min(1100px,92%);margin:auto}
 .site-header{background:#fff}
 .topbar{min-height:86px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;line-height:1.1;text-decoration:none}
+.brand{display:flex;align-items:center;gap:11px;font-weight:700;font-size:16px;line-height:1.05;text-decoration:none}
 .brand-mark{width:50px;height:50px;border-radius:50%;overflow:hidden;display:grid;place-items:center;box-shadow:0 2px 8px rgba(6,57,155,0.18);flex-shrink:0;background:#fff}
 .brand-mark img{width:100%;height:100%;object-fit:cover;display:block}
-.brand-name span{display:block;color:#06399b;font-size:17px;letter-spacing:-0.2px}.brand-name b{color:#00aeea}
-.brand-tagline{display:block;font-size:8.5px;color:#555;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.brand-name span{display:block;color:#06399b;font-size:18px;letter-spacing:-0.2px}.brand-name b{color:#00aeea}
 .menu-btn{border:1px solid #ddd;background:white;border-radius:3px;width:42px;height:34px;font-size:21px;color:#777;cursor:pointer}
 .call-row{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:0 0 12px;flex-wrap:wrap}
 .call-pill{border:1px solid #55d889;background:#effff5;border-radius:20px;padding:8px 12px;font-size:12px;color:#222}
@@ -147,10 +146,7 @@ h1 span,.section-title span{color:var(--blue)}
   <div class="container topbar">
     <a class="brand" href="#" aria-label="Group Travel Desk home">
       <span class="brand-mark"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
-      <div class="brand-name">
-        <span>Group Travel <b>Desk</b></span>
-        <span class="brand-tagline">Plan • Book • Travel Together</span>
-      </div>
+      <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
     </a>
     <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
   </div>
@@ -290,10 +286,7 @@ h1 span,.section-title span{color:var(--blue)}
     <div>
       <a class="footer-brand" href="#top" style="text-decoration:none">
         <span class="brand-mark" style="width:44px;height:44px;"><img src="logo-icon.jpg" alt="Group Travel Desk Logo"></span>
-        <div class="brand-name">
-          <span style="color:#00b5ef;font-size:17px;font-weight:700">Group Travel <b style="color:#06399b;font-size:17px">Desk</b></span>
-          <span class="brand-tagline" style="color:#777">Plan • Book • Travel Together</span>
-        </div>
+        <span class="brand-name"><span style="color:#00b5ef;font-size:17px;font-weight:700">Group Travel <b style="color:#06399b;font-size:17px">Desk</b></span></span>
       </a>
       <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
       <div class="footer-columns">
