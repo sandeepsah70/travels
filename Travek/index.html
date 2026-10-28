@@ -69,6 +69,28 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
 .airport-city{font-size:12px;font-weight:700;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .airport-name{font-size:11px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .airport-code{font-size:11px;font-weight:800;color:#06399b;background:#e2f2ff;padding:2px 7px;border-radius:4px;letter-spacing:.5px;flex-shrink:0;margin-left:8px}
+
+/* Multi City Dynamic Booking Styles */
+.multi-city-wrap{display:none;grid-column:span 12;margin-bottom:8px}
+.multi-city-row{background:#fff;border:1px solid #dbe6ef;border-radius:6px;padding:12px 14px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,0.04);position:relative}
+.multi-city-row-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.multi-city-title{font-size:12.5px;font-weight:700;color:#06399b;display:inline-flex;align-items:center;gap:6px}
+.multi-city-fields{display:grid;grid-template-columns:repeat(12,1fr);gap:10px 14px}
+.mc-from-wrap{grid-column:span 5}
+.mc-to-wrap{grid-column:span 5}
+.mc-date-wrap{grid-column:span 2}
+.mc-from-wrap label,.mc-to-wrap label,.mc-date-wrap label{display:block;font-size:12px;color:#666;margin:0 0 8px}
+.remove-leg-btn{background:none;border:none;color:#ef4444;font-size:11.5px;font-weight:700;cursor:pointer;padding:2px 8px;border-radius:4px;transition:background .2s}
+.remove-leg-btn:hover{background:#fee2e2}
+.add-leg-btn{background:#f0f9ff;border:1.5px dashed #08aeea;color:#06399b;padding:9px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s;margin-bottom:12px}
+.add-leg-btn:hover{background:#ddf2ff;color:#078ec5}
+@media(max-width:768px){
+  .mc-from-wrap,.mc-to-wrap{grid-column:span 6}
+  .mc-date-wrap{grid-column:span 12}
+}
+@media(max-width:480px){
+  .mc-from-wrap,.mc-to-wrap{grid-column:span 12}
+}
 .phone-field{grid-column:span 4}
 .submit-field{grid-column:span 3;display:flex;align-items:end}
 .quote-btn{border:0;background:#06aeea;color:#fff;font-size:12px;font-weight:700;padding:12px 22px;cursor:pointer;min-height:38px;transition:all 0.2s}
@@ -234,22 +256,88 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
     </div>
     <form class="booking-box" id="quoteForm">
       <div class="form-grid">
-        <div class="field wide">
-          <label for="from">Flying from:</label>
-          <div class="airport-field-wrap">
-            <input id="from" name="from" placeholder="Enter City, Airport, or Code (e.g. Delhi)" autocomplete="off" required>
-            <div class="airport-dropdown" id="fromDropdown"></div>
+        <!-- Standard Route Fields (Round Trip & One Way) -->
+        <div id="standardFlightFields" style="grid-column:span 12;display:contents">
+          <div class="field wide">
+            <label for="from">Flying from:</label>
+            <div class="airport-field-wrap">
+              <input id="from" name="from" placeholder="Enter City, Airport, or Code (e.g. Delhi)" autocomplete="off" required>
+              <div class="airport-dropdown" id="fromDropdown"></div>
+            </div>
           </div>
-        </div>
-        <div class="field wide">
-          <label for="to">To:</label>
-          <div class="airport-field-wrap">
-            <input id="to" name="to" placeholder="Enter Destination City or Code (e.g. Mumbai)" autocomplete="off" required>
-            <div class="airport-dropdown" id="toDropdown"></div>
+          <div class="field wide">
+            <label for="to">To:</label>
+            <div class="airport-field-wrap">
+              <input id="to" name="to" placeholder="Enter Destination City or Code (e.g. Mumbai)" autocomplete="off" required>
+              <div class="airport-dropdown" id="toDropdown"></div>
+            </div>
           </div>
+          <div class="field"><label for="departure">Departure:</label><input id="departure" name="departure" type="date" required></div>
+          <div class="field" id="returnField"><label for="returnDate">Return Date:</label><input id="returnDate" name="returnDate" type="date"></div>
         </div>
-        <div class="field"><label for="departure">Departure:</label><input id="departure" name="departure" type="date" required></div>
-        <div class="field" id="returnField"><label for="returnDate">Return Date:</label><input id="returnDate" name="returnDate" type="date"></div>
+
+        <!-- Multi City Route Fields (MakeMyTrip / Skyscanner Style) -->
+        <div id="multiCityContainer" class="multi-city-wrap">
+          <div id="multiCityRows">
+            <!-- Flight 1 -->
+            <div class="multi-city-row" data-index="1">
+              <div class="multi-city-row-header">
+                <span class="multi-city-title">✈ Flight 1</span>
+              </div>
+              <div class="multi-city-fields">
+                <div class="mc-from-wrap">
+                  <label>Flying from:</label>
+                  <div class="airport-field-wrap">
+                    <input class="mc-from" placeholder="Origin City or Code (e.g. Delhi)" autocomplete="off">
+                    <div class="airport-dropdown"></div>
+                  </div>
+                </div>
+                <div class="mc-to-wrap">
+                  <label>To:</label>
+                  <div class="airport-field-wrap">
+                    <input class="mc-to" placeholder="Destination City or Code (e.g. Mumbai)" autocomplete="off">
+                    <div class="airport-dropdown"></div>
+                  </div>
+                </div>
+                <div class="mc-date-wrap">
+                  <label>Departure:</label>
+                  <input class="mc-date" type="date">
+                </div>
+              </div>
+            </div>
+
+            <!-- Flight 2 -->
+            <div class="multi-city-row" data-index="2">
+              <div class="multi-city-row-header">
+                <span class="multi-city-title">✈ Flight 2</span>
+                <button type="button" class="remove-leg-btn" onclick="removeFlightLeg(this)">✕ Remove</button>
+              </div>
+              <div class="multi-city-fields">
+                <div class="mc-from-wrap">
+                  <label>Flying from:</label>
+                  <div class="airport-field-wrap">
+                    <input class="mc-from" placeholder="Origin City or Code (e.g. Mumbai)" autocomplete="off">
+                    <div class="airport-dropdown"></div>
+                  </div>
+                </div>
+                <div class="mc-to-wrap">
+                  <label>To:</label>
+                  <div class="airport-field-wrap">
+                    <input class="mc-to" placeholder="Destination City or Code (e.g. Dubai)" autocomplete="off">
+                    <div class="airport-dropdown"></div>
+                  </div>
+                </div>
+                <div class="mc-date-wrap">
+                  <label>Departure:</label>
+                  <input class="mc-date" type="date">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="button" class="add-leg-btn" id="addFlightBtn">＋ Add Another Flight</button>
+        </div>
+
         <div class="field"><label for="passengers">Passenger:</label><input id="passengers" name="passengers" type="number" min="1" max="99" placeholder=" " required></div>
         <div class="field"><label for="class">Class:</label><select id="class" name="class"><option>Economy</option><option>Premium Economy</option><option>Business</option><option>First Class</option></select></div>
         <div class="field wide"><label for="email">Email:</label><input id="email" name="email" type="email" placeholder="*****@gmail.com" required></div>
@@ -437,9 +525,9 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
 <footer class="site-footer">
   <div class="footer-panel">
     <div>
-      <a class="footer-brand" href="#top" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px">
-        <img src="logo.png" alt="Group Travel Desk Logo" style="height:40px;width:auto;object-fit:contain;display:block">
-        <span class="brand-name" style="font-size:18px;font-weight:700;display:inline-flex;align-items:center;white-space:nowrap"><span style="color:#00b5ef">Group Travel</span><b style="color:#ffffff;margin-left:4px">Desk</b></span>
+      <a class="brand" href="#top" aria-label="Group Travel Desk home" style="margin-bottom:16px;display:inline-flex">
+        <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
+        <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
       </a>
       <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services. We have an excellent team of travel experts who look after the travel requirements of customers.</p>
       <div class="footer-columns">
@@ -595,16 +683,116 @@ const WHATSAPP_NUMBER = "";
 
 const tabs = document.querySelectorAll(".trip-tab");
 let tripType = "Round Trip";
+const standardFields = document.getElementById("standardFlightFields");
+const multiCityContainer = document.getElementById("multiCityContainer");
+const returnField = document.getElementById("returnField");
+const returnInput = document.getElementById("returnDate");
+const fromInput = document.getElementById("from");
+const toInput = document.getElementById("to");
+const departureInput = document.getElementById("departure");
+
 tabs.forEach(tab => tab.addEventListener("click", () => {
   tabs.forEach(t => t.classList.remove("active"));
   tab.classList.add("active");
   tripType = tab.dataset.trip === "one" ? "One Way" : tab.dataset.trip === "multi" ? "Multi City" : "Round Trip";
-  const returnField = document.getElementById("returnField");
-  const returnInput = document.getElementById("returnDate");
-  returnField.style.display = tripType === "One Way" ? "none" : "block";
-  returnInput.required = tripType === "Round Trip";
-  if (tripType === "Multi City") showToast("Multi City selected — please mention extra stops in route or details.");
+
+  if (tripType === "Multi City") {
+    if (standardFields) standardFields.style.display = "none";
+    if (multiCityContainer) multiCityContainer.style.display = "block";
+    if (fromInput) fromInput.required = false;
+    if (toInput) toInput.required = false;
+    if (departureInput) departureInput.required = false;
+    if (returnInput) returnInput.required = false;
+    document.querySelectorAll("#multiCityRows .mc-from, #multiCityRows .mc-to, #multiCityRows .mc-date").forEach(inp => inp.required = true);
+  } else {
+    if (standardFields) standardFields.style.display = "contents";
+    if (multiCityContainer) multiCityContainer.style.display = "none";
+    if (fromInput) fromInput.required = true;
+    if (toInput) toInput.required = true;
+    if (departureInput) departureInput.required = true;
+    if (returnField) returnField.style.display = tripType === "One Way" ? "none" : "block";
+    if (returnInput) returnInput.required = tripType === "Round Trip";
+    document.querySelectorAll("#multiCityRows .mc-from, #multiCityRows .mc-to, #multiCityRows .mc-date").forEach(inp => inp.required = false);
+  }
 }));
+
+function removeFlightLeg(btn) {
+  const container = document.getElementById("multiCityRows");
+  const rows = container.querySelectorAll(".multi-city-row");
+  if (rows.length <= 2) {
+    showToast("A minimum of 2 flights is required for Multi City.");
+    return;
+  }
+  btn.closest(".multi-city-row").remove();
+  renumberFlightLegs();
+}
+
+function renumberFlightLegs() {
+  const rows = document.querySelectorAll("#multiCityRows .multi-city-row");
+  rows.forEach((r, idx) => {
+    const num = idx + 1;
+    r.dataset.index = num;
+    const title = r.querySelector(".multi-city-title");
+    if (title) title.innerHTML = `✈ Flight ${num}`;
+  });
+}
+
+const addFlightBtn = document.getElementById("addFlightBtn");
+if (addFlightBtn) {
+  addFlightBtn.addEventListener("click", () => {
+    const container = document.getElementById("multiCityRows");
+    const rows = container.querySelectorAll(".multi-city-row");
+    if (rows.length >= 5) {
+      showToast("Maximum 5 flight segments allowed in Multi City.");
+      return;
+    }
+    const nextNum = rows.length + 1;
+    const lastToInput = rows[rows.length - 1].querySelector(".mc-to");
+    const lastToVal = lastToInput ? lastToInput.value : "";
+
+    const newRow = document.createElement("div");
+    newRow.className = "multi-city-row";
+    newRow.dataset.index = nextNum;
+    newRow.innerHTML = `
+      <div class="multi-city-row-header">
+        <span class="multi-city-title">✈ Flight ${nextNum}</span>
+        <button type="button" class="remove-leg-btn" onclick="removeFlightLeg(this)">✕ Remove</button>
+      </div>
+      <div class="multi-city-fields">
+        <div class="mc-from-wrap">
+          <label>Flying from:</label>
+          <div class="airport-field-wrap">
+            <input class="mc-from" placeholder="Origin City or Code" value="${lastToVal}" autocomplete="off" required>
+            <div class="airport-dropdown"></div>
+          </div>
+        </div>
+        <div class="mc-to-wrap">
+          <label>To:</label>
+          <div class="airport-field-wrap">
+            <input class="mc-to" placeholder="Destination City or Code" autocomplete="off" required>
+            <div class="airport-dropdown"></div>
+          </div>
+        </div>
+        <div class="mc-date-wrap">
+          <label>Departure:</label>
+          <input class="mc-date" type="date" required>
+        </div>
+      </div>
+    `;
+    container.appendChild(newRow);
+
+    const fromInp = newRow.querySelector(".mc-from");
+    const fromDrop = newRow.querySelector(".mc-from-wrap .airport-dropdown");
+    const toInp = newRow.querySelector(".mc-to");
+    const toDrop = newRow.querySelector(".mc-to-wrap .airport-dropdown");
+    const dateInp = newRow.querySelector(".mc-date");
+
+    if (window.bindAirportAutocomplete) {
+      window.bindAirportAutocomplete(fromInp, fromDrop, toInp);
+      window.bindAirportAutocomplete(toInp, toDrop, dateInp);
+    }
+  });
+}
 
 document.getElementById("quoteForm").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -615,18 +803,54 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
   }
 
   const d = new FormData(this);
-  const quoteData = {
-    trip_type: tripType,
-    flying_from: d.get("from"),
-    destination: d.get("to"),
-    departure_date: d.get("departure"),
-    return_date: tripType !== "One Way" ? (d.get("returnDate") || null) : null,
-    passengers: parseInt(d.get("passengers"), 10) || 1,
-    flight_class: d.get("class"),
-    email: d.get("email"),
-    phone: d.get("phone"),
-    status: 'pending'
-  };
+  let quoteData = null;
+
+  if (tripType === "Multi City") {
+    const rows = document.querySelectorAll("#multiCityRows .multi-city-row");
+    const legs = [];
+    let firstDate = null;
+    let lastDate = null;
+
+    for (let i = 0; i < rows.length; i++) {
+      const fromVal = rows[i].querySelector(".mc-from").value.trim();
+      const toVal = rows[i].querySelector(".mc-to").value.trim();
+      const dateVal = rows[i].querySelector(".mc-date").value;
+      if (!fromVal || !toVal || !dateVal) {
+        showToast(`Please complete all details for Flight ${i + 1}`);
+        if (quoteBtn) { quoteBtn.disabled = false; quoteBtn.textContent = "FREE QUOTE"; }
+        return;
+      }
+      legs.push(`Flight ${i + 1}: ${fromVal} ➔ ${toVal} (${dateVal})`);
+      if (i === 0) firstDate = dateVal;
+      lastDate = dateVal;
+    }
+
+    quoteData = {
+      trip_type: "Multi City",
+      flying_from: rows[0].querySelector(".mc-from").value.trim() + " [Multi City]",
+      destination: legs.join(" | "),
+      departure_date: firstDate,
+      return_date: lastDate,
+      passengers: parseInt(d.get("passengers"), 10) || 1,
+      flight_class: d.get("class"),
+      email: d.get("email"),
+      phone: d.get("phone"),
+      status: 'pending'
+    };
+  } else {
+    quoteData = {
+      trip_type: tripType,
+      flying_from: d.get("from"),
+      destination: d.get("to"),
+      departure_date: d.get("departure"),
+      return_date: tripType !== "One Way" ? (d.get("returnDate") || null) : null,
+      passengers: parseInt(d.get("passengers"), 10) || 1,
+      flight_class: d.get("class"),
+      email: d.get("email"),
+      phone: d.get("phone"),
+      status: 'pending'
+    };
+  }
 
   let savedSuccessfully = false;
 
@@ -641,7 +865,6 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
         alert("Supabase Error: " + error.message);
       } else {
         savedSuccessfully = true;
-        // Refresh leads count & table
         loadSupabaseLeads();
       }
     } catch (err) {
@@ -658,25 +881,33 @@ document.getElementById("quoteForm").addEventListener("submit", async function(e
   }
 
   if (savedSuccessfully) {
-    // Show clear confirmation modal to user
-    openSuccessModal("Success! Your flight details have been received and saved in Supabase database. Click 'Supabase Database' button in the top bar to verify all saved leads.");
+    const successMsg = tripType === "Multi City" 
+      ? `Success! Your Multi-City itinerary with ${document.querySelectorAll('#multiCityRows .multi-city-row').length} flights has been received and stored in Supabase.`
+      : "Success! Your flight details have been received and saved in Supabase database. Click 'Supabase Database' button in the top bar to verify all saved leads.";
+    
+    openSuccessModal(successMsg);
     
     // Reset form after successful submission
     this.reset();
     tripType = "Round Trip";
     tabs.forEach(t => t.classList.toggle("active", t.dataset.trip === "round"));
-    const returnField = document.getElementById("returnField");
+    if (standardFields) standardFields.style.display = "contents";
+    if (multiCityContainer) multiCityContainer.style.display = "none";
     if (returnField) returnField.style.display = "block";
 
-    // Optional: Only redirect to WhatsApp if a real custom WhatsApp number is provided
+    // Optional WhatsApp redirect
     if (WHATSAPP_NUMBER && WHATSAPP_NUMBER !== "919999999999") {
       const lines = [
         "Hello Group Travel Desk! I want a free flight quote.",
         "Trip Type: " + quoteData.trip_type,
-        "Flying From: " + quoteData.flying_from,
-        "Destination: " + quoteData.destination,
-        "Departure: " + quoteData.departure_date,
-        ...(quoteData.return_date ? ["Return Date: " + quoteData.return_date] : []),
+        ...(tripType === "Multi City" 
+          ? ["Itinerary:\n" + quoteData.destination.split(" | ").join("\n")]
+          : [
+              "Flying From: " + quoteData.flying_from,
+              "Destination: " + quoteData.destination,
+              "Departure: " + quoteData.departure_date,
+              ...(quoteData.return_date ? ["Return Date: " + quoteData.return_date] : [])
+            ]),
         "Passengers: " + quoteData.passengers,
         "Class: " + quoteData.flight_class,
         "Email: " + quoteData.email,
@@ -1069,9 +1300,9 @@ function closeLeadsModal() {
     { code: "SEZ", city: "Mahe", country: "Seychelles", name: "Seychelles International Airport" }
   ];
 
-  function setupAutocomplete(inputId, dropdownId, nextInputId) {
-    const input = document.getElementById(inputId);
-    const dropdown = document.getElementById(dropdownId);
+  function attachAirportAutocomplete(inputTarget, dropdownTarget, nextTarget) {
+    const input = typeof inputTarget === "string" ? document.getElementById(inputTarget) : inputTarget;
+    const dropdown = typeof dropdownTarget === "string" ? document.getElementById(dropdownTarget) : dropdownTarget;
     if (!input || !dropdown) return;
 
     let selectedIdx = -1;
@@ -1115,14 +1346,14 @@ function closeLeadsModal() {
     function selectAirport(item) {
       input.value = `${item.city} (${item.code}) - ${item.name}`;
       dropdown.classList.remove("open");
-      if (nextInputId) {
-        const next = document.getElementById(nextInputId);
-        if (next && !next.value.trim()) next.focus();
+      if (nextTarget) {
+        const next = typeof nextTarget === "string" ? document.getElementById(nextTarget) : nextTarget;
+        if (next && (!next.value || !next.value.trim())) next.focus();
       }
     }
 
     function filterAirports(query) {
-      const q = query.trim().toLowerCase();
+      const q = (query || "").trim().toLowerCase();
       if (!q) {
         const popular = AIRPORTS.filter(a => a.popular);
         renderList(popular, "POPULAR AIRPORTS & HUBS");
@@ -1193,8 +1424,22 @@ function closeLeadsModal() {
     }
   }
 
-  setupAutocomplete("from", "fromDropdown", "to");
-  setupAutocomplete("to", "toDropdown", "departure");
+  window.bindAirportAutocomplete = attachAirportAutocomplete;
+
+  // Bind Standard Routes
+  attachAirportAutocomplete("from", "fromDropdown", "to");
+  attachAirportAutocomplete("to", "toDropdown", "departure");
+
+  // Bind Initial Multi City Flight Rows
+  document.querySelectorAll("#multiCityRows .multi-city-row").forEach(row => {
+    const fromInp = row.querySelector(".mc-from");
+    const fromDrop = row.querySelector(".mc-from-wrap .airport-dropdown");
+    const toInp = row.querySelector(".mc-to");
+    const toDrop = row.querySelector(".mc-to-wrap .airport-dropdown");
+    const dateInp = row.querySelector(".mc-date");
+    attachAirportAutocomplete(fromInp, fromDrop, toInp);
+    attachAirportAutocomplete(toInp, toDrop, dateInp);
+  });
 
   // Close dropdowns on outside click
   document.addEventListener("click", (e) => {
