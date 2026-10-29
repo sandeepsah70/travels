@@ -271,11 +271,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
     <a class="mobile-nav-item" href="#airlines">Routes</a>
   </div>
   <div class="container call-row">
-    <!-- Live Supabase Leads Viewer Button -->
-    <button type="button" class="leads-pill-btn" onclick="openLeadsModal()" title="Click to view all live leads stored in Supabase">
-      <span>📊 Supabase Database:</span>
-      <strong id="leadsCount">5 Leads Saved</strong>
-    </button>
+    
     <div class="call-pill">☎ &nbsp; Book a Group – Call us 24/7 &nbsp; <strong>+1-XXX-XXX-XXXX</strong></div>
   </div>
 </header>
@@ -665,7 +661,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
         <img src="logo.png" alt="Group Travel Desk Logo" class="brand-logo-img">
         <span class="brand-name"><span>Group Travel</span><b>Desk</b></span>
       </a>
-      <p class="footer-about">Established in the year 2022, we at Group Travel Desk aim to provide all-inclusive group travel-related services across the United States. We have an excellent team of travel experts who look after the group flight requirements of customers.</p>
+      <p class="footer-about">Established in the year 2026, we at Group Travel Desk aim to provide all-inclusive group travel-related services across the United States. We have an excellent team of travel experts who look after the group flight requirements of customers.</p>
       <div class="footer-columns">
         <div>
           <p class="footer-heading">QUICK LINKS</p>
@@ -675,7 +671,7 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
             <a href="terms-conditions.html">Terms &amp; Conditions</a>
             <a href="#destinations">Destinations</a>
             <a href="#airlines">Airlines</a>
-            <a href="#deals">Popular Deals</a>
+            <a href="javascript:void(0)" onclick="handlePopularDealsClick()">Popular Deals</a>
           </div>
         </div>
         <div>
@@ -720,11 +716,40 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
 </div>
 
 <!-- Live Supabase Leads Viewer Modal -->
+
+<!-- Admin Login Modal (Triggered via Footer Popular Deals) -->
+<div class="success-modal" id="adminLoginModal" role="dialog" aria-modal="true">
+  <div class="success-box" style="max-width:380px;text-align:left;padding:26px 24px;border-radius:12px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #edf2f7;padding-bottom:12px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="font-size:20px;">🔒</span>
+        <h3 style="margin:0;font-size:17px;color:#06399b;font-weight:700;">Admin Portal Login</h3>
+      </div>
+      <button type="button" onclick="closeAdminLoginModal()" style="border:0;background:#f1f5f9;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:14px;font-weight:bold;color:#64748b;">✕</button>
+    </div>
+    <form id="adminLoginForm" onsubmit="submitAdminLogin(event)" style="display:grid;gap:13px;">
+      <div id="adminLoginError" style="display:none;background:#fee2e2;border:1px solid #fca5a5;color:#b91c1c;padding:8px 12px;border-radius:6px;font-size:12px;font-weight:600;"></div>
+      <div>
+        <label for="adminUsername" style="display:block;font-size:12px;font-weight:700;color:#06399b;margin-bottom:6px;">Username:</label>
+        <input type="text" id="adminUsername" placeholder="Enter username" required style="width:100%;height:38px;border:1px solid #cbd5e1;border-radius:6px;padding:0 12px;font-size:13px;box-sizing:border-box;">
+      </div>
+      <div>
+        <label for="adminPassword" style="display:block;font-size:12px;font-weight:700;color:#06399b;margin-bottom:6px;">Password:</label>
+        <input type="password" id="adminPassword" placeholder="Enter password" required style="width:100%;height:38px;border:1px solid #cbd5e1;border-radius:6px;padding:0 12px;font-size:13px;box-sizing:border-box;">
+      </div>
+      <button type="submit" style="background:linear-gradient(135deg,#06399b,#08aeea);color:#fff;border:0;padding:11px;border-radius:6px;font-weight:700;font-size:13px;cursor:pointer;margin-top:4px;">Login to Admin Panel</button>
+    </form>
+  </div>
+</div>
+
 <div class="success-modal" id="leadsModal" role="dialog" aria-modal="true">
   <div class="success-box" style="max-width:760px;text-align:left;">
     <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:12px;margin-bottom:14px;">
       <div>
-        <h3 style="margin:0;font-size:18px;color:#06399b;">📋 Live Leads in Supabase</h3>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <h3 style="margin:0;font-size:18px;color:#06399b;">📋 Live Leads in Supabase</h3>
+          <span id="leadsModalCount" style="background:#e0f2fe;color:#0369a1;padding:3px 9px;border-radius:12px;font-size:11px;font-weight:700;">Loading...</span>
+        </div>
         <span style="font-size:11px;color:#666;">Project: <strong>Travel (whwbtirsjbzyecciovyp)</strong> | Table: <strong>public.flight_quotes</strong></span>
       </div>
       <button type="button" onclick="closeLeadsModal()" style="border:0;background:#f0f0f0;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:15px;font-weight:bold;">✕</button>
@@ -747,8 +772,14 @@ h1 span{color:#48d2ff;text-shadow:0 2px 8px rgba(8,174,234,.5)}
       </table>
     </div>
     <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-      <a href="https://supabase.com/dashboard/project/whwbtirsjbzyecciovyp/editor" target="_blank" style="font-size:12px;color:#08aeea;font-weight:bold;text-decoration:underline;">🔗 Open Supabase Dashboard Table Editor ↗</a>
-      <button type="button" class="success-btn" onclick="closeLeadsModal()" style="padding:8px 20px;">Close</button>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <a href="https://supabase.com/dashboard/project/whwbtirsjbzyecciovyp/editor" target="_blank" style="font-size:12px;color:#08aeea;font-weight:bold;text-decoration:underline;">🔗 Open Supabase Table Editor ↗</a>
+        <button type="button" onclick="loadSupabaseLeads()" style="background:#f0f9ff;border:1px solid #08aeea;color:#06399b;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">🔄 Refresh</button>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button type="button" onclick="adminLogout()" style="background:#fee2e2;border:1px solid #fca5a5;color:#b91c1c;padding:8px 16px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;">Logout</button>
+        <button type="button" class="success-btn" onclick="closeLeadsModal()" style="padding:8px 20px;">Close</button>
+      </div>
     </div>
   </div>
 </div>
@@ -781,6 +812,10 @@ async function loadSupabaseLeads() {
     const countEl = document.getElementById("leadsCount");
     if (countEl && data) {
       countEl.textContent = data.length + " Leads Saved";
+    }
+    const modalCount = document.getElementById("leadsModalCount");
+    if (modalCount && data) {
+      modalCount.textContent = data.length + " Leads Saved";
     }
 
     const tbody = document.getElementById("leadsTableBody");
@@ -1468,6 +1503,69 @@ async function submitInquiry(e) {
 }
 
 
+
+
+// ── Admin Portal Authentication ──
+let isAdminAuthenticated = false;
+
+function handlePopularDealsClick() {
+  if (isAdminAuthenticated) {
+    openLeadsModal();
+  } else {
+    openAdminLoginModal();
+  }
+}
+
+function openAdminLoginModal() {
+  const m = document.getElementById("adminLoginModal");
+  if (m) {
+    m.classList.add("show");
+    document.body.style.overflow = "hidden";
+    const u = document.getElementById("adminUsername");
+    if (u) u.focus();
+  }
+}
+
+function closeAdminLoginModal() {
+  const m = document.getElementById("adminLoginModal");
+  if (m) {
+    m.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+  const err = document.getElementById("adminLoginError");
+  if (err) err.style.display = "none";
+}
+
+document.getElementById("adminLoginModal").addEventListener("click", function(e) {
+  if (e.target === this) closeAdminLoginModal();
+});
+
+function submitAdminLogin(e) {
+  e.preventDefault();
+  const u = document.getElementById("adminUsername").value.trim();
+  const p = document.getElementById("adminPassword").value.trim();
+  const err = document.getElementById("adminLoginError");
+
+  if (u === "admin" && p === "admin123") {
+    isAdminAuthenticated = true;
+    if (err) err.style.display = "none";
+    document.getElementById("adminLoginForm").reset();
+    closeAdminLoginModal();
+    openLeadsModal();
+    showToast("✅ Login successful! Supabase Leads loaded.");
+  } else {
+    if (err) {
+      err.textContent = "❌ Invalid username or password. Please try again.";
+      err.style.display = "block";
+    }
+  }
+}
+
+function adminLogout() {
+  isAdminAuthenticated = false;
+  closeLeadsModal();
+  showToast("🔒 Admin logged out successfully.");
+}
 
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
